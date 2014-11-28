@@ -1,6 +1,7 @@
 var app = angular.module('nourritureApp', [
   'ngRoute',
   'loginViewControllers',
+  'registerUserViewControllers',
   'homeViewControllers'
 ]);
 
@@ -11,6 +12,10 @@ app.config(['$routeProvider',
         templateUrl: '/views/login.html',
         controller: 'LoginViewCtrl'
       }).
+      when('/registerUser', {
+        templateUrl: '/views/registerUser.html',
+        controller: 'RegisterUserViewCtrl'
+      }).
       when('/home', {
         templateUrl: '/views/home.html',
         controller: 'HomeViewCtrl'
@@ -18,10 +23,10 @@ app.config(['$routeProvider',
       otherwise({
         redirectTo: '/home'
       });
-  }]).
+  }])/*.
   controller('routeController', ['$scope', '$location', function($scope, $location) {
     $scope.currentLocation = "OK";
-  }]);
+  }]);*/
 
 app.service("userService", [
   function () {
