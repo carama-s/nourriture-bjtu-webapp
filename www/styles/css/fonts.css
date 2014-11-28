@@ -1,0 +1,9 @@
+@font-face {
+  font-family: myKGBlankSpaceSolid;
+  src: url('/styles/fonts/KGBlankSpaceSolid.ttf');
+}
+
+@font-face {
+  font-family: myKGBlankSpaceSketch;
+  src: url('/styles/fonts/KGBlankSpaceSketch.ttf');
+}

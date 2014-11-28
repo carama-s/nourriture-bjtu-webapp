@@ -1,0 +1,84 @@
+body {
+  background-color: #F8F5EF;
+}
+
+.help-block {
+  font-size: 13px;
+  margin: 0;
+  margin-top: 3px;
+  text-align: left;
+}
+
+.brand-text {
+  font-family: myKGBlankSpaceSketch;
+  font-size: 22px;
+  color: white;
+}
+
+.brand-text:hover {
+  color: #AA0000;
+}
+
+.navbar-login-btn {
+  background-color: #AA0000;
+  color: white;
+  border-color: #AA0000;
+  padding: 4px 12px;
+  font-size: 17px;
+}
+
+.navbar-login-btn:hover, .navbar-login-btn:active, .navbar-login-btn:focus {
+  color: white;
+  background-color: #990000;
+  border-color: #990000;
+}
+
+.keyword-orange {
+  color: #E67E22;
+  font-weight: bold;
+}
+
+.login-title-section {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.login-form-input {
+    height: 50px;
+    line-height: 50px;
+}
+
+.login-submit-btn {
+  background-color: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+  width: 100%;
+  height: 50px;
+}
+
+.login-submit-btn:focus, .login-submit-btn:hover, .login-submit-btn:active {
+  background-color: #d74b3c;
+  border-color: #d74b3c;
+  color: white;
+}
+
+.login-social-btn, .login-social-btn:focus, .login-social-btn:active {
+  width: 100%;
+  padding-left: 70px;
+  height: 50px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.login-facebook-btn, .login-facebook-btn:focus, .login-facebook-btn:active, .login-facebook-btn:hover {
+  background: url("/images/facebook.jpg") no-repeat;
+  background-color: white;
+  background-size: 50px 50px;
+}
+
+.login-google-btn, .login-google-btn:focus, .login-google-btn:active, .login-google-btn:hover {
+  background: url("/images/google.jpg") no-repeat;
+  background-color: white;
+  background-size: 50px 50px;
+}

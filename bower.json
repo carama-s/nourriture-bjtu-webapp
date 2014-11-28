@@ -1,0 +1,23 @@
+{
+  "name": "nourriture-platform",
+  "version": "0.0.0",
+  "authors": [
+    "Caramanno Stéphane <stephane.caramanno@epitech.eu>"
+  ],
+  "description": "BJTU training project",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "angular": "1.3.0",
+    "angular-route": "~1.3.0"
+  }
+}
