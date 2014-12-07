@@ -3,6 +3,6 @@
   Home page ! <br /><br />
 
   <br /> <br />
-  <p ng-show="user.isLogged()">Vous êtes connecté !</p>
-  <p ng-show="!user.isLogged()">Vous n'êtes pas connecté !</p>
+  <p ng-show="apiFactory.getToken()">Vous êtes connecté !</p>
+  <p ng-show="!apiFactory.getToken()">Vous n'êtes pas connecté !</p>
 </div>

@@ -1,7 +1,7 @@
 var homeViewControllers = angular.module('homeViewControllers', []);
 
-homeViewControllers.controller('HomeViewCtrl', ['$scope', 'userService',
-  function($scope, userService) {
-    $scope.user = userService;
+homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory',
+  function($scope, apiFactory) {
+    $scope.apiFactory = apiFactory;
 
   }]);
