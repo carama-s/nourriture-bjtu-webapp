@@ -11,9 +11,9 @@ loginViewControllers.controller("LogInFormCtrl", ['$scope', 'apiFactory', functi
     $scope.submitted = true;
     if (isValid) {
       apiFactory.user.authenticate($scope.loginInputEmail, $scope.loginInputPassword)
-        .success(function(token) {
-        })
-        .error(function(data) {
+        .then(function(token) {
+          console.log(token);
+        }, function(data) {
           console.log(data);
         });
     }
