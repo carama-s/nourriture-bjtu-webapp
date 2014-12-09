@@ -67,8 +67,8 @@ app.factory("apiFactory", ['$http', "$q", function ($http, $q) {
       return httpPost(urlUser + "/get_token", {
         email: email,
         passwd: passwd
-      }).then(function(data) {
-        token = data.token;
+      }).then(function(res) {
+        token = res.data.token;
         return token;
       });
     };
