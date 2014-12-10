@@ -2,4 +2,4 @@
 apt-get update
 # install missing package
 apt-get install nodejs-legacy npm git
-npm install -g bower
+npm install -g bower grunt-cli
