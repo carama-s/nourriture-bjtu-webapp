@@ -19,20 +19,31 @@
 
   <div class="col-md-2 col-md-offset-2" style="margin-top: 30px;" ng-controller="LogInFormCtrl">
 
-    <p class="login-title-section">Sign in with email</p>
+    <p class="login-title-section">Sign in with email adress</p>
 
     <form role="form" name="formLogIn" ng-submit="submitLogIn(formLogIn.$valid)" novalidate>
+
       <div class="form-group" ng-class="{ 'has-error' : submitted && ((formLogIn.loginInputEmail.$required) || (formLogIn.loginInputEmail.$invalid)) }">
-        <input required ng-model="loginInputEmail" name="loginInputEmail" type="email" class="form-control login-form-input" placeholder="Email">
-        <p ng-show="submitted && formLogIn.loginInputEmail.$error.required" class="help-block">The email is required and cannot be empty.</p>
+        <input ng-change="badPassword = false" required ng-model="loginInputEmail" name="loginInputEmail" type="email" class="form-control login-form-input" placeholder="Email adress">
+        <p ng-show="submitted && formLogIn.loginInputEmail.$error.required" class="help-block">The email adress is required and cannot be empty.</p>
         <p ng-show="!formLogIn.loginInputEmail.$error.required && formLogIn.loginInputEmail.$invalid && submitted" class="help-block">The email address is not valid.</p>
       </div>
       <div style="margin-top: 30px;" class="form-group" ng-class="{ 'has-error' : submitted && formLogIn.loginInputPassword.$error.required }">
-        <input required name="loginInputPassword" ng-model="loginInputPassword" type="password" class="form-control login-form-input" placeholder="Password">
+        <input ng-change="badPassword = false" required name="loginInputPassword" ng-model="loginInputPassword" type="password" class="form-control login-form-input" placeholder="Password">
         <p ng-show="submitted && formLogIn.loginInputPassword.$error.required" class="help-block">The password is required and cannot be empty.</p>
       </div>
+      <!--
+      <div class="checkbox login-form-checkbox">
+        <label>
+          <input type="checkbox"> Keep the session active
+        </label>
+      </div>
+      -->
+      <div ng-show="badPassword" style="margin-top: 30px;" class="form-group has-error">
+        <p class="help-block">The email address or password you entered is not valid. Please try again.</p>
+      </div>
 
-      <input style="margin-top: 15px;" type="submit" class="btn btn-default login-submit-btn" value="Sign in"/>
+      <input style="margin-top: 20px;" type="submit" class="btn btn-default login-submit-btn" value="Sign in"/>
     </form>
   </div>
 

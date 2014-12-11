@@ -56,7 +56,6 @@ body {
 
 .login-form-input {
     height: 50px;
-    line-height: 50px;
 }
 
 .login-submit-btn {
@@ -98,4 +97,10 @@ body {
   text-decoration: none;
   color: black;
   cursor: pointer;
+}
+
+.login-form-checkbox {
+  text-align: left;
+  padding-left: 1px;
+  margin-top: 25px;
 }

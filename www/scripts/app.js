@@ -1,5 +1,6 @@
 var app = angular.module('nourritureApp', [
   'ngRoute',
+  'ipCookie',
   'loginViewControllers',
   'registerUserViewControllers',
   'homeViewControllers'
@@ -25,17 +26,32 @@ app.config(['$routeProvider',
       });
   }])
 
-app.factory("apiFactory", ['$http', "$q", function ($http, $q) {
+app.run(function($rootScope, $location, apiFactory) {
+  $rootScope.$on("$routeChangeStart", function(event, next, current) {
+    if (apiFactory.getToken() != undefined) { // user logged
+      if (next.templateUrl) {
+        if (next.templateUrl == "/views/login.html" || next.templateUrl == "/views/registerUser.html") {
+          $location.path("/");
+        }
+      }
+    }
+  });
+})
+
+app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCookie) {
     var host = "http://api.nourriture.dennajort.fr";
     var urlUser = host + "/user";
     var apiFactory = {user: {}};
     var token = undefined;
+    var user = undefined;
 
     function httpGet(url, config) {
       config = config || {};
       config.headers = config.headers || {};
-      if (token !== undefined)
+      var token = apiFactory.getToken();
+      if (token !== undefined) {
         config.headers.Authorization = "Bearer " + token;
+      }
       return $http.get(url, config);
     }
 
@@ -48,19 +64,39 @@ app.factory("apiFactory", ['$http', "$q", function ($http, $q) {
     }
 
     apiFactory.getToken = function() {
-      return token;
+      return ipCookie("token");
     };
 
     apiFactory.setToken = function(t) {
       token = t;
     };
 
+    apiFactory.getUser = function() {
+      return user;
+    };
+
+    apiFactory.setUser = function(u) {
+      user = u;
+    };
+
     apiFactory.user.find = function(config) {
       return httpGet(urlUser, config);
     };
 
-    apiFactory.user.signup = function(data) {
+    apiFactory.user.me = function() {
+      return httpGet(urlUser + "/me").then(function(res) {
+        return res.data;
+      });
+    };
 
+    apiFactory.user.signup = function(username, email, passwd) {
+      return httpPost(urlUser + "/signup", {
+        username: username,
+        email: email,
+        passwd: passwd
+      }).then(function(data) {
+        console.log(data);
+      });
     };
 
     apiFactory.user.authenticate = function(email, passwd) {
@@ -68,8 +104,7 @@ app.factory("apiFactory", ['$http', "$q", function ($http, $q) {
         email: email,
         passwd: passwd
       }).then(function(res) {
-        token = res.data.token;
-        return token;
+        return res.data;
       });
     };
 

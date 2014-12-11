@@ -6,8 +6,9 @@
   <title>BJTU Nourriture</title>
 
   <script src="/bower/jquery/dist/jquery.min.js"></script>
-  <script src="/bower/angular/angular.min.js"></script>
+  <script src="/bower/angular/angular.js"></script>
   <script src="/bower/angular-route/angular-route.js"></script>
+  <script src="/bower/angular-cookie/angular-cookie.min.js"></script>
   <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
 
   <script src="/scripts/app.js"></script>
@@ -38,17 +39,30 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-navbar-collapse">
         <ul class="nav navbar-nav my-navbar-nav">
+          <li><a href="#/">Home</a></li>
+
           <li><a href="#/">Recipes</a></li>
           <li><a href="#/">Ingredients</a></li>
-          <li ng-show="apiFactory.getToken()"><a>{{ apiFactory.getToken() }}</a><li>
+          <!--<li ng-show="apiFactory.getToken()"><a>{{ apiFactory.getToken() }}</a><li>-->
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li ng-show="!isActive('/login')">
+          <li ng-show="apiFactory.getToken() == undefined && !isActive('/login')">
             <p class="navbar-btn">
               <a href="#/login/" class="btn btn-default navbar-login-btn">Login</a>
             </p>
           </li>
+
+          <li class="dropdown" ng-show="apiFactory.getToken() != undefined" ng-controller="HomeNavUserCtrl">
+            <a href="#" class="dropdown-toggle my-dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">{{ apiFactory.getUser().username }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Manage account</a></li>
+              <li><a href="#">Settings</a></li>
+              <li class="divider"></li>
+              <li><a href="#" ng-click="logOut();">Log out</a></li>
+            </ul>
+          </li>
+
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
