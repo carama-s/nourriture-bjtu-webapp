@@ -36,7 +36,7 @@ app.config(['$routeProvider',
       });
   }])
 
-app.run(function($rootScope, $location, apiFactory) {
+app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location, apiFactory) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
     if (apiFactory.getToken() != undefined) { // user logged
       if (next.templateUrl) {
@@ -46,7 +46,7 @@ app.run(function($rootScope, $location, apiFactory) {
       }
     }
   });
-})
+}])
 
 app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCookie) {
     var host = "http://api.nourriture.dennajort.fr";
