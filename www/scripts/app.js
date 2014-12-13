@@ -1,6 +1,8 @@
 var app = angular.module('nourritureApp', [
   'ngRoute',
   'ipCookie',
+  'changePasswordUserViewControllers',
+  'editUserViewControllers',
   'loginViewControllers',
   'registerUserViewControllers',
   'homeViewControllers'
@@ -9,6 +11,14 @@ var app = angular.module('nourritureApp', [
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+      when('/changePasswordUser', {
+        templateUrl: '/views/changePasswordUser.html',
+        controller: 'ChangePasswordUserViewCtrl'
+      }).
+      when('/editUser', {
+        templateUrl: '/views/editUser.html',
+        controller: 'EditUserViewCtrl'
+      }).
       when('/login', {
         templateUrl: '/views/login.html',
         controller: 'LoginViewCtrl'
@@ -58,6 +68,7 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     function httpPost(url, data, config) {
       config = config || {};
       config.headers = config.headers || {};
+      var token = apiFactory.getToken();
       if (token !== undefined)
         config.headers.Authorization = "Bearer " + token;
       return $http.post(url, data, config);
@@ -89,8 +100,11 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
       });
     };
 
-    apiFactory.user.signup = function(username, email, passwd) {
+    apiFactory.user.signup = function(firstname, lastname, gender, username, email, passwd) {
       return httpPost(urlUser + "/signup", {
+        firstname: firstname,
+        lastname: lastname,
+        gender: gender,
         username: username,
         email: email,
         passwd: passwd
@@ -107,6 +121,17 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
         return res.data;
       });
     };
+
+    apiFactory.user.changePassword = function(old_pwd, new_pwd) {
+      return httpPost(urlUser + "/change_passwd", {
+        old_passwd: old_pwd,
+        new_passwd: new_pwd
+      }).then(function(res) {
+        return res;
+      });
+    };
+
+
 
     /*
     function signUpAndAuthenticate(data) {
@@ -137,5 +162,9 @@ app.controller('RouteCtrl', ['$scope', '$location', 'apiFactory', function($scop
   $scope.apiFactory = apiFactory;
   $scope.isActive = function(route) {
     return route === $location.path();
-  }
+  };
+
+  $scope.go = function (path) {
+    $location.path(path);
+  };
 }]);

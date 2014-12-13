@@ -6,17 +6,21 @@ registerUserViewControllers.controller('RegisterUserViewCtrl', ['$scope',
 ]);
 
 registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactory', function($scope, apiFactory) {
+  $scope.registerInputGender = "male";
+
   $scope.submitRegister = function(isValid) {
     $scope.submitted = true;
     $scope.usernameAlreadyExists = false;
     $scope.emailAlreadyExists = false;
     $scope.passwordDontMatch = false;
+
     if (isValid) {
       if ($scope.registerInputPassword != $scope.registerInputConfirmPassword) {
         $scope.passwordDontMatch = true;
         return;
       }
-      apiFactory.user.signup($scope.registerInputUsername, $scope.registerInputEmail, $scope.registerInputPassword)
+      apiFactory.user.signup($scope.registerInputFirstname, $scope.registerInputLastname, $scope.registerInputGender,
+                             $scope.registerInputUsername, $scope.registerInputEmail, $scope.registerInputPassword)
         .then(function(res) {
           alert("success register");
         }, function(res) {

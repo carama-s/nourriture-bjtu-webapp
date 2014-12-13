@@ -7,3 +7,8 @@
   font-family: myKGBlankSpaceSketch;
   src: url('/styles/fonts/KGBlankSpaceSketch.woff');
 }
+
+@font-face {
+  font-family: robotoRegular;
+  src: url('/styles/fonts/Roboto-Regular.ttf');
+}

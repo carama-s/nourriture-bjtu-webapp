@@ -1,106 +1,40 @@
+@macros {
+  mainColor: #2196F3;
+}
+
 body {
-  background-color: #F8F5EF;
 }
 
-.footer {
-  min-height: 100px;
-  line-height: 100px;
+nav ul li {
+  height: 64px;
 }
 
-.help-block {
-  font-size: 13px;
-  margin: 0;
-  margin-top: 3px;
+.has-error-block {
+  display: block;
+  margin-top: -10px;
   text-align: left;
+  font-size: 12px;
+  color: #F44336;
 }
 
 .brand-text {
   font-family: myKGBlankSpaceSketch;
   font-size: 22px;
   color: white;
+  line-height: 26px;
 }
 
 .brand-text:hover {
-  color: #AA0000;
+  color: #ffebee;
 }
 
-.navbar-login-btn {
-  background-color: #AA0000;
-  color: white;
-  border-color: #AA0000;
-  padding: 4px 12px;
-  font-size: 17px;
-}
-
-.navbar-login-btn:hover, .navbar-login-btn:active, .navbar-login-btn:focus {
-  color: white;
-  background-color: #990000;
-  border-color: #990000;
-}
-
-.keyword-orange {
-  color: #E67E22;
+.keyword {
+  color: mainColor;
   font-weight: bold;
-}
-
-.keyword-red {
-  color: #d74b3c;
-  font-weight: bold;
-}
-
-.login-title-section {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-
-.login-form-input {
-    height: 50px;
-}
-
-.login-submit-btn {
-  background-color: #e74c3c;
-  color: white;
-  border-color: #e74c3c;
-  width: 100%;
-  height: 50px;
-  font-weight: bold;
-}
-
-.login-submit-btn:focus, .login-submit-btn:hover, .login-submit-btn:active {
-  background-color: #d74b3c;
-  border-color: #d74b3c;
-  color: white;
-}
-
-.login-social-btn, .login-social-btn:focus, .login-social-btn:active {
-  width: 100%;
-  padding-left: 70px;
-  height: 50px;
-  margin-bottom: 30px;
-  text-align: left;
-}
-
-.login-facebook-btn, .login-facebook-btn:focus, .login-facebook-btn:active, .login-facebook-btn:hover {
-  background: url("/images/facebook.jpg") no-repeat;
-  background-color: white;
-  background-size: 50px 50px;
-}
-
-.login-google-btn, .login-google-btn:focus, .login-google-btn:active, .login-google-btn:hover {
-  background: url("/images/google.jpg") no-repeat;
-  background-color: white;
-  background-size: 50px 50px;
 }
 
 .a-normal, .a-normal:hover, .a-normal:active, .a-normal:focus {
   text-decoration: none;
   color: black;
   cursor: pointer;
-}
-
-.login-form-checkbox {
-  text-align: left;
-  padding-left: 1px;
-  margin-top: 25px;
 }

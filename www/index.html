@@ -3,73 +3,60 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BJTU Nourriture</title>
-
-  <script src="/bower/jquery/dist/jquery.min.js"></script>
-  <script src="/bower/angular/angular.js"></script>
-  <script src="/bower/angular-route/angular-route.js"></script>
-  <script src="/bower/angular-cookie/angular-cookie.min.js"></script>
-  <script src="/bower/bootstrap/dist/js/bootstrap.min.js"></script>
-
-  <script src="/scripts/app.js"></script>
-  <script src="/scripts/controllers/loginViewControllers.js"></script>
-  <script src="/scripts/controllers/registerUserViewControllers.js"></script>
-  <script src="/scripts/controllers/homeViewControllers.js"></script>
-
-  <link rel="stylesheet" type="text/css" href="/bower/bootstrap/dist/css/bootstrap.min.css">
-
+  <link type="text/css" rel="stylesheet" href="/bower/materialize/bin/materialize.css" media="screen,projection"/>
   <link rel="stylesheet" type="text/css" href="/styles/css/fonts.css">
-  <link rel="stylesheet" type="text/css" href="/styles/css/bootstrap-custom.css">
   <link rel="stylesheet" type="text/css" href="/styles/css/custom.css">
-
 </head>
 
 <body>
-  <nav class="navbar navbar-default my-navbar" role="navigation" ng-controller='RouteCtrl'>
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand my-navbar-brand" href="#/"><p class="brand-text">nourriture</p></a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-navbar-collapse">
-        <ul class="nav navbar-nav my-navbar-nav">
-          <li><a href="#/">Home</a></li>
 
-          <li><a href="#/">Recipes</a></li>
-          <li><a href="#/">Ingredients</a></li>
-          <!--<li ng-show="apiFactory.getToken()"><a>{{ apiFactory.getToken() }}</a><li>-->
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li ng-show="apiFactory.getToken() == undefined && !isActive('/login')">
-            <p class="navbar-btn">
-              <a href="#/login/" class="btn btn-default navbar-login-btn">Login</a>
-            </p>
-          </li>
-
-          <li class="dropdown" ng-show="apiFactory.getToken() != undefined" ng-controller="HomeNavUserCtrl">
-            <a href="#" class="dropdown-toggle my-dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">{{ apiFactory.getUser().username }} <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Manage account</a></li>
-              <li><a href="#">Settings</a></li>
-              <li class="divider"></li>
-              <li><a href="#" ng-click="logOut();">Log out</a></li>
-            </ul>
-          </li>
-
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+  <nav ng-controller='RouteCtrl'>
+    <div class="container">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><span class="brand-text">nourriture</span></a>
+      <ul id="nav-mobile" class="right side-nav">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/">Recipes</a></li>
+        <li><a href="#/">Ingredients</a></li>
+        <li ng-show="apiFactory.getToken() == undefined && !isActive('/login')">
+          <a href="#/login"><i class="mdi-action-account-circle"></i></a>
+        </li>
+        <li ng-show="apiFactory.getToken()" ng-controller="HomeNavUserCtrl">
+          <a href="#/editUser"><img src="/images/profile.jpg" height="40" width="40" style="border-radius: 50px; vertical-align: middle;"/></a>
+        </li>
+        <li ng-show="apiFactory.getToken()" ng-controller="HomeNavUserCtrl">
+          <a href="#/" ng-click="logOut();"><i class="mdi-action-exit-to-app"></i></a>
+        </li>
+      </ul>
+      <a class="button-collapse" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a>
+    </div>
+  </div>
   </nav>
 
   <div ng-view></div>
 
+  <script src="/bower/jquery/dist/jquery.min.js"></script>
+  <script src="/scripts/cssmacros.js"></script>
+  <script src="/bower/angular/angular.js"></script>
+  <script src="/bower/angular-route/angular-route.js"></script>
+  <script src="/bower/angular-cookie/angular-cookie.min.js"></script>
+
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/controllers/changePasswordUserViewControllers.js"></script>
+  <script src="/scripts/controllers/editUserViewControllers.js"></script>
+  <script src="/scripts/controllers/loginViewControllers.js"></script>
+  <script src="/scripts/controllers/registerUserViewControllers.js"></script>
+  <script src="/scripts/controllers/homeViewControllers.js"></script>
+  <script type="text/javascript" src="/bower/materialize/bin/materialize.js"></script>
+
+  <script>
+    $(function() {
+      $(".button-collapse").sideNav();
+      $('ul.tabs').tabs();
+    });
+  </script>
 </body>
 
 </html>
