@@ -13,7 +13,9 @@ loginViewControllers.controller("LogInFormCtrl", ['$scope', '$location', 'ipCook
         .then(function(data) {
           apiFactory.setToken(data.token);
           apiFactory.setUser(data.user);
-          ipCookie("token", data.token, {expirationUnit: 'hours', expires: 240});
+          if ($scope.loginInputRemember === true) {
+            ipCookie("token", data.token, {expirationUnit: 'hours', expires: 240});
+          }
           $location.path('/');
         }, function(data) {
           $scope.badPassword = true;

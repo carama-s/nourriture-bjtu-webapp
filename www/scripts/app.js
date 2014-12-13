@@ -1,7 +1,6 @@
 var app = angular.module('nourritureApp', [
   'ngRoute',
   'ipCookie',
-  'changePasswordUserViewControllers',
   'editUserViewControllers',
   'loginViewControllers',
   'registerUserViewControllers',
@@ -11,10 +10,6 @@ var app = angular.module('nourritureApp', [
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/changePasswordUser', {
-        templateUrl: '/views/changePasswordUser.html',
-        controller: 'ChangePasswordUserViewCtrl'
-      }).
       when('/editUser', {
         templateUrl: '/views/editUser.html',
         controller: 'EditUserViewCtrl'
@@ -75,6 +70,8 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     }
 
     apiFactory.getToken = function() {
+      if (token)
+        return token;
       return ipCookie("token");
     };
 
@@ -155,6 +152,26 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     */
 
     return apiFactory;
+  }
+]);
+
+app.controller('MainAppCtrl', ['$scope', 'ipCookie', 'apiFactory',
+  function($scope, ipCookie, apiFactory) {
+    $scope.loaded = true;
+    $scope.apiFactory = apiFactory;
+    if (apiFactory.getToken()) {
+      $scope.loaded = false;
+      apiFactory.user.me()
+        .then(function(data) { // token is the same
+          apiFactory.setUser(data);
+        }, function(data) { // invalid token
+          //ipCookie.remove('token');
+        })
+        .then(function() {
+          console.log("fini loaded");
+          $scope.loaded = true;
+        });
+    }
   }
 ]);
 

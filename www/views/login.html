@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" data-ng-cloak>
 
 <div class="row center" style="margin-top: 30px;">
   <img src="/images/burger.png" height="60"/>
@@ -31,7 +31,7 @@
 
       <!-- input checkbox -->
       <p style="margin-top: 30px;">
-        <input type="checkbox" id="remember" />
+        <input type="checkbox" id="remember" name="loginInputRemember" ng-model="loginInputRemember" />
         <label style="font-size: 15px;" for="remember">Remember me ?</label>
       </p>
 

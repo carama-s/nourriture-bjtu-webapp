@@ -9,6 +9,23 @@ nav ul li {
   height: 64px;
 }
 
+nav ul li a {
+  outline: none;
+}
+
+ul.tabs li.tab {
+  max-width: 50%;
+}
+
+.header {
+  color: #EE6E73;
+  font-weight: 300;
+}
+
+.brand-logo {
+  outline: none;
+}
+
 .has-error-block {
   display: block;
   margin-top: -10px;
