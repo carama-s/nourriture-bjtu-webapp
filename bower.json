@@ -19,6 +19,6 @@
     "angular": "~1.3.6",
     "angular-route": "~1.3.6",
     "angular-cookie": "~4.0.6",
-    "materialize": "*"
+    "materialize": "v0.91"
   }
 }
