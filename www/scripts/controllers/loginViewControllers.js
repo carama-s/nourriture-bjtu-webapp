@@ -1,7 +1,8 @@
 var loginViewControllers = angular.module('loginViewControllers', []);
 
-loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory',
-  function($scope, apiFactory) {
+loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refreshInputForms',
+  function($scope, apiFactory, refreshInputForms) {
+    refreshInputForms();
   }
 ]);
 

@@ -17,6 +17,33 @@ ul.tabs li.tab {
   max-width: 50%;
 }
 
+.home-bandeau {
+  /*background-image: url('/images/home-bandeau-search.jpeg');*/
+  background-color: #2ecc71;
+  width: 100%;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+
+}
+
+.home-search-bar {
+  background-color: white;
+  margin: 10px;
+}
+
+.home-search-bar-border {
+  padding: 0 !important;
+  background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.15);
+
+}
+
+.input-text-default {
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 4px 20px !important;
+}
+
 .header {
   color: #EE6E73;
   font-weight: 300;

@@ -6,41 +6,43 @@ editUserViewControllers.controller('EditUserViewCtrl', ['$scope', 'apiFactory',
   }
 ]);
 
-editUserViewControllers.controller("EditUserFormCtrl", ['$scope', 'apiFactory', function($scope, apiFactory) {
-  console.log(apiFactory);
-  $scope.editUserInputFirstname = apiFactory.getUser().firstname;
-  $scope.editUserInputLastname = apiFactory.getUser().lastname;
-  $scope.editUserInputGender = apiFactory.getUser().gender;
-  $scope.editUserInputUsername = apiFactory.getUser().username;
-  $scope.editUserInputEmail = apiFactory.getUser().email;
+editUserViewControllers.controller("EditUserFormCtrl", ['$scope', '$timeout', 'apiFactory', 'refreshInputForms',
+  function($scope, $timeout, apiFactory, refreshInputForms) {
+    $scope.editUserInputFirstname = apiFactory.getUser().firstname;
+    $scope.editUserInputLastname = apiFactory.getUser().lastname;
+    $scope.editUserInputGender = apiFactory.getUser().gender;
+    $scope.editUserInputEmail = apiFactory.getUser().email;
 
-  $scope.submitEditUser = function(isValid) {
-    $scope.submitted = true;
+    $scope.emailAlreadyExists = false;
 
-    if (isValid) {
-      apiFactory.user.signup($scope.registerInputFirstname, $scope.registerInputLastname, $scope.registerInputGender,
-                             $scope.registerInputUsername, $scope.registerInputEmail, $scope.registerInputPassword)
-        .then(function(res) {
-          alert("success register");
-        }, function(res) {
-          if (res.data.name == "ValidationError") {
-            var mapping = {username: "usernameAlreadyExists", email: "emailAlreadyExists"};
-            for (fieldName in res.data.errors) {
-              var field = res.data.errors[fieldName];
-              if (field.type == "user defined") {
-                // already exists
-                var realName = mapping[fieldName];
-                $scope[realName] = true;
+    $scope.submitEditUser = function(isValid) {
+      $scope.submitted = true;
+
+      if (isValid) {
+        apiFactory.user.editUser({'firstname': $scope.editUserInputFirstname, 'lastname': $scope.editUserInputLastname, 'gender': $scope.editUserInputGender, 'email': $scope.editUserInputEmail })
+          .then(function(res) {
+            alert("success change user info");
+          }, function(res) {
+              if (res.data.name == "ValidationError") {
+                var mapping = {email: "emailAlreadyExists"};
+                for (fieldName in res.data.errors) {
+                  var field = res.data.errors[fieldName];
+                  if (field.type == "user defined") {
+                    // already exists
+                    var realName = mapping[fieldName];
+                    $scope[realName] = true;
+                  }
+                }
               }
-            }
-          }
-          else {
-            // server problem
-          }
-        });
+              else {
+                // server problem
+              }
+          });
+      }
     }
-  };
-}]);
+    $timeout(refreshInputForms);
+  }
+]);
 
 editUserViewControllers.controller("ChangePasswordFormCtrl", ['$scope', 'apiFactory', function($scope, apiFactory) {
   $scope.submitChangePassword = function(isValid) {

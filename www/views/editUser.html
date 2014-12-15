@@ -13,85 +13,78 @@
 <div id="profile" class="container" data-ng-cloak>
   <h4 class="header">Edit profile</h4>
 
-<div class="row">
+  <p>
+    Edit your basic account information for <span class="keyword">{{ apiFactory.getUser().username }}</span>.
+  </p>
 
-  <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-  <div class="row" ng-controller="EditUserFormCtrl">
-    <form role="form" class="col s12" name="formEditUser" ng-submit="submitEditUser(formEditUser.$valid)" novalidate>
+  <div class="row" style="margin-top: 70px;">
 
-      <div class="row">
-        <!-- input firstname -->
-        <div class="input-field col s6">
-          <input required ng-model="editUserInputFirstname" name="editUserInputFirstname" id="editUserInputFirstname" type="text">
-          <label for="editUserInputFirstname">First Name</label>
-          <div class="has-error-block" ng-show="submitted && formEditUser.editUserInputFirstname.$error.required">The firstname is required and cannot be empty.</div>
-        </div>
+    <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
+    <div class="row" ng-controller="EditUserFormCtrl">
+      <form role="form" class="col s12" name="formEditUser" ng-submit="submitEditUser(formEditUser.$valid)" novalidate>
 
-        <!-- input lastname -->
-        <div class="input-field col s6">
-          <input required ng-model="editUserInputLastname" name="editUserInputLastname" id="editUserInputLastname" type="text">
-          <label for="editUserInputLastname">Last Name</label>
-          <div class="has-error-block" ng-show="submitted && formEditUser.editUserInputLastname.$error.required">The lastname is required and cannot be empty.</div>
-        </div>
-      </div>
-
-      <!-- input radio gender -->
-      <div class="row">
-        <div class="radio radio-primary">
-          <div class="col s3">
-
-              <input name="editUserInputGender" ng-model="editUserInputGender" value="male" type="radio" id="genderMale" />
-              <label style="font-size: 15px;" for="genderMale">Male</label>
-
+        <div class="row">
+          <!-- input firstname -->
+          <div class="input-field col s6">
+            <input required ng-model="editUserInputFirstname" name="editUserInputFirstname" id="editUserInputFirstname" type="text">
+            <label for="editUserInputFirstname">First Name</label>
+            <div class="has-error-block" ng-show="submitted && formEditUser.editUserInputFirstname.$error.required">The firstname is required and cannot be empty.</div>
           </div>
-          <div class="col s3">
 
-              <input name="editUserInputGender" ng-model="editUserInputGender" value="female" type="radio" id="genderFemale" />
-              <label style="font-size: 15px;" for="genderFemale">Female</label>
-
+          <!-- input lastname -->
+          <div class="input-field col s6">
+            <input required ng-model="editUserInputLastname" name="editUserInputLastname" id="editUserInputLastname" type="text">
+            <label for="editUserInputLastname">Last Name</label>
+            <div class="has-error-block" ng-show="submitted && formEditUser.editUserInputLastname.$error.required">The lastname is required and cannot be empty.</div>
           </div>
         </div>
-      </div>
 
-      <!-- input username -->
-      <div class="row">
-        <div class="input-field col s12">
-          <input disabled required ng-model="editUserInputUsername" name="editUserInputUsername" id="editUserInputUsername" type="text">
-          <label for="editUserInputUsername">Username</label>
+        <!-- input radio gender -->
+        <div class="row" style="padding-bottom: 20px;">
+          <div class="radio radio-primary">
+            <div class="col s3">
+
+                <input name="editUserInputGender" ng-model="editUserInputGender" value="male" type="radio" id="genderMale" />
+                <label style="font-size: 15px;" for="genderMale">Male</label>
+
+            </div>
+            <div class="col s3">
+
+                <input name="editUserInputGender" ng-model="editUserInputGender" value="female" type="radio" id="genderFemale" />
+                <label style="font-size: 15px;" for="genderFemale">Female</label>
+
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- input email -->
-      <div class="row">
-        <div class="input-field col s12">
-          <input disabled required ng-model="editUserInputEmail" name="editUserInputEmail" id="editUserInputEmail" type="email">
-          <label for="editUserInputEmail">Address Mail</label>
+        <!-- input email -->
+        <div class="row">
+          <div class="input-field col s12">
+            <input required ng-model="editUserInputEmail" name="editUserInputEmail" id="editUserInputEmail" type="email">
+            <label for="editUserInputEmail">Address Mail</label>
+            <div class="has-error-block" ng-show="submitted && formEditUser.editUserInputEmail.$error.required">The email address is required and cannot be empty.</div>
+            <div class="has-error-block" ng-show="submitted && !formEditUser.editUserInputEmail.$error.required && formEditUser.editUserInputEmail.$invalid">The email address is not valid.</div>
+            <div class="has-error-block" ng-show="submitted && emailAlreadyExists">The email address already exists.</div>
+          </div>
         </div>
-      </div>
 
 
-      <div class="center">
-        <button style="margin-top: 30px;" type="submit" class="waves-effect waves-light btn">Edit profile</button>
-      </div>
+        <div class="center">
+          <button style="margin-top: 30px;" type="submit" class="waves-effect waves-light btn">Edit profile</button>
+        </div>
 
-    </form>
+      </form>
+    </div>
+    </div>
   </div>
-
-</div>
-</div>
-
-
-
-
-
-
-
 </div>
 
 
 <!-- Avatar -->
 <div id="avatar" class="container" data-ng-cloak>
   <h4 class="header">Change avatar</h4>
+
+
 </div>
 
 <!-- Password -->
@@ -104,8 +97,8 @@
       Note: You can't reuse your old password once you change it.
   </p>
 
-  <div class="row">
-    <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4"  style="margin-top: 30px;">
+  <div class="row" style="margin-top: 70px;">
+    <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
     <div class="row" ng-controller="ChangePasswordFormCtrl">
       <form role="form" class="col s12" name="formChangePassword" ng-submit="submitChangePassword(formChangePassword.$valid)" novalidate>
 
@@ -149,7 +142,6 @@
   </div>
 </div>
 
-<script type="text/javascript" src="/bower/materialize/bin/materialize.js"></script>
 
 <script>
 $(document).ready(function(){

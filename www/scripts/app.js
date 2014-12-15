@@ -43,6 +43,28 @@ app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location
   });
 }])
 
+app.factory("refreshInputForms", [function() {
+  return function() {
+    var text_inputs = $('input[type=text], input[type=password], input[type=email], textarea');
+
+    text_inputs.each(function(){
+      if($(this).val().length !== 0) {
+       $(this).siblings('label').addClass('active');
+      }
+    })
+
+    text_inputs.focus(function () {
+      $(this).siblings('label').addClass('active');
+    });
+
+    text_inputs.blur(function () {
+      if ($(this).val().length === 0) {
+        $(this).siblings('label').removeClass('active');
+      }
+    });
+  }
+}]);
+
 app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCookie) {
     var host = "http://api.nourriture.dennajort.fr";
     var urlUser = host + "/user";
@@ -105,8 +127,6 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
         username: username,
         email: email,
         passwd: passwd
-      }).then(function(data) {
-        console.log(data);
       });
     };
 
@@ -128,6 +148,9 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
       });
     };
 
+    apiFactory.user.editUser = function(data) {
+      return httpPost(urlUser + "/update", data);
+    };
 
 
     /*
@@ -168,7 +191,6 @@ app.controller('MainAppCtrl', ['$scope', 'ipCookie', 'apiFactory',
           //ipCookie.remove('token');
         })
         .then(function() {
-          console.log("fini loaded");
           $scope.loaded = true;
         });
     }
