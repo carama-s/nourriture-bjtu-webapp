@@ -38,13 +38,13 @@ nav a.button-collapse {
 
 @media (max-width: @screen-s-max) {
   .container {
-    width: 100%;
+    width: 90%;
   }
 }
 
 @media (min-width: @screen-m-min) and (max-width: @screen-m-max) {
   .container {
-    width: 600px;
+    width: (@screen-m-min - 30);
   }
 
   .ingredient-img-container {
@@ -54,7 +54,7 @@ nav a.button-collapse {
 
 @media (min-width: @screen-l-min) and (max-width: @screen-l-max) {
   .container {
-    width: 992px;
+    width: (@screen-l-min - 30);
   }
 
   .ingredient-img-container {
@@ -64,7 +64,7 @@ nav a.button-collapse {
 
 @media (min-width: @screen-ll-min) {
   .container {
-    width: 1200px;
+    width: (@screen-ll-min - 30);
   }
 
   .ingredient-img-container {
