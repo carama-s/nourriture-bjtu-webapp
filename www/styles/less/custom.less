@@ -1,6 +1,10 @@
-@macros {
-  mainColor: #2196F3;
-}
+@mainColor: #2196F3;
+@screen-s-max: 599px;
+@screen-m-min: (@screen-s-max + 1);
+@screen-m-max: 991px;
+@screen-l-min: (@screen-m-max + 1);
+@screen-l-max: 1199px;
+@screen-ll-min: (@screen-l-max + 1);
 
 body {
 }
@@ -19,6 +23,54 @@ ul.tabs li.tab {
 
 nav a.button-collapse {
   position: absolute !important;
+}
+
+.ingredient-img-container {
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+  vertical-align: center;
+
+  img {
+    display:block;
+    margin:auto;
+  }
+}
+
+@media (max-width: @screen-s-max) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media (min-width: @screen-m-min) and (max-width: @screen-m-max) {
+  .container {
+    width: 600px;
+  }
+
+  .ingredient-img-container {
+    height: 189px;
+  }
+}
+
+@media (min-width: @screen-l-min) and (max-width: @screen-l-max) {
+  .container {
+    width: 992px;
+  }
+
+  .ingredient-img-container {
+    height: 213px;
+  }
+}
+
+@media (min-width: @screen-ll-min) {
+  .container {
+    width: 1200px;
+  }
+
+  .ingredient-img-container {
+    height: 266px;
+  }
 }
 
 .home-bandeau {
@@ -59,74 +111,25 @@ nav a.button-collapse {
   padding-bottom: 1rem;
 }
 
-.container-horizontal-list ul
-{
+.container-horizontal-list ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.container-horizontal-list ul li
-{
+.container-horizontal-list ul li {
   display: inline;
   padding: 12px 6px;
 }
 
-.container-horizontal-list ul li a
-{
+.container-horizontal-list ul li a {
   color: black;
   outline: none;
 }
 
-.container-horizontal-list ul li a:hover
-{
+.container-horizontal-list ul li a:hover {
   color: #EE6E73;
 }
-.ingredient-container {
-
-}
-
-.ingredient-container:hover {
-}
-
-.ingredient {
-}
-
-.ingredient-name {
-  background-color: #2ECC71;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  text-align: right;
-}
-
-
-.coverIngredientImage {
- background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-
-/*
-.coverIngredientImage {
-  padding-bottom: 50%;
-  display: block;
-  max-height: 500px;
-  max-width: 1000px;
-  overflow: hidden;
-background-position: 50%;
-background-repeat: no-repeat;
-background-size: cover;
-  margin: 0 auto;
-}
-
-.coverIngredientImage:before {
-  content: "";
-  display: block;
-  padding-bottom: 50%;
-}
-*/
 
 .input-text-default {
   border: none !important;
@@ -178,7 +181,7 @@ background-size: cover;
 }
 
 .keyword {
-  color: mainColor;
+  color: @mainColor;
   font-weight: bold;
 }
 

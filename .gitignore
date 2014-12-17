@@ -1,3 +1,5 @@
 /www/bower
 /node_modules
 /build
+/www/styles/lcss/
+!/www/styles/lcss/.gitkeep
