@@ -6,13 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BJTU Nourriture</title>
 
-  <link type="text/css" rel="stylesheet" href="/bower/materialize/bin/materialize.css" media="screen,projection"/>
+  <link rel="stylesheet" type="text/css" href="/bower/materialize/bin/materialize.css" media="screen,projection"/>
+  <link rel="stylesheet" type="text/css" href="/libs/CaptionHoverEffects/css/component.css"/>
+  <link rel="stylesheet" type="text/css" href="/libs/CaptionHoverEffects/css/default.css"/>
   <link rel="stylesheet" type="text/css" href="/styles/css/fonts.css">
   <link rel="stylesheet" type="text/css" href="/styles/css/custom.css">
   <link rel="stylesheet" type="text/css" href="/styles/css/spinner.css">
 </head>
 
 <body>
+
   <nav ng-controller='RouteCtrl'>
     <div class="container">
     <div class="nav-wrapper">
@@ -20,7 +23,9 @@
       <ul id="nav-mobile" class="right side-nav" data-ng-if="loaded">
         <li><a href="#/">Home</a></li>
         <li><a href="#/">Recipes</a></li>
-        <li><a href="#/">Ingredients</a></li>
+        <li><a href="#/ingredients">Ingredients</a></li>
+        <li><a href="#/addIngredient"> + Ingredients</a></li>
+
         <li ng-show="apiFactory.getToken() == undefined && !isActive('/login')">
           <a href="#/login"><i class="mdi-action-account-circle"></i></a>
         </li>
@@ -30,6 +35,7 @@
         <li ng-show="apiFactory.getToken()" ng-controller="HomeNavUserCtrl">
           <a href="#/" ng-click="logOut();"><i class="mdi-action-exit-to-app"></i></a>
         </li>
+
       </ul>
       <a class="button-collapse" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a>
     </div>
@@ -46,16 +52,21 @@
   <div ng-view data-ng-if="loaded"></div>
 
   <script src="/bower/jquery/dist/jquery.min.js"></script>
+  <script src="/libs/CaptionHoverEffects/js/modernizr.custom.js"></script>
+  <script src="/libs/CaptionHoverEffects/js/toucheffects.js"></script>
   <script src="/scripts/cssmacros.js"></script>
+
   <script src="/bower/angular/angular.js"></script>
   <script src="/bower/angular-route/angular-route.js"></script>
   <script src="/bower/angular-cookie/angular-cookie.min.js"></script>
 
   <script src="/scripts/app.js"></script>
+  <script src="/scripts/controllers/addIngredientViewControllers.js"></script>
   <script src="/scripts/controllers/editUserViewControllers.js"></script>
+  <script src="/scripts/controllers/homeViewControllers.js"></script>
+  <script src="/scripts/controllers/ingredientsViewControllers.js"></script>
   <script src="/scripts/controllers/loginViewControllers.js"></script>
   <script src="/scripts/controllers/registerUserViewControllers.js"></script>
-  <script src="/scripts/controllers/homeViewControllers.js"></script>
   <script type="text/javascript" src="/bower/materialize/bin/materialize.js"></script>
 
   <script>

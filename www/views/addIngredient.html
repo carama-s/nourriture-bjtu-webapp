@@ -1,0 +1,19 @@
+<div class="container">
+  <h4 class="header">Add Ingredient</h4>
+
+
+  <div ng-controller="AddIngredientFormCtrl">
+    <form role="form" name="formAddIngredient" ng-submit="submitAddIngredient()" novalidate>
+
+      <input type="text" ng-model="nameIngredient"/>
+      <input type="text" ng-model="categoryIngredient"/>
+      <input type="file" file-model="photoIngredient"/>
+
+      <div>
+        <button type="submit" class="waves-effect waves-light btn">Add Ingredient</button>
+      </div>
+
+
+    </form>
+  <div>
+</div>

@@ -4,7 +4,9 @@ var app = angular.module('nourritureApp', [
   'editUserViewControllers',
   'loginViewControllers',
   'registerUserViewControllers',
-  'homeViewControllers'
+  'homeViewControllers',
+  'ingredientsViewControllers',
+  'addIngredientViewControllers'
 ]);
 
 app.config(['$routeProvider',
@@ -26,6 +28,14 @@ app.config(['$routeProvider',
         templateUrl: '/views/home.html',
         controller: 'HomeViewCtrl'
       }).
+      when('/ingredients', {
+        templateUrl: '/views/ingredients.html',
+        controller: 'IngredientsViewCtrl'
+      }).
+      when('/addIngredient', {
+        templateUrl: '/views/addIngredient.html',
+        controller: 'addIngredientViewCtrl'
+      }).
       otherwise({
         redirectTo: '/home'
       });
@@ -42,6 +52,22 @@ app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location
     }
   });
 }])
+
+app.directive('fileModel', ['$parse', function ($parse) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      var model = $parse(attrs.fileModel);
+      var modelSetter = model.assign;
+
+      element.bind('change', function(){
+          scope.$apply(function(){
+              modelSetter(scope, element[0].files[0]);
+          });
+      });
+    }
+  };
+}]);
 
 app.factory("refreshInputForms", [function() {
   return function() {
@@ -68,7 +94,9 @@ app.factory("refreshInputForms", [function() {
 app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCookie) {
     var host = "http://api.nourriture.dennajort.fr";
     var urlUser = host + "/user";
-    var apiFactory = {user: {}};
+    var urlIngredient = host + "/ingredient";
+
+    var apiFactory = {user: {}, ingredient: {}};
     var token = undefined;
     var user = undefined;
 
@@ -104,6 +132,8 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     apiFactory.getUser = function() {
       return user;
     };
+
+    /* API USER */
 
     apiFactory.setUser = function(u) {
       user = u;
@@ -150,6 +180,16 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
 
     apiFactory.user.editUser = function(data) {
       return httpPost(urlUser + "/update", data);
+    };
+
+    /* API INGREDIENT */
+
+    apiFactory.ingredient.findIngredient = function(config) {
+      return httpGet(urlIngredient, config);
+    };
+
+    apiFactory.ingredient.createIngredient = function(data, config) {
+      return httpPost(urlIngredient + "/create", data, config);
     };
 
 
