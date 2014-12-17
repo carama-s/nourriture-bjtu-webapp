@@ -19,6 +19,7 @@ ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFact
 
       apiFactory.ingredient.findIngredient(config).then(function(res) {
         $scope.ingredients = res.data;
+        console.log(res.data);
       });
     };
 

@@ -5,6 +5,7 @@ var app = angular.module('nourritureApp', [
   'loginViewControllers',
   'registerUserViewControllers',
   'homeViewControllers',
+  'ingredientViewControllers',
   'ingredientsViewControllers',
   'addIngredientViewControllers'
 ]);
@@ -31,6 +32,10 @@ app.config(['$routeProvider',
       when('/ingredients', {
         templateUrl: '/views/ingredients.html',
         controller: 'IngredientsViewCtrl'
+      }).
+      when('/ingredient/:id', {
+        templateUrl: '/views/ingredient.html',
+        controller: 'IngredientViewCtrl'
       }).
       when('/addIngredient', {
         templateUrl: '/views/addIngredient.html',
@@ -187,6 +192,11 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     apiFactory.ingredient.findIngredient = function(config) {
       return httpGet(urlIngredient, config);
     };
+
+    apiFactory.ingredient.findIngredientById = function(id, config) {
+      return httpGet(urlIngredient + '/' + id, config);
+    };
+
 
     apiFactory.ingredient.createIngredient = function(data, config) {
       return httpPost(urlIngredient + "/create", data, config);
