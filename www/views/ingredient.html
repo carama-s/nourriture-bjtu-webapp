@@ -1,4 +1,4 @@
-<div style="width: 100%; background-color: #ecf0f1; padding: 1rem;">
+<div style="width: 100%; background-color: #ecf0f1; padding-top: 1rem; padding-bottom: 1rem;">
   <div class="container">
     <h4 class="header">{{ ingredient.name}}</h4>
   </div>
@@ -6,6 +6,13 @@
 
 <div class="container">
   <div class="row">
-    {{ ingredient }}
+
+        <div data-ng-repeat="p in ingredient.period track by $index" class="col s1 m1 l1">
+          {{ months[$index] }}
+        </div>
+
+
+
+
   </div>
 </div>

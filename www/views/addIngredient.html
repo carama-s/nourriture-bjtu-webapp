@@ -1,19 +1,57 @@
 <div class="container">
   <h4 class="header">Add Ingredient</h4>
 
-
-  <div ng-controller="AddIngredientFormCtrl">
+  <div class="row" ng-controller="AddIngredientFormCtrl">
     <form role="form" name="formAddIngredient" ng-submit="submitAddIngredient()" novalidate>
 
-      <input type="text" ng-model="nameIngredient"/>
-      <input type="text" ng-model="categoryIngredient"/>
-      <input type="file" file-model="photoIngredient"/>
+    <div class="col m4">
+
+      <div id="containerPreviewImage" style="width: 300px; height: 225px; background-color: grey;">
+        <img ng-click="simulateClickFile();" class="img-preview" id="previewImage" src="/images/default-preview.png"/>
+      </div>
+      <input class="hidden" id="uploadImage" type="file" file-model="photoIngredient"/>
+
+    </div>
+    <div class="col m4">
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input required ng-model="ingredientInputName" name="ingredientInputName" type="text">
+          <label for="ingredientInputName">Name</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input required ng-model="categoryIngredient" name="categoryIngredient" type="text">
+          <label for="categoryIngredient">Category</label>
+        </div>
+      </div>
 
       <div>
         <button type="submit" class="waves-effect waves-light btn">Add Ingredient</button>
       </div>
 
+    </div>
 
     </form>
-  <div>
+  </div>
+
+
+
 </div>
+
+<script>
+$(document).ready(function() {
+  $("#uploadImage").change(function(){
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          $('#previewImage').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+});
+
+</script>

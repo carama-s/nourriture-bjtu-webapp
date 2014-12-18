@@ -1,4 +1,4 @@
-<div class="container bandeau">
+<div class="home-bandeau">
 
     <div class="row">
       <div class=" col l6 offset-l3 m8 offset-m2 s12 home-search-bar-border">
@@ -27,9 +27,11 @@
   <div class="row">
 
     <div ng-repeat="ingredient in ingredients" class="col s12 m6 l4" style="padding: 20px;">
-      <div class="ingredient-img-container">
-        <img src="http://nourriture.dennajort.fr/{{ingredient.photo_url}}" alt="img01" height="100%">
-      </div>
+      <a ng-href="#/ingredient/{{ ingredient._id }}">
+        <div class="ingredient-img-container">
+          <img src="http://nourriture.dennajort.fr/{{ingredient.photo_url}}" alt="img01" height="100%">
+        </div>
+      </a>
     <div>
 
   </div>
