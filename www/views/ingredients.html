@@ -7,13 +7,10 @@
         </div>
         <div class="container-horizontal-list" style="margin-top: 10px;">
           <ul>
-            <li><a href="#/ingredients" ng-click="changeCategory('all')">All</a></li>
-            <li><a href="#/ingredients" ng-click="changeCategory('vegetable')">Vegetables</a></li>
-            <li><a href="#/ingredients" ng-click="changeCategory('fruit')">Fruits</a></li>
-            <li><a href="#/ingredients">Spices</a></li>
-            <li><a href="#/ingredients">Eggs</a></li>
-            <li><a href="#/ingredients">Cheeses</a></li>
-            <li><a href="#/ingredients">Chocolate</a></li>
+            <li><a href="#/ingredients" ng-click="changeCategory('all')" ng-class="selectedCategory == 'All' ? 'container-horizontal-list-selected' : ''">All</a></li>
+            <li data-ng-repeat="(k, v) in categories_mapper">
+              <a href="#/ingredients" ng-click="changeCategory(k)" ng-class="selectedCategory == v.name ? 'container-horizontal-list-selected' : ''">{{ v.name }}</a/>
+            </li>
           </ul>
         </div>
       </div>
@@ -22,10 +19,10 @@
 
 
 
-<div class="container" style="background-color: #9b59b6;">
+<div class="container" style="background-color: white;">
   <div class="row">
 
-    <div ng-repeat="ingredient in ingredients" class="col s12 m6 l3" style="padding: 20px;">
+    <div ng-repeat="ingredient in ingredients" class="col s12 m6 l3" style="padding: 25px;">
       <a ng-href="#/ingredient/{{ ingredient._id }}">
         <div class="ratio-container">
           <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>

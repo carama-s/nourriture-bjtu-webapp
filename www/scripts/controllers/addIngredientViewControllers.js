@@ -50,7 +50,8 @@ addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'api
 
       var fd = new FormData();
       fd.append('photo', $scope.photoIngredient);
-      fd.append('name', $scope.nameIngredient);
+      if ($scope.nameIngredient != undefined)
+        fd.append('name', $scope.nameIngredient);
       fd.append('category', $scope.categoryIngredient);
       fd.append('period', JSON.stringify(period));
 

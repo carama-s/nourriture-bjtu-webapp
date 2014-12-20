@@ -8,9 +8,11 @@
 <div class="row">
 
   <div class="col s12 m4 l3">
-    <div class="ratio-4_3" id="containerPreviewImage">
-      <img ng-click="simulateClickFile();" class="img-preview" id="previewImage" src="/images/default-preview.png"/>
+
+    <div class="ratio-container" id="containerPreviewImage">
+      <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(/images/default-preview.png)'}"></div>
     </div>
+
     <input class="hidden" id="uploadImage" type="file" file-model="photoIngredient"/>
   </div>
 
@@ -68,7 +70,7 @@ $(document).ready(function() {
     if (this.files && this.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
-          $('#previewImage').attr('src', e.target.result);
+          $('#previewImage').css('background-image', 'url(' + e.target.result + ')');
       }
       reader.readAsDataURL(this.files[0]);
     }

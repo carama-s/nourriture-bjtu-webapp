@@ -2,21 +2,14 @@
 <div class="row">
   <div class="col l12">
     <p class="title">{{ ingredient.name }}</p>
-    <div class="categories" ng-style="{'background-color': categories_mapper[ingredient.category].color}">lol</div>
+    <div class="categories" ng-style="{'background-color': categories_mapper[ingredient.category].color}">{{ categories_mapper[ingredient.category].name }}</div>
   </div>
 </div>
 
-  <div class="row">
 
-
-        <div class="row">
-          <div data-ng-repeat="p in ingredient.period track by $index" ng-class="p == 1 ? 'month-selected' : ''" class="col s2 m2 l1 month" style="cursor: auto;">
-            {{ months[$index] }}
-          </div>
-        </div>
-
-
-
-
+  <div class="row" ng-if="ingredient.category == 'fruit' || ingredient.category == 'vegetable'">
+    <div data-ng-repeat="p in ingredient.period track by $index" ng-class="p == 1 ? 'month-selected' : ''" class="col s2 m2 l1 month" style="cursor: auto;">
+      {{ months[$index] }}
+    </div>
   </div>
 </div>
