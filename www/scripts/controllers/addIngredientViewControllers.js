@@ -6,8 +6,8 @@ addIngredientViewControllers.controller('addIngredientViewCtrl', ['$scope', 'api
   }
 ]);
 
-addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'apiFactory', 'refreshInputForms',
-  function($scope, apiFactory, refreshInputForms) {
+addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'apiFactory', 'categories_mapper',
+  function($scope, apiFactory, categories_mapper) {
     $scope.months = [{name: "Jan", active: false},
                      {name: "Fev", active: false},
                      {name: "Mar", active: false},
@@ -21,10 +21,17 @@ addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'api
                      {name: "Nov", active: false},
                      {name: "Dec", active: false}];
 
+    $scope.categories_mapper = categories_mapper;
 
-    $scope.categories = [{text: "Fruit", value: "fruit"},
-                         {text: "Vegetable", value: "vegetable"}];
+    $scope.changeCategory = function($event, value) {
 
+      var parent = $event.currentTarget.parentNode;
+      for (var i = 0; i < parent.children.length; i++) {
+        parent.children[i].style.backgroundColor = "#DADADA";
+      }
+      $event.currentTarget.style.backgroundColor = categories_mapper[value].color;
+      $scope.categoryIngredient = value;
+    };
 
     $scope.changeMonth = function(index) {
       $scope.months[index].active = !$scope.months[index].active;
@@ -59,8 +66,5 @@ addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'api
       });
     };
 
-    setTimeout(function() {
-      $('select').not('.disabled').material_select();
-    });
   }
 ]);

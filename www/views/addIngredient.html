@@ -3,7 +3,10 @@
 <p class="title">Add Ingredient</p>
 
 <form role="form" name="formAddIngredient" ng-submit="submitAddIngredient()" ng-controller="AddIngredientFormCtrl" novalidate>
-<div class="row" >
+
+<p class="sub-title">Identity</p>
+<div class="row">
+
   <div class="col s12 m4 l3">
     <div class="ratio-4_3" id="containerPreviewImage">
       <img ng-click="simulateClickFile();" class="img-preview" id="previewImage" src="/images/default-preview.png"/>
@@ -11,17 +14,11 @@
     <input class="hidden" id="uploadImage" type="file" file-model="photoIngredient"/>
   </div>
 
-
-
-
   <div class="col s12 m7 l8 offset-m1 offset-l1">
 
     <div class="row">
-      <div class="col s12">
-        <label>Category</label>
-        <select id="categoryIngredient" ng-model="selectedIngredient" ng-options="item.value as item.text for item in categories">
-            <option value="" disabled selected>Choose an ingredient category</option>
-        </select>
+      <div data-ng-repeat="(k, v) in categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m3 l2 categories">
+        {{ v.name }}
       </div>
     </div>
 
@@ -36,20 +33,30 @@
   </div>
 </div>
 
-
-      <div class="row" >
-        <div data-ng-repeat="m in months track by $index" ng-click="changeMonth($index);" ng-class="m.active ? 'month-selected' : ''" class="col s2 m2 l1 month">
-          {{ m.name }}
-        </div>
-
-
-
-      <div>
-        <button type="submit" class="waves-effect waves-light btn">Add Ingredient</button>
-      </div>
+<!-- Season -->
+<div ng-if="categoryIngredient == 'fruit' || categoryIngredient == 'vegetable'">
+  <p class="sub-title">Season</p>
+  <div class="row" >
+    <div class="col s2 m2 l1 month" data-ng-repeat="m in months track by $index" ng-class="m.active ? 'month-selected' : ''" ng-click="changeMonth($index);">
+      {{ m.name }}
     </div>
+  </div>
+</div>
 
-    </form>
+<!-- Content -->
+<p class="sub-title">Content</p>
+<!-- Nutrition -->
+<p class="sub-title">Nutrition</p>
+
+
+<div style="text-align: center">
+  <button type="submit" class="waves-effect waves-light btn">Add Ingredient</button>
+</div>
+
+
+
+
+</form>
 
 
 

@@ -10,6 +10,17 @@ var app = angular.module('nourritureApp', [
   'addIngredientViewControllers'
 ]);
 
+app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
+                                'cheese': {name: "Cheese", color: '#f1c40f'},
+                                'chocolate': {name: "Chocolate", color: '#d35400'},
+                                'egg': {name: "Egg", color: '#1abc9c'},
+                                'fish': {name: "Fish", color: '#3498db'},
+                                'fruit': {name: "Fruit", color: '#2ecc71'},
+                                'meat': {name: "Meat", color: '#c0392b'},
+                                'spice': {name: "Spice", color: '#e74c3c'},
+                                'vegetable': {name: "Vegetable", color: '#e67e22'},
+                                'other': {name: "Other", color: '#bdc3c7'}});
+
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -67,9 +78,6 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
       element.bind('change', function(){
           scope.$apply(function(){
-            console.log(model);
-console.log(element[0].files[0]);
-
               modelSetter(scope, element[0].files[0]);
           });
       });
@@ -252,6 +260,10 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
 
     apiFactory.ingredient.createIngredient = function(data, config) {
       return httpPost(urlIngredient + "/create", data, config);
+    };
+
+    apiFactory.ingredient.findCategories = function(config) {
+      return httpGet(urlIngredient + "/categories", config);
     };
 
 

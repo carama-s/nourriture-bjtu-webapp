@@ -15,11 +15,9 @@ ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFact
       }
       if (category_name != "all")
         config.params.where.category = category_name;
-      console.log(config);
 
       apiFactory.ingredient.findIngredient(config).then(function(res) {
         $scope.ingredients = res.data;
-        console.log(res.data);
       });
     };
 
