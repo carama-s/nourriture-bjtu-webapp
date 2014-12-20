@@ -6,8 +6,8 @@ addIngredientViewControllers.controller('addIngredientViewCtrl', ['$scope', 'api
   }
 ]);
 
-addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'apiFactory', 'categories_mapper',
-  function($scope, apiFactory, categories_mapper) {
+addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', '$location', 'apiFactory', 'categories_mapper',
+  function($scope, $location, apiFactory, categories_mapper) {
     $scope.months = [{name: "Jan", active: false},
                      {name: "Fev", active: false},
                      {name: "Mar", active: false},
@@ -62,6 +62,7 @@ addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'api
       };
       apiFactory.ingredient.createIngredient(fd, config).then(function(res) {
         console.log(res.data);
+        $location.path("/ingredients");
       }, function(res) {
         console.error(res);
       });
