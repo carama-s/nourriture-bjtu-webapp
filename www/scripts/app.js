@@ -165,23 +165,26 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     var token = undefined;
     var user = undefined;
 
-    function httpGet(url, config) {
+    function updateConfig(config) {
       config = config || {};
       config.headers = config.headers || {};
       var token = apiFactory.getToken();
       if (token !== undefined) {
         config.headers.Authorization = "Bearer " + token;
       }
-      return $http.get(url, config);
+      return config;
+    }
+
+    function httpGet(url, config) {
+      return $http.get(url, updateConfig(config));
+    }
+
+    function httpDelete(url, config) {
+      return $http.delete(url, updateConfig(config));
     }
 
     function httpPost(url, data, config) {
-      config = config || {};
-      config.headers = config.headers || {};
-      var token = apiFactory.getToken();
-      if (token !== undefined)
-        config.headers.Authorization = "Bearer " + token;
-      return $http.post(url, data, config);
+      return $http.post(url, data, updateConfig(config));
     }
 
     apiFactory.getToken = function() {
@@ -257,6 +260,9 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
       return httpGet(urlIngredient + '/' + id, config);
     };
 
+    apiFactory.ingredient.deleteById = function(id, config) {
+      return httpDelete(urlIngredient + "/" + id, config);
+    };
 
     apiFactory.ingredient.createIngredient = function(data, config) {
       return httpPost(urlIngredient + "/create", data, config);
