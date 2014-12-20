@@ -96,6 +96,55 @@ app.factory("refreshInputForms", [function() {
         $(this).siblings('label').removeClass('active');
       }
     });
+
+
+    // Select Functionality
+    // Select Plugin
+    $.fn.material_select = function () {
+      $(this).each(function(){
+          $select = $(this);
+          if ($select.hasClass('disabled') || $select.hasClass('initialized')){
+            return false;
+          }
+          var uniqueID = guid();
+          var wrapper = $('<div class="select-wrapper"></div>');
+          var options = $('<ul id="select-options-' + uniqueID+'" class="dropdown-content"></ul>');
+          var selectOptions = $select.children('option');
+          var label = selectOptions.first();
+          // Create Dropdown structure
+          selectOptions.each(function () {
+            options.append($('<li><span>' + $(this).html() + '</span></li>'));
+          });
+          options.find('li').each(function (i) {
+          var $curr_select = $select;
+          $(this).click(function () {
+            $curr_select.find('option').eq(i + 1).prop('selected', true);
+            $curr_select.prev('span.select-dropdown').html($(this).text());
+          });
+        });
+        // Wrap Elements
+        $select.wrap(wrapper);
+        // Add Select Display Element
+        var $newSelect = $('<span class="select-dropdown" data-activates="select-options-' + uniqueID +'">' + label.html() + '</span>');
+        $select.before($newSelect);
+        $('body').append(options);
+        $newSelect.dropdown({"hover": false});
+        $select.addClass('initialized');
+      });
+    }
+
+    // Unique ID
+    var guid = (function() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+      }
+      return function() {
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+        };
+    })();
   }
 }]);
 

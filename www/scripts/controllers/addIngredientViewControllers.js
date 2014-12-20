@@ -6,8 +6,29 @@ addIngredientViewControllers.controller('addIngredientViewCtrl', ['$scope', 'api
   }
 ]);
 
-addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'apiFactory',
-  function($scope, apiFactory) {
+addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'apiFactory', 'refreshInputForms',
+  function($scope, apiFactory, refreshInputForms) {
+    $scope.months = [{name: "Jan", active: false},
+                     {name: "Fev", active: false},
+                     {name: "Mar", active: false},
+                     {name: "Apr", active: false},
+                     {name: "May", active: false},
+                     {name: "Jun", active: false},
+                     {name: "Jul", active: false},
+                     {name: "Aug", active: false},
+                     {name: "Sep", active: false},
+                     {name: "Oct", active: false},
+                     {name: "Nov", active: false},
+                     {name: "Dec", active: false}];
+
+
+    $scope.categories = [{text: "Fruit", value: "fruit"},
+                         {text: "Vegetable", value: "vegetable"}];
+
+
+    $scope.changeMonth = function(index) {
+      $scope.months[index].active = !$scope.months[index].active;
+    }
 
     $scope.simulateClickFile = function() {
       $("#uploadImage").click();
@@ -15,10 +36,17 @@ addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'api
 
 
     $scope.submitAddIngredient = function() {
+      var period = [];
+      for(var i = 0; i < $scope.months.length; i++) {
+        period[i] = ($scope.months[i].active ? 1 : 0);
+      }
+
       var fd = new FormData();
       fd.append('photo', $scope.photoIngredient);
       fd.append('name', $scope.nameIngredient);
       fd.append('category', $scope.categoryIngredient);
+      fd.append('period', JSON.stringify(period));
+
 
       var config = {
         transformRequest: angular.identity,
@@ -30,5 +58,9 @@ addIngredientViewControllers.controller("AddIngredientFormCtrl", ['$scope', 'api
         console.error(res);
       });
     };
+
+    setTimeout(function() {
+      $('select').not('.disabled').material_select();
+    });
   }
 ]);
