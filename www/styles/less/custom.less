@@ -27,11 +27,30 @@ nav a.button-collapse {
   position: absolute !important;
 }
 
+div.ratio-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  >.content {
+    position: absolute;
+    top: -100%;
+    bottom: -100%;
+    left: -100%;
+    right: -100%;
+    margin: auto;
+  }
+}
+
 div.ratio-4_3 {
-	width: 100%;
 	padding-bottom: 75%;
-	position: relative;
 	background: black;
+}
+
+div.ratio-4_3.background-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 div.ratio-4_3 > img {
