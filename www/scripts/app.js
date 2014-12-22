@@ -158,6 +158,7 @@ app.factory("refreshInputForms", [function() {
 
 app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCookie) {
     var host = "http://api.nourriture.dennajort.fr";
+    //var host = "http://localhost:3000";
     var urlUser = host + "/user";
     var urlIngredient = host + "/ingredient";
 
@@ -237,6 +238,15 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
       });
     };
 
+    apiFactory.user.authenticateFB = function(user_id, user_token) {
+      return httpPost(urlUser + "/get_token", {
+        facebook_id: user_id,
+        facebook_token: user_token
+      }).then(function(res) {
+        return res.data;
+      });
+    };
+
     apiFactory.user.changePassword = function(old_pwd, new_pwd) {
       return httpPost(urlUser + "/change_passwd", {
         old_passwd: old_pwd,
@@ -295,6 +305,44 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     */
 
     return apiFactory;
+  }
+]);
+
+app.factory("Facebook", ["$q",
+  function(Q) {
+    var loaded = false;
+    var fac = {};
+
+    window.fbAsyncInit = function() {
+      loaded = true;
+      FB.init({
+        appId: '1569143169966374',
+        xfbml: true,
+        version: 'v2.2'
+      });
+    };
+
+    function waitLoaded(fn) {
+      if (loaded) return fn();
+      setTimeout(waitLoaded, 500, fn);
+    }
+
+    fac.login = function(scope) {
+      var d = Q.defer();
+      waitLoaded(function() {
+        FB.login(function(res) {
+          console.log(res);
+          if (res.status === 'connected') {
+            d.resolve(res);
+          } else {
+            d.reject(res);
+          }
+        }, scope);
+      });
+      return d.promise;
+    };
+
+    return fac;
   }
 ]);
 
