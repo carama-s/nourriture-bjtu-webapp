@@ -1,19 +1,19 @@
 var loginViewControllers = angular.module('loginViewControllers', []);
 
-loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refreshInputForms', 'Facebook',
-  function($scope, apiFactory, refreshInputForms, Facebook) {
+loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refreshInputForms', 'Facebook', "globalFactory", "$location",
+  function($scope, apiFactory, refreshInputForms, Facebook, glob, $location) {
     refreshInputForms();
 
     $scope.loginWithFB = function() {
-      console.log("Hello world !");
       Facebook.login({scope: 'public_profile,email'})
       .then(function(res) {
-        console.log("Logged with Facebook !");
         apiFactory.user.authenticateFB(res.authResponse.userID, res.authResponse.accessToken)
           .then(function(data) {
             console.log("Success");
             if (data.need_signup == true) {
-              // the user is authenticated on facebook but don't exists in out app
+              // the user is authenticated on facebook but don't exists in our app
+              glob.set("forRegisterUser", data.user);
+              $location.path('/registerUser');
             } else {
               apiFactory.setToken(data.token);
               apiFactory.setUser(data.user);
@@ -22,11 +22,7 @@ loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refre
               }
               $location.path('/');
             }
-          }, function(data) {
-            console.error("Failure");
           });
-      }, function(res) {
-        console.log("Failed to log with Facebook !");
       });
     };
   }

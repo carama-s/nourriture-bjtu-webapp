@@ -85,6 +85,35 @@ app.directive('fileModel', ['$parse', function ($parse) {
   };
 }]);
 
+app.factory("globalFactory", [function() {
+  var data = {};
+  var g = {};
+
+  g.get = function(key) {
+    return data[key];
+  };
+
+  g.set = function(key, value) {
+    data[key] = value;
+  };
+
+  g.pop = function(key) {
+    var t = data[key];
+    data[key] = undefined;
+    return t;
+  };
+
+  g.delete = function(key) {
+    data[key] = undefined;
+  };
+
+  g.exists = function(key) {
+    return data[key] != undefined;
+  };
+
+  return g;
+}]);
+
 app.factory("refreshInputForms", [function() {
   return function() {
     var text_inputs = $('input[type=text], input[type=password], input[type=email], textarea');
@@ -226,6 +255,19 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
         username: username,
         email: email,
         passwd: passwd
+      });
+    };
+
+    apiFactory.user.signupFB = function(firstname, lastname, gender, username, email, passwd, fb_id, fb_token) {
+      return httpPost(urlUser + "/signup", {
+        firstname: firstname,
+        lastname: lastname,
+        gender: gender,
+        username: username,
+        email: email,
+        passwd: passwd,
+        facebook_id: fb_id,
+        facebook_token: fb_token
       });
     };
 
