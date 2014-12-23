@@ -1,6 +1,8 @@
 var app = angular.module('nourritureApp', [
   'ngRoute',
   'ipCookie',
+  'duScroll',
+  'ngScrollTo',
   'editUserViewControllers',
   'loginViewControllers',
   'registerUserViewControllers',
@@ -131,6 +133,28 @@ app.factory("globalFactory", [function() {
   return g;
 }]);
 
+app.directive("scrolltableofcontentsingredient", function ($window) {
+  return function(scope, element, attrs) {
+    angular.element($window).bind("scroll", function() {
+        if (this.pageYOffset >= 64) { // navbar height
+          element.addClass('fixed');
+          element.css('top', 0);
+          element.css('width', $("#magic-table-of-contents-line").width());
+       } else {
+          element.removeClass('fixed');
+       }
+    });
+  };
+});
+
+app.directive("resizetableofcontentsingredient", function ($window) {
+  return function(scope, element, attrs) {
+    angular.element($window).bind("resize", function() {
+      element.css('width', $("#magic-table-of-contents-line").width());
+    });
+  };
+});
+
 app.factory("refreshInputForms", [function() {
   return function() {
     var text_inputs = $('input[type=text], input[type=password], input[type=email], textarea');
@@ -211,26 +235,23 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     var token = undefined;
     var user = undefined;
 
-    function updateConfig(config) {
+    function httpGet(url, config) {
       config = config || {};
       config.headers = config.headers || {};
       var token = apiFactory.getToken();
       if (token !== undefined) {
         config.headers.Authorization = "Bearer " + token;
       }
-      return config;
-    }
-
-    function httpGet(url, config) {
-      return $http.get(url, updateConfig(config));
-    }
-
-    function httpDelete(url, config) {
-      return $http.delete(url, updateConfig(config));
+      return $http.get(url, config);
     }
 
     function httpPost(url, data, config) {
-      return $http.post(url, data, updateConfig(config));
+      config = config || {};
+      config.headers = config.headers || {};
+      var token = apiFactory.getToken();
+      if (token !== undefined)
+        config.headers.Authorization = "Bearer " + token;
+      return $http.post(url, data, config);
     }
 
     apiFactory.getToken = function() {
@@ -328,9 +349,6 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
       return httpGet(urlIngredient + '/' + id, config);
     };
 
-    apiFactory.ingredient.deleteById = function(id, config) {
-      return httpDelete(urlIngredient + "/" + id, config);
-    };
 
     apiFactory.ingredient.createIngredient = function(data, config) {
       return httpPost(urlIngredient + "/create", data, config);

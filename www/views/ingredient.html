@@ -1,18 +1,63 @@
-<div class="container">
-<div class="row">
-  <div class="col l12">
-    <p class="title">{{ ingredient.name }}</p>
-    <div class="categories" ng-style="{'background-color': categories_mapper[ingredient.category].color}">{{ categories_mapper[ingredient.category].name }}</div>
-  </div>
-</div>
+<div class="container" ng-if="loaded">
+  <div class="row">
 
-
-  <div class="row" ng-if="ingredient.category == 'fruit' || ingredient.category == 'vegetable'">
-    <div data-ng-repeat="p in ingredient.period track by $index" ng-class="p == 1 ? 'month-selected' : ''" class="col s2 m2 l1 month" style="cursor: auto;">
-      {{ months[$index] }}
+    <!-- Table contents left -->
+    <div class="col hide-on-small-only m3 l2">
+      <div style="height: 1px;" id="magic-table-of-contents-line">
+        <ul class="table-of-contents" scrolltableofcontentsingredient resizetableofcontentsingredient>
+          <li>
+            <div class="ratio-container" style="padding: 8px 18px; width: auto;">
+              <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
+            </div>
+          </li>
+          <li><a href="#presentation" du-smooth-scroll du-scrollspy offset="100" id="table-presentation" scroll-to="presentation">Presentation</a></li>
+          <li><a href="#historique" du-smooth-scroll du-scrollspy id="table-historique" scroll-to="historique">Historique</a></li>
+          <li ng-if="hasSeasonPeriod()"><a href="#season" du-smooth-scroll du-scrollspy id="table-season" scroll-to="season">Season</a></li>
+        </ul>
+      </div>
     </div>
+
+    <!-- Right content -->
+    <div class="section col s12 m9 l10">
+
+      <!-- Presentation -->
+      <div class="row" id="presentation">
+        <a href="" ng-click="deleteIngredient()"><i class="mdi-action-delete btn-icon btn-icon-delete"></i></a>
+        <a href=""><i class="mdi-action-settings btn-icon btn-icon-settings" style="margin-right: 15px;"></i></a>
+
+        <p class="title">{{ ingredient.name }}</p>
+        <div class="ratio-container hide-on-med-and-up" style="padding: 8px 18px; width: auto;">
+          <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
+        </div>
+
+        <p class="sub-title">Presentation</p>
+      </div>
+
+      <!-- Historique -->
+      <div class="row" id="historique">
+        <p class="sub-title">Historique</p>
+
+        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
+        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
+        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
+        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
+        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
+        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
+      </div>
+
+      <!-- Season period -->
+      <div class="row" id="season" ng-if="hasSeasonPeriod()">
+        <p class="sub-title">Season</p>
+        <div class="row">
+          <div data-ng-repeat="p in ingredient.period track by $index" ng-class="p == 1 ? 'month-selected' : ''" class="col s2 m2 l1 month" style="cursor: auto;">
+            {{ months[$index] }}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-
-  <a class="waves-effect waves-light btn" ng-click="deleteIngredient()">Delete</a>
-
 </div>
+
+<script ng-if="loaded">
+</script>
