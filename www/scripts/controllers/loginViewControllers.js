@@ -5,6 +5,7 @@ loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refre
     refreshInputForms();
 
     $scope.loginWithFB = function() {
+      console.log("Button FB clicked");
       Facebook.login({scope: 'public_profile,email'})
       .then(function(res) {
         apiFactory.user.authenticateFB(res.authResponse.userID, res.authResponse.accessToken)
