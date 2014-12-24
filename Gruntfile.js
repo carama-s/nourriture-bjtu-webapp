@@ -10,8 +10,10 @@ module.exports = function(grunt) {
           booleans: true,
           loops: true,
           unused: true,
-          join_vars: true
+          join_vars: true,
+          angular: true
         },
+        sourceMap: true
       },
       uglify: {
         files: [
