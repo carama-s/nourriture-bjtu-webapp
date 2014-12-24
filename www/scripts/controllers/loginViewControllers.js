@@ -11,7 +11,7 @@ loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refre
         apiFactory.user.authenticateFB(res.authResponse.userID, res.authResponse.accessToken)
           .then(function(data) {
             console.log("Success");
-            if (data.need_signup == true) {
+            if (data.need_signup === true) {
               // the user is authenticated on facebook but don't exists in our app
               glob.set("forRegisterUser", data.user);
               $location.path('/registerUser');

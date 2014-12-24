@@ -5,7 +5,13 @@ module.exports = function(grunt) {
     uglify: {
       uglify: {
         options: {
-          sourceMap: true
+          sourceMap: true,
+          angular: true,
+          mangle: false,
+          compress: {
+            angular: true,
+            drop_console: false
+          }
         },
         files: [
           {
@@ -57,7 +63,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
-  grunt.registerTask('default', ["uglify", 'less', 'watch']);
+  grunt.registerTask('default', ['less', 'watch']);
 
-  grunt.registerTask('deploy', ['uglify', 'less']);
+  grunt.registerTask('deploy', ['less']);
 };

@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="nourritureApp" ng-controller="MainAppCtrl">
+<html ng-app="nourritureApp" ng-controller="MainAppCtrl" ng-strict-di>
 
 <head>
   <meta charset="UTF-8">
@@ -55,14 +55,14 @@
   <script src="/bower/angular-cookie/angular-cookie.min.js"></script>
 
 
-  <script src="/scripts/app.min.js"></script>
-  <script src="/scripts/controllers/addIngredientViewControllers.min.js"></script>
-  <script src="/scripts/controllers/editUserViewControllers.min.js"></script>
-  <script src="/scripts/controllers/homeViewControllers.min.js"></script>
-  <script src="/scripts/controllers/ingredientViewControllers.min.js"></script>
-  <script src="/scripts/controllers/ingredientsViewControllers.min.js"></script>
-  <script src="/scripts/controllers/loginViewControllers.min.js"></script>
-  <script src="/scripts/controllers/registerUserViewControllers.min.js"></script>
+  <script src="/scripts/app.js"></script>
+  <script src="/scripts/controllers/addIngredientViewControllers.js"></script>
+  <script src="/scripts/controllers/editUserViewControllers.js"></script>
+  <script src="/scripts/controllers/homeViewControllers.js"></script>
+  <script src="/scripts/controllers/ingredientViewControllers.js"></script>
+  <script src="/scripts/controllers/ingredientsViewControllers.js"></script>
+  <script src="/scripts/controllers/loginViewControllers.js"></script>
+  <script src="/scripts/controllers/registerUserViewControllers.js"></script>
   <script type="text/javascript" src="/bower/materialize/bin/materialize.js"></script>
 
   <script>
@@ -70,16 +70,6 @@
       $(".button-collapse").sideNav();
       $('ul.tabs').tabs();
     });
-  </script>
-
-  <script>
-  (function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
   </script>
 
   <script>

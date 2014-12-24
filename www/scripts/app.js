@@ -55,7 +55,8 @@ app.config(['$routeProvider',
       otherwise({
         redirectTo: '/home'
       });
-  }])
+  }
+]);
 
 app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location, apiFactory) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
@@ -67,7 +68,19 @@ app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location
       }
     }
   });
-}])
+}]);
+
+// Initialize Facebook
+app.run(["Facebook", function(face) {
+  console.log("Loading facebook...");
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+}]);
 
 app.directive('fileModel', ['$parse', function ($parse) {
   return {
@@ -366,7 +379,7 @@ app.factory("Facebook", ["$q",
 
     function waitLoaded(fn) {
       if (loaded) return fn();
-      setTimeout(waitLoaded, 500, fn);
+      setTimeout(waitLoaded, 100, fn);
     }
 
     fac.login = function(scope) {
