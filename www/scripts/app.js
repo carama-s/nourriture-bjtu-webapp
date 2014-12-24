@@ -371,6 +371,7 @@ app.factory("Facebook", ["$q",
 
     fac.login = function(scope) {
       var d = Q.defer();
+      console.log("Hello I'm here !");
       waitLoaded(function() {
         FB.login(function(res) {
           console.log(res);
