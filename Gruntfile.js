@@ -4,16 +4,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       options: {
-        compress: {
-          dead_code: true,
-          comparisons: true,
-          booleans: true,
-          loops: true,
-          unused: true,
-          join_vars: true,
-          angular: true
-        },
-        sourceMap: true
+        sourceMap: true,
+        report: "gzip"
       },
       uglify: {
         files: [
