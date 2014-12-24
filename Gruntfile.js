@@ -3,18 +3,17 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
-      options: {
-        sourceMap: true,
-        report: "gzip"
-      },
       uglify: {
+        options: {
+          sourceMap: true
+        },
         files: [
           {
             expand: true,     // Enable dynamic expansion.
             cwd: 'www/',      // Src matches are relative to this path.
             src: ['scripts/**/*.js'], // Actual pattern(s) to match.
-            dest: 'build/',   // Destination path prefix.
-            ext: '.js',   // Dest filepaths will have this extension.
+            dest: 'www/',   // Destination path prefix.
+            ext: '.min.js',   // Dest filepaths will have this extension.
             extDot: 'first'   // Extensions in filenames begin after the first dot
           }
         ]
@@ -41,6 +40,13 @@ module.exports = function(grunt) {
         options: {
           nospawn: true
         }
+      },
+      scripts: {
+        files: ["www/scripts/**/*.js"],
+        tasks: ["uglify"],
+        options: {
+          nospawn: true
+        }
       }
     }
   });
@@ -51,7 +57,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
-  grunt.registerTask('default', ['less', 'watch']);
+  grunt.registerTask('default', ["uglify", 'less', 'watch']);
 
   grunt.registerTask('deploy', ['uglify', 'less']);
 };
