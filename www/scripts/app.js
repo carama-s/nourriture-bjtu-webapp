@@ -23,7 +23,7 @@ app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
                                 'other': {name: "Other", color: '#bdc3c7'}});
 
 app.value("apiURL", "http://nourriture.dennajort.fr/api");
-app.value("apiSocketURL", "ws://nourriture.dennajort.fr");
+app.value("apiSocketURL", "ws://nourriture.dennajort.fr:80");
 
 app.config(['$routeProvider',
   function($routeProvider) {
