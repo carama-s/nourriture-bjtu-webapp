@@ -409,6 +409,7 @@ app.factory("Facebook", ["$q",
     var fac = {};
 
     window.fbAsyncInit = function() {
+      console.log("Facebook is loaded !");
       loaded = true;
       FB.init({
         appId: '1569143169966374',
