@@ -46,13 +46,6 @@ module.exports = function(grunt) {
         options: {
           nospawn: true
         }
-      },
-      scripts: {
-        files: ["www/scripts/**/*.js"],
-        tasks: ["uglify"],
-        options: {
-          nospawn: true
-        }
       }
     }
   });
