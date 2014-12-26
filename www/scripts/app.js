@@ -385,7 +385,7 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
 ]);
 
 app.factory('apiSocketFactory', ["socketFactory", "apiSocketURL", function(socketFactory, apiSocketURL) {
-  var ioSocket = io.connect(apiSocketURL, {transports: ['websocket', 'polling']});
+  var ioSocket = io.connect(apiSocketURL);
   var socket = socketFactory({
     ioSocket: ioSocket,
     prefix: "apiSocket:"
