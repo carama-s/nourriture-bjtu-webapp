@@ -22,7 +22,7 @@ app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
                                 'vegetable': {name: "Vegetable", color: '#e67e22'},
                                 'other': {name: "Other", color: '#bdc3c7'}});
 
-app.value("apiURL", "http://nourriture.dennajort.fr/")
+app.value("apiURL", "http://nourriture.dennajort.fr/api")
 
 app.config(['$routeProvider',
   function($routeProvider) {
