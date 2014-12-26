@@ -7,7 +7,8 @@ var app = angular.module('nourritureApp', [
   'homeViewControllers',
   'ingredientViewControllers',
   'ingredientsViewControllers',
-  'addIngredientViewControllers'
+  'addIngredientViewControllers',
+  'btford.socket-io'
 ]);
 
 app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
@@ -20,6 +21,8 @@ app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
                                 'spice': {name: "Spice", color: '#e74c3c'},
                                 'vegetable': {name: "Vegetable", color: '#e67e22'},
                                 'other': {name: "Other", color: '#bdc3c7'}});
+
+app.value("apiURL", "/api")
 
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -198,9 +201,8 @@ app.factory("refreshInputForms", [function() {
   }
 }]);
 
-app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCookie) {
-    var host = "http://api.nourriture.dennajort.fr";
-    //var host = "http://localhost:3000";
+app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL, $http, $q, ipCookie) {
+    var host = apiURL;
     var urlUser = host + "/user";
     var urlIngredient = host + "/ingredient";
 
@@ -362,6 +364,25 @@ app.factory("apiFactory", ['$http', "$q", "ipCookie", function ($http, $q, ipCoo
     return apiFactory;
   }
 ]);
+
+app.factory('apiSocketFactory', ["socketFactory", "apiURL", function(socketFactory, apiURL) {
+  var ioSocket = io.connect(apiURL);
+  var socket = socketFactory({
+    ioSocket: ioSocket,
+    prefix: "apiSocket:"
+  });
+  var fac = {};
+
+  fac.subscribe = function(events, scope) {
+    socket.emit("subscribe", {names: events});
+    scope.$on("$destroy", function() {
+      socket.emit("unsubscribe", {names: events});
+    });
+    socket.forward(events, scope);
+  };
+
+  return fac;
+}]);
 
 app.factory("Facebook", ["$q",
   function(Q) {
