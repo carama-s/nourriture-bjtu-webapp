@@ -19,10 +19,10 @@ app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
                                 'chocolate': {name: "Chocolate", color: '#d35400'},
                                 'egg': {name: "Egg", color: '#1abc9c'},
                                 'fish': {name: "Fish", color: '#3498db'},
-                                'fruit': {name: "Fruit", color: '#2ecc71'},
+                                'fruit': {name: "Fruits", color: '#2ecc71'},
                                 'meat': {name: "Meat", color: '#c0392b'},
                                 'spice': {name: "Spice", color: '#e74c3c'},
-                                'vegetable': {name: "Vegetable", color: '#e67e22'},
+                                'vegetable': {name: "Vegetables", color: '#e67e22'},
                                 'other': {name: "Other", color: '#bdc3c7'}});
 
 app.value("apiURL", "http://nourriture.dennajort.fr/api");
