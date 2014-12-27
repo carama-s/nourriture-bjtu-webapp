@@ -6,14 +6,8 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory',
   }
 ]);
 
-homeViewControllers.controller("HomeNavUserCtrl", ['$scope', '$location', 'ipCookie', 'apiFactory', "apiSocketFactory",
-  function($scope, $location, ipCookie, apiFactory, apiSocket) {
-    apiSocket.subscribe(["ingredient.new"], $scope);
-
-    $scope.$on("apiSocket:ingredient.new", function(ev, data) {
-      console.log("ingredient.new");
-      console.log(data);
-    });
+homeViewControllers.controller("HomeNavUserCtrl", ['$scope', '$location', 'ipCookie', 'apiFactory',
+  function($scope, $location, ipCookie, apiFactory) {
 
     $scope.logOut = function() {
       ipCookie.remove('token');
