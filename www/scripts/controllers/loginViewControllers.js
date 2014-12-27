@@ -38,7 +38,7 @@ loginViewControllers.controller("LogInFormCtrl", ['$scope', '$location', 'ipCook
           apiFactory.setToken(data.token.token);
           apiFactory.setUser(data.user);
           if ($scope.loginInputRemember === true) {
-            ipCookie("token", data.toke.token, {expirationUnit: 'hours', expires: 240});
+            ipCookie("token", data.token.token, {expirationUnit: 'hours', expires: 240});
           }
           $location.path('/');
         }, function(data) {
