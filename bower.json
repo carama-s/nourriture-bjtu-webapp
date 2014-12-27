@@ -21,6 +21,7 @@
     "angular-cookie": "~4.0.6",
     "materialize": "v0.91",
     "angular-socket-io": "~0.7.0",
-    "angular-scroll": "~0.6.2"
+    "angular-scroll": "~0.6.2",
+    "angular-xeditable": "~0.1.8"
   }
 }

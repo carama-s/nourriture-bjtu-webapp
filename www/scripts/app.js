@@ -2,7 +2,7 @@ var app = angular.module('nourritureApp', [
   'ngRoute',
   'ipCookie',
   'duScroll',
-  'ngScrollTo',
+  'xeditable',
   'editUserViewControllers',
   'loginViewControllers',
   'registerUserViewControllers',
@@ -10,6 +10,7 @@ var app = angular.module('nourritureApp', [
   'ingredientViewControllers',
   'ingredientsViewControllers',
   'addIngredientViewControllers',
+  'editIngredientViewControllers',
   'btford.socket-io'
 ]);
 
@@ -54,15 +55,25 @@ app.config(['$routeProvider',
         templateUrl: '/views/ingredient.html',
         controller: 'IngredientViewCtrl'
       }).
+      when('/ingredient/:id/edit', {
+        templateUrl: '/views/editIngredient.html',
+        controller: 'EditIngredientViewCtrl'
+      }).
       when('/addIngredient', {
         templateUrl: '/views/addIngredient.html',
-        controller: 'addIngredientViewCtrl'
+        controller: 'AddIngredientViewCtrl'
       }).
       otherwise({
         redirectTo: '/home'
       });
   }
 ]);
+
+app.filter("sanitize", ['$sce', function($sce) {
+  return function(htmlCode){
+    return $sce.trustAsHtml(htmlCode);
+  }
+}]);
 
 app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location, apiFactory) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
@@ -75,6 +86,7 @@ app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location
     }
   });
 }]);
+
 
 // Initialize Facebook
 app.run(["Facebook", function(face) {
@@ -133,7 +145,7 @@ app.factory("globalFactory", [function() {
   return g;
 }]);
 
-app.directive("scrolltableofcontentsingredient", function ($window) {
+app.directive("scrolltableofcontentsingredient", ['$window', function ($window) {
   return function(scope, element, attrs) {
     angular.element($window).bind("scroll", function() {
         if (this.pageYOffset >= 64) { // navbar height
@@ -145,15 +157,15 @@ app.directive("scrolltableofcontentsingredient", function ($window) {
        }
     });
   };
-});
+}]);
 
-app.directive("resizetableofcontentsingredient", function ($window) {
+app.directive("resizetableofcontentsingredient", ['$window', function ($window) {
   return function(scope, element, attrs) {
     angular.element($window).bind("resize", function() {
       element.css('width', $("#magic-table-of-contents-line").width());
     });
   };
-});
+}]);
 
 app.factory("refreshInputForms", [function() {
   return function() {
@@ -174,55 +186,6 @@ app.factory("refreshInputForms", [function() {
         $(this).siblings('label').removeClass('active');
       }
     });
-
-
-    // Select Functionality
-    // Select Plugin
-    $.fn.material_select = function () {
-      $(this).each(function(){
-          $select = $(this);
-          if ($select.hasClass('disabled') || $select.hasClass('initialized')){
-            return false;
-          }
-          var uniqueID = guid();
-          var wrapper = $('<div class="select-wrapper"></div>');
-          var options = $('<ul id="select-options-' + uniqueID+'" class="dropdown-content"></ul>');
-          var selectOptions = $select.children('option');
-          var label = selectOptions.first();
-          // Create Dropdown structure
-          selectOptions.each(function () {
-            options.append($('<li><span>' + $(this).html() + '</span></li>'));
-          });
-          options.find('li').each(function (i) {
-          var $curr_select = $select;
-          $(this).click(function () {
-            $curr_select.find('option').eq(i + 1).prop('selected', true);
-            $curr_select.prev('span.select-dropdown').html($(this).text());
-          });
-        });
-        // Wrap Elements
-        $select.wrap(wrapper);
-        // Add Select Display Element
-        var $newSelect = $('<span class="select-dropdown" data-activates="select-options-' + uniqueID +'">' + label.html() + '</span>');
-        $select.before($newSelect);
-        $('body').append(options);
-        $newSelect.dropdown({"hover": false});
-        $select.addClass('initialized');
-      });
-    }
-
-    // Unique ID
-    var guid = (function() {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-      }
-      return function() {
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-        s4() + '-' + s4() + s4() + s4();
-        };
-    })();
   }
 }]);
 
@@ -252,6 +215,26 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
       if (token !== undefined)
         config.headers.Authorization = "Bearer " + token;
       return $http.post(url, data, config);
+    }
+
+    function httpDelete(url, config) {
+      config = config || {};
+      config.headers = config.headers || {};
+      var token = apiFactory.getToken();
+      if (token !== undefined) {
+        config.headers.Authorization = "Bearer " + token;
+      }
+      return $http.delete(url, config);
+    }
+
+    function httpPut(url, data, config) {
+      config = config || {};
+      config.headers = config.headers || {};
+      var token = apiFactory.getToken();
+      if (token !== undefined) {
+        config.headers.Authorization = "Bearer " + token;
+      }
+      return $http.put(url, data, config);
     }
 
     apiFactory.getToken = function() {
@@ -341,44 +324,29 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
 
     /* API INGREDIENT */
 
-    apiFactory.ingredient.findIngredient = function(config) {
+    apiFactory.ingredient.find = function(config) {
       return httpGet(urlIngredient, config);
     };
 
-    apiFactory.ingredient.findIngredientById = function(id, config) {
+    apiFactory.ingredient.findById = function(id, config) {
       return httpGet(urlIngredient + '/' + id, config);
     };
 
+    apiFactory.ingredient.deleteById = function(id, config) {
+      return httpDelete(urlIngredient + '/' + id, config);
+    };
 
-    apiFactory.ingredient.createIngredient = function(data, config) {
-      return httpPost(urlIngredient + "/create", data, config);
+    apiFactory.ingredient.updateById = function(id, data, config) {
+      return httpPut(urlIngredient + '/' + id, data, config);
+    };
+
+    apiFactory.ingredient.create = function(data, config) {
+      return httpPost(urlIngredient, data, config);
     };
 
     apiFactory.ingredient.findCategories = function(config) {
       return httpGet(urlIngredient + "/categories", config);
     };
-
-
-    /*
-    function signUpAndAuthenticate(data) {
-      return signup(data)
-        .then(function(user) {
-          return authenticate(user.email, data.passwd)
-            .then()
-        })
-        .then(null, function)
-    }
-    */
-
-    /*
-    apiFactory.user.authenticate("toto@toto.com", "azerty")
-      .success(function(token) {
-
-      })
-      .error(fuction(data) {
-        data.error
-      });
-    */
 
     return apiFactory;
   }

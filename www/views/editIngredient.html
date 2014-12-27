@@ -1,26 +1,25 @@
-<div class="container" ng-cloak>
-
-  <p class="title">Add Ingredient</p>
+<div class="container" ng-controller="EditIngredientCtrl" ng-show="loaded" ng-cloak>
+  <p class="title">Edit Ingredient</p>
 
   <!-- Identity -->
   <p class="sub-title">Identity</p>
-  <div class="row" ng-cloak>
+  <div class="row">
     <div class="col s12 m4 l3">
-      <div class="ratio-container" id="containerPreviewImage">
-        <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(/images/default-preview.png)'}"></div>
+      <div ng-if="loaded" class="ratio-container" id="containerPreviewImage">
+        <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
       </div>
       <input class="hidden" id="uploadImage" type="file" file-model="photoIngredient"/>
     </div>
     <div class="col s12 hide-on-med-and-up" style="height: 28px;"></div>
     <div class="col s12 m7 l8 offset-m1 offset-l1">
       <div class="row">
-        <div data-ng-repeat="(k, v) in categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
+        <div data-ng-repeat="(k, v) in categories_mapper track by $index" ng-style="ingredient.category == k && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
           {{ v.name }}
         </div>
       </div>
       <div class="row" style="padding-top: 12px;">
         <div class="input-field col s12">
-          <input required ng-model="nameIngredient" ng-change="emptyIngredientName = false;" name="nameIngredient" id="nameIngredient" type="text">
+          <input ng-model="nameIngredient" ng-change="emptyIngredientName = false;" id="nameIngredient" value="{{ ingredient.name }}" type="text"/>
           <label for="nameIngredient">Name</label>
           <div class="has-error-block" ng-show="submitted && emptyIngredientName">The ingredient name is required and cannot be empty.</div>
         </div>
@@ -29,7 +28,7 @@
   </div>
 
   <!-- Season -->
-  <div ng-if="categoryIngredient == 'fruit' || categoryIngredient == 'vegetable'">
+  <div ng-if="hasSeasonPeriod()">
     <p class="sub-title">Season</p>
     <div class="row" >
       <div class="col s2 m2 l1 month" data-ng-repeat="m in months track by $index" ng-class="m.active ? 'month-selected' : ''" ng-click="changeMonth($index);">
@@ -42,15 +41,15 @@
   <p class="sub-title">Description</p>
   <div class="row">
     <div class="input-field col s12">
-      <textarea class="materialize-textarea" ng-model="descriptionIngredient" ng-change="emptyIngredientDescription = false;" required style="padding-top: 0px;"></textarea>
+      <textarea class="materialize-textarea" ng-model="descriptionIngredient" ng-change="emptyIngredientDescription = false;" style="padding-top: 0px;"></textarea>
       <div class="has-error-block" ng-show="submitted && emptyIngredientDescription">The ingredient description is required and cannot be empty.</div>
     </div>
   </div>
 
-  <!-- Nutrition -->
-  <p class="sub-title">Nutrition</p>
+  <!-- Nutritions -->
+  <p class="sub-title">Nutritions</p>
   <div class="row">
-     <table class="striped centered">
+    <table class="striped centered">
       <thead class="table-thead">
         <tr>
           <th data-field="designation" style="width: 30%;">Designation</th>
@@ -60,8 +59,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="nutrition in nutritions">
-
+        <tr ng-repeat="nutrition in ingredient.nutritions">
           <td>
             <span editable-text="nutrition.designation" e-name="designation" e-form="rowform" onbeforesave="checkDesignation($data)" e-required>
               {{ nutrition.designation || 'Unknown' }}
@@ -81,7 +79,7 @@
           </td>
 
           <td>
-            <form editable-form name="rowform" onbeforesave="saveNutrition($data, nutrition.designation)" ng-show="rowform.$visible" onaftersave="onNutritionAdded()"  class="form-buttons form-inline" shown="inserted == nutrition">
+            <form editable-form name="rowform" ng-show="rowform.$visible" onaftersave="onNutritionAdded()" class="form-buttons form-inline" shown="inserted == nutrition">
               <button type="submit" class="no-btn" ng-disabled="rowform.$waiting"><i class="mdi-navigation-check btn-icon-nutrition"></i></button>
               <button ng-show="nutrition.designation" type="button" class="no-btn" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"><i class="mdi-navigation-close btn-icon-nutrition"></i></button>
             </form>
@@ -96,7 +94,6 @@
         </tr>
       </tbody>
     </table>
-
     <p>
       *Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.
     </p>
@@ -104,9 +101,8 @@
 
 
   <div class="row" style="text-align: center">
-    <button type="button" class="waves-effect waves-light btn" ng-click="submitAddIngredient()">Add Ingredient</button>
+    <button type="button" class="waves-effect waves-light btn" ng-click="submitEditIngredient()">Edit</button>
   </div>
-
 </div>
 
 <script>
@@ -115,7 +111,7 @@ $(document).ready(function() {
     if (this.files && this.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
-          $('#previewImage').css('background-image', 'url(' + e.target.result + ')');
+        $('#previewImage').css('background-image', 'url(' + e.target.result + ')');
       }
       reader.readAsDataURL(this.files[0]);
     }

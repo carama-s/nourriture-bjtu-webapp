@@ -8,6 +8,7 @@
 @screen-ll-min: (@screen-l-max + 1);
 
 body {
+  background: url("/images/background.jpg") no-repeat fixed center top transparent;
 }
 
 nav ul li {
@@ -57,7 +58,6 @@ div.ratio-4_3 > img {
 	top: 0; bottom: 0; left: 0; right: 0;
 	text-align: center;
 }
-
 
 .ingredient-img-container {
   overflow: hidden;
@@ -136,7 +136,7 @@ div.ratio-4_3 > img {
 .icon-search-bar:hover {
   color: #EE6E73;
 }
-
+/*
 .container-horizontal-list ul {
   margin: 0;
   padding: 0;
@@ -160,6 +160,7 @@ div.ratio-4_3 > img {
 .container-horizontal-list-selected {
   color: @mainColor !important;
 }
+*/
 
 .input-text-default {
   border: none !important;
@@ -180,7 +181,6 @@ div.ratio-4_3 > img {
   background-color: white;
   width: 100%;
 }
-
 
 .header {
   color: #EE6E73;
@@ -280,6 +280,45 @@ div.ratio-4_3 > img {
   color: grey;
 }
 
+.btn-icon-nutrition {
+  font-size: 2rem;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.btn-icon-nutrition-delete {
+  color: #e74c3c;
+}
+
+.no-btn {
+  border: none;
+  background: none;
+}
+
+.table-thead {
+  background-color: @mainColor;
+  color: white;
+}
+
+th {
+  font-weight: normal;
+}
+
+thead {
+  border-bottom: 1px solid white;
+}
+
+// extendable angular
+
+div .editable-error {
+  display: block;
+  font-size: 12px;
+  color: #F44336;
+  margin-top: 4px;
+  position: absolute;
+}
+
 
 // override input
 
@@ -315,4 +354,46 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 
 /* label quand input est rempli */
 .input-field label.active {
+}
+
+// ingredients page
+
+.ingredients-menu-sub-title {
+  color: #444;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.category-li > a {
+  color: #555;
+  font-size: 16px;
+  margin-left: 10px;
+  outline: none;
+}
+
+.category-li > a:hover {
+  color: @mainColor !important;
+}
+
+.category-li-selected {
+  color: @mainColor !important;
+}
+
+.ingredient-li {
+  background-color: white;
+  border: 1px solid pink;
+}
+
+.ingredient-li-content {
+  text-align: center;
+}
+
+.ingredient-li-content-name {
+  color: #444;
+  font-size: 18px;
+}
+
+.ingredient-li-content-category {
+  color: #333;
+  font-size: 14px;
 }

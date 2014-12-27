@@ -1,3 +1,4 @@
+<!--
 <div class="home-bandeau">
     <div class="row">
       <div class=" col l6 offset-l3 m8 offset-m2 s12 home-search-bar-border">
@@ -16,12 +17,72 @@
       </div>
     </div>
 </div>
+-->
 
 
+<div class="container">
+  <div class="row" style="margin-top: 20px;">
+    <div class="col l4 m4 s12">
+      <div class="ratio-container" style="border: 1px solid pink;">
+        <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(/images/category_fruit.jpg)'}"></div>
+      </div>
+    </div>
+    <div class="col l4 m4 s12">
+      <div class="ratio-container" style="border: 1px solid pink;">
+        <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(/images/category_vegetable.jpg)'}"></div>
+      </div>
+    </div>
 
-<div class="container" style="background-color: white;">
+    <div class="col l4 m4 s12">
+      <div class="ratio-container" style="border: 1px solid pink;">
+        <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(/images/category_fish.jpg)'}"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
 
+    <div class="col l3 s12">
+      <div class="row">
+        <div class="ingredients-menu-sub-title">Categories</div>
+        <ul>
+          <li class="category-li"><a href="#/ingredients" ng-click="changeCategory('all')" ng-class="selectedCategory == 'All' ? 'category-li-selected' : ''">All</a></li>
+          <li class="category-li" data-ng-repeat="(k, v) in categories_mapper">
+            <a href="#/ingredients" ng-click="changeCategory(k)" ng-class="selectedCategory == v.name ? 'category-li-selected' : ''">{{ v.name }}</a/>
+          </li>
+        </ul>
+
+      </div>
+      <div class="row">
+        <div class="ingredients-menu-sub-title">Popular Tags</div>
+      </div>
+
+    </div>
+
+    <div class="col l9 s12">
+      <div class="row">
+        <ul>
+          <li ng-repeat="ingredient in ingredients" class="col s12 m6 l3 ingredient-li">
+            <div class="row">
+              <div class="ratio-container">
+                <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
+              </div>
+            </div>
+            <div class="row ingredient-li-content">
+              <div class="ingredient-li-content-name">{{ ingredient.name }}</div>
+              <div class="ingredient-li-content-category">{{ ingredient.category }}</div>
+
+
+            </div>
+          </li>
+
+
+        </ul>
+
+      </div>
+    </div>
+
+    <!--
     <div ng-repeat="ingredient in ingredients" class="col s12 m6 l3" style="padding: 25px;">
       <a ng-href="#/ingredient/{{ ingredient._id }}">
         <div class="ratio-container">
@@ -29,6 +90,6 @@
         </div>
       </a>
     </div>
-
+    -->
   </div>
 </div>

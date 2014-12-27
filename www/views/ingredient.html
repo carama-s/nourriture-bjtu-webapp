@@ -10,9 +10,9 @@
               <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
             </div>
           </li>
-          <li><a href="#presentation" du-smooth-scroll du-scrollspy offset="100" id="table-presentation" scroll-to="presentation">Presentation</a></li>
-          <li><a href="#historique" du-smooth-scroll du-scrollspy id="table-historique" scroll-to="historique">Historique</a></li>
-          <li ng-if="hasSeasonPeriod()"><a href="#season" du-smooth-scroll du-scrollspy id="table-season" scroll-to="season">Season</a></li>
+          <li><a du-scrollspy="presentation" du-smooth-scroll offset='100' href="#presentation">Presentation</a></li>
+          <li><a du-scrollspy="season" du-smooth-scroll offset='0' href="#season">Season</a></li>
+          <li><a du-scrollspy="nutritions" du-smooth-scroll offset='0' href="#nutritions">Nutritions</a></li>
         </ul>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <!-- Presentation -->
       <div class="row" id="presentation">
         <a href="" ng-click="deleteIngredient()"><i class="mdi-action-delete btn-icon btn-icon-delete"></i></a>
-        <a href=""><i class="mdi-action-settings btn-icon btn-icon-settings" style="margin-right: 15px;"></i></a>
+        <a ng-href="#/ingredient/{{ ingredient._id }}/edit"><i class="mdi-action-settings btn-icon btn-icon-settings" style="margin-right: 15px;"></i></a>
 
         <p class="title">{{ ingredient.name }}</p>
         <div class="ratio-container hide-on-med-and-up" style="padding: 8px 18px; width: auto;">
@@ -31,18 +31,9 @@
         </div>
 
         <p class="sub-title">Presentation</p>
-      </div>
-
-      <!-- Historique -->
-      <div class="row" id="historique">
-        <p class="sub-title">Historique</p>
-
-        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
-        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
-        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
-        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
-        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
-        Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />Historique<br />
+        <div class="row">
+          <div class="col m12" ng-bind-html="ingredient.description | sanitize"></div>
+        </div>
       </div>
 
       <!-- Season period -->
@@ -54,6 +45,35 @@
           </div>
         </div>
       </div>
+
+      <!-- Nutritions -->
+      <div class="row" id="nutritions">
+        <p class="sub-title">Nutritions</p>
+        <div class="row">
+
+          <table class="striped centered">
+            <thead class="table-thead">
+              <tr>
+                <th data-field="designation" style="width: 40%;">Designation</th>
+                <th data-field="value" style="width: 30%;">Value</th>
+                <th data-field="dailyValue" style="width: 30%;">% Daily Value*</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="nutrition in ingredient.nutritions">
+                <td>{{ nutrition.designation || 'Unknown' }}</td>
+                <td>{{ nutrition.value || 'Unknown' }}</td>
+                <td>{{ nutrition.dailyValue || 'Unknown' }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            *Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.
+          </p>
+        </div>
+      </div>
+
     </div>
 
   </div>
