@@ -356,7 +356,72 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 .input-field label.active {
 }
 
+.background-image-zoom {
+  -moz-transition: all .5s;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.background-image-zoom:hover {
+  -moz-transform: scale(1.2, 1.2);
+  -webkit-transform: scale(1.2, 1.2);
+  transform: scale(1.2, 1.2);
+}
+
 // ingredients page
+
+.ingredients-category-banner-fruits:before {
+  border-color: transparent transparent transparent #f1c40f;
+}
+
+.ingredients-category-banner-vegetables:before {
+  border-color: transparent transparent transparent #27ae60;
+}
+
+.ingredients-category-banner-fish:before {
+  border-color: transparent transparent transparent #3498db;
+}
+
+
+.ingredients-category-banner:before {
+  position: absolute;
+  left: -1px;
+  bottom: 0px;
+  content: "";
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 80px 0px 0px 230px;
+}
+
+.ingredients-category-banner {
+  text-align: left;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 230px;
+  height: 80px;
+}
+
+.ingredients-category-banner-text {
+  position: absolute;
+  text-align: left;
+  left: 0px;
+  bottom: 0px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 40px 0px 6px 10px;
+  font-size: 18px !important;
+  line-height: 18px !important;
+  font-weight: 400;
+  font-family: "Roboto",sans-serif;
+  text-transform: none;
+  color: #FFF;
+  text-decoration: none;
+  outline: none;
+}
 
 .ingredients-menu-sub-title {
   color: #444;
@@ -380,20 +445,105 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 }
 
 .ingredient-li {
-  background-color: white;
-  border: 1px solid pink;
+  background-color: none;
+  padding: 15px !important;
+}
+
+.ingredient-li-horizontal {
+  display: table;
+  margin-bottom: 30px;
+}
+
+.ingredient-li-horizontal-container {
+  display: table-cell;
+  float: none !important;
+  vertical-align: top;
 }
 
 .ingredient-li-content {
   text-align: center;
+  background-color: white;
+  margin: 0px !important;
+}
+
+.ingredient-li-horizontal-content {
+  text-align: left;
+  background-color: white;
+  margin: 0px !important;
 }
 
 .ingredient-li-content-name {
-  color: #444;
+  color: #555;
   font-size: 18px;
 }
 
+.ingredient-li-horizontal-content-name {
+  color: #555;
+  font-size: 18px;
+  padding: 18px;
+  padding-top: 12px;
+  padding-bottom: 0px;
+}
+
 .ingredient-li-content-category {
-  color: #333;
+  color: #999;
   font-size: 14px;
+}
+
+.ingredient-li-horizontal-content-category {
+  color: #999;
+  font-size: 14px;
+  padding: 0px 18px;
+}
+
+.ingredient-li-content-description {
+  color: #999;
+  font-size: 14px;
+  padding: 12px 18px;
+}
+
+.ingredients-switch-view {
+  float: right;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.ingredients-switch-view:hover {
+  color: @mainColor;
+}
+
+.ingredients-switch-view-selected {
+  color: @mainColor;
+}
+
+.ratio-container:hover + .ingredient-li-content > .ingredient-li-content-name { color: @mainColor; }
+
+.ratio-container:hover + .ingredient-li-horizontal-content > .ingredient-li-horizontal-content-name { color: @mainColor; }
+
+.ingredients-pagination-container {
+  text-align: center;
+  color: #555;
+  font-size: 16px;
+}
+
+.ingredients-pagination-btn {
+  font-size: 3rem;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.ingredients-nb-elements {
+  font-size: 16px;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.second-color {
+  color: @secondColor;
 }

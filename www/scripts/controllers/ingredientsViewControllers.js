@@ -6,21 +6,76 @@ ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFact
     $scope.ingredients = [];
     $scope.categories_mapper = categories_mapper;
     $scope.selectedCategory = "All";
+    $scope.modeDisplay = 'module';
 
-    $scope.changeCategory = function(category_name) {
+    var currentCategory = undefined;
+
+    $scope.currentPage = 0;
+    $scope.perPage = 9;
+    $scope.nbPage = 0;
+    $scope.nbElements = 0;
+
+    function loadIngredient() {
       var config = {
         params: {
-          where: {},
-          sort: "name",
-          per_page: 12
+          sort: "name ASC",
+          limit: $scope.perPage,
+          skip: $scope.currentPage * $scope.perPage,
+          category: currentCategory
         }
-      }
-      if (category_name != "all")
-        config.params.where.category = category_name;
+      };
 
       apiFactory.ingredient.find(config).then(function(res) {
         $scope.ingredients = res.data;
-        (category_name != "all") ? ($scope.selectedCategory = categories_mapper[category_name].name) : ($scope.selectedCategory = "All");
+      });
+    }
+
+    $scope.switchView = function(mode) {
+      $scope.modeDisplay = mode;
+    };
+
+    $scope.canGoPreviousPage = function() {
+      return $scope.currentPage > 0;
+    }
+
+    $scope.goPreviousPage = function() {
+      if ($scope.canGoPreviousPage()) {
+        $scope.currentPage -= 1;
+        loadIngredient();
+      }
+    };
+
+    $scope.canGoNextPage = function() {
+      return ($scope.currentPage + 1) < $scope.nbPage;
+    }
+
+    $scope.goNextPage = function() {
+      if ($scope.canGoNextPage()) {
+        $scope.currentPage += 1;
+        loadIngredient();
+      }
+    };
+
+    $scope.changeCategory = function(category_name) {
+      if (category_name == "all") {
+        currentCategory = undefined;
+        $scope.selectedCategory = "All"
+      } else {
+        currentCategory = category_name;
+        $scope.selectedCategory = categories_mapper[category_name].name;
+      }
+      $scope.currentPage = 0;
+
+      var config = {
+        params: {
+          category: currentCategory
+        }
+      };
+
+      apiFactory.ingredient.count(config).then(function(count) {
+        $scope.nbElements = count;
+        $scope.nbPage = Math.ceil(count / $scope.perPage);
+        loadIngredient();
       });
     };
 

@@ -7,16 +7,6 @@ ingredientViewControllers.controller('IngredientViewCtrl', ['$scope', '$routePar
     $scope.ingredientId = $routeParams.id;
     $scope.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     $scope.categories_mapper = categories_mapper;
-
-
-    $document.on('scroll', function() {
-      console.log('Document scrolled to ', $document.scrollLeft(), $document.scrollTop());
-    });
-    var container = angular.element(document.getElementById('container'));
-    container.on('scroll', function() {
-      console.log('Container scrolled to ', container.scrollLeft(), container.scrollTop());
-    });
-
     apiFactory.ingredient.findById($routeParams.id).then(function(res) {
       $scope.ingredient = res.data;
 

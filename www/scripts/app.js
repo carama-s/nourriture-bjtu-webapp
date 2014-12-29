@@ -348,10 +348,16 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
       return httpGet(urlIngredient + "/categories", config);
     };
 
+    apiFactory.ingredient.count = function(config) {
+      return httpGet(urlIngredient + "/count", config).then(function(res) {
+        return res.data.count;
+      });
+    };
+
     return apiFactory;
   }
 ]);
-
+/*
 app.factory('apiSocketFactory', ["socketFactory", "apiSocketURL", function(socketFactory, apiSocketURL) {
   var ioSocket = io.connect(apiSocketURL);
   var socket = socketFactory({
@@ -370,6 +376,7 @@ app.factory('apiSocketFactory', ["socketFactory", "apiSocketURL", function(socke
 
   return fac;
 }]);
+*/
 
 app.factory("Facebook", ["$q",
   function(Q) {
