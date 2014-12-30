@@ -26,7 +26,7 @@ app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
                                 'other': {name: "Other", color: '#bdc3c7'}});
 
 app.value("apiURL", "http://nourriture.dennajort.fr/api");
-app.value("apiSocketURL", "ws://nourriture.dennajort.fr:80");
+app.value("apiSocketURL", "http://nourriture.dennajort.fr:80/");
 
 app.config(['$routeProvider',
   function($routeProvider) {
@@ -357,7 +357,7 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     return apiFactory;
   }
 ]);
-/*
+
 app.factory('apiSocketFactory', ["socketFactory", "apiSocketURL", function(socketFactory, apiSocketURL) {
   var ioSocket = io.connect(apiSocketURL);
   var socket = socketFactory({
@@ -376,7 +376,7 @@ app.factory('apiSocketFactory', ["socketFactory", "apiSocketURL", function(socke
 
   return fac;
 }]);
-*/
+
 
 app.factory("Facebook", ["$q",
   function(Q) {
