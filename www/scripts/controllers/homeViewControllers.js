@@ -4,10 +4,10 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSock
   function($scope, apiFactory, socket) {
     $scope.apiFactory = apiFactory;
 
-    socket.subscribe(["ingredient.create", "ingredient.update", "ingredient.destroy"], $scope);
+    socket.subscribe(["timeline.create"], $scope);
 
-    $scope.$on("apiSocket:ingredient.create", function(event, data) {
-      console.log("ingredient.create");
+    $scope.$on("apiSocket:timeline.create", function(event, data) {
+      console.log("timeline.create");
       console.log(data);
     });
   }
