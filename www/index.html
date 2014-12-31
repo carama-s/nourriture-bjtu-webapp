@@ -25,15 +25,15 @@
             <li><a href="#/">Recipes</a></li>
             <li><a href="#/addRecipe"> + Recipe</a></li>
             <li><a href="#/ingredients">Ingredients</a></li>
-            <li><a href="#/addIngredient"> + Ingredient</a></li>
-
-            <li ng-show="apiFactory.getToken() == undefined && !isActive('/login')">
+            <li ng-show="apiFactory.isRole()"><a href="#/addIngredient"> + Ingredient</a></li>
+            
+            <li ng-show="!apiFactory.isRole() && !isActive('/login')">
               <a href="#/login"><i class="mdi-action-account-circle"></i></a>
             </li>
-            <li ng-show="apiFactory.getToken()" ng-controller="HomeNavUserCtrl">
+            <li ng-show="apiFactory.isRole()" ng-controller="HomeNavUserCtrl">
               <a href="#/editUser"><img src="/images/profile.jpg" height="40" width="40" style="border-radius: 50px; vertical-align: middle;"/></a>
             </li>
-            <li ng-show="apiFactory.getToken()" ng-controller="HomeNavUserCtrl">
+            <li ng-show="apiFactory.isRole()" ng-controller="HomeNavUserCtrl">
               <a href="#/" ng-click="logOut();"><i class="mdi-action-exit-to-app"></i></a>
             </li>
 

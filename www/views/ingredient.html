@@ -22,8 +22,8 @@
 
       <!-- Presentation -->
       <div class="row" id="presentation">
-        <a href="" ng-click="deleteIngredient()"><i class="mdi-action-delete btn-icon btn-icon-delete"></i></a>
-        <a ng-href="#/ingredient/{{ ingredient.id }}/edit"><i class="mdi-action-settings btn-icon btn-icon-settings" style="margin-right: 15px;"></i></a>
+        <a ng-if="apiFactory.isRole()" href="" ng-click="deleteIngredient()"><i class="mdi-action-delete btn-icon btn-icon-delete"></i></a>
+        <a ng-if="apiFactory.isRole()" ng-href="#/ingredient/{{ ingredient.id }}/edit"><i class="mdi-action-settings btn-icon btn-icon-settings" style="margin-right: 15px;"></i></a>
 
         <p class="title">{{ ingredient.name }}</p>
         <div class="ratio-container hide-on-med-and-up" style="padding: 8px 18px; width: auto;">

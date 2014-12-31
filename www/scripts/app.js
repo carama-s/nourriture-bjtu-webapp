@@ -91,7 +91,7 @@ app.filter("sanitize", ['$sce', function($sce) {
 
 app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location, apiFactory) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    if (apiFactory.getToken() != undefined) { // user logged
+    if (apiFactory.isRole()) { // user logged
       if (next.templateUrl) {
         if (next.templateUrl == "/views/login.html" || next.templateUrl == "/views/registerUser.html") {
           $location.path("/");
@@ -210,18 +210,23 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     var urlTimeline = host + "/timeline";
 
     var apiFactory = {user: {}, ingredient: {}, timeline: {}};
-    var token = undefined;
+    var token = ipCookie("token");
     var user = undefined;
 
     apiFactory.isRole = function(roles) {
-      if (user) return false;
-      return true;
+      if (user) return true;
+      return false;
+    };
+
+    apiFactory.logout = function() {
+      user = false;
+      token = false;
+      ipCookie.remove('token');
     };
 
     function httpGet(url, config) {
       config = config || {};
       config.headers = config.headers || {};
-      var token = apiFactory.getToken();
       if (token !== undefined) {
         config.headers.Authorization = "Bearer " + token;
       }
@@ -231,7 +236,6 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     function httpPost(url, data, config) {
       config = config || {};
       config.headers = config.headers || {};
-      var token = apiFactory.getToken();
       if (token !== undefined)
         config.headers.Authorization = "Bearer " + token;
       return $http.post(url, data, config);
@@ -240,7 +244,6 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     function httpDelete(url, config) {
       config = config || {};
       config.headers = config.headers || {};
-      var token = apiFactory.getToken();
       if (token !== undefined) {
         config.headers.Authorization = "Bearer " + token;
       }
@@ -250,7 +253,6 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     function httpPut(url, data, config) {
       config = config || {};
       config.headers = config.headers || {};
-      var token = apiFactory.getToken();
       if (token !== undefined) {
         config.headers.Authorization = "Bearer " + token;
       }
@@ -258,13 +260,12 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     }
 
     apiFactory.getToken = function() {
-      if (token)
-        return token;
-      return ipCookie("token");
+      return token;
     };
 
-    apiFactory.setToken = function(t) {
+    apiFactory.setToken = function(t, save) {
       token = t;
+      if (save) ipCookie("token", t, {expirationUnit: 'hours', expires: 240});
     };
 
     apiFactory.getUser = function() {
@@ -385,6 +386,10 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
 ]);
 
 app.factory('apiSocketFactory', ["socketFactory", "apiSocketURL", function(socketFactory, apiSocketURL) {
+  if (!window.io) {
+    console.warn("Can't load socket.io !");
+    return {subscribe: _.identity};
+  }
   var ioSocket = io.connect(apiSocketURL);
   var socket = socketFactory({
     ioSocket: ioSocket,
@@ -443,17 +448,17 @@ app.factory("Facebook", ["$q",
   }
 ]);
 
-app.controller('MainAppCtrl', ['$scope', 'ipCookie', 'apiFactory',
-  function($scope, ipCookie, apiFactory) {
+app.controller('MainAppCtrl', ['$scope', 'apiFactory',
+  function($scope, apiFactory) {
     $scope.loaded = true;
     $scope.apiFactory = apiFactory;
-    if (apiFactory.getToken()) {
+    if (apiFactory.getToken() && !apiFactory.isRole()) {
       $scope.loaded = false;
       apiFactory.user.me()
         .then(function(data) { // token is the same
           apiFactory.setUser(data);
         }, function(res) { // invalid token
-          if (res.status == 403) ipCookie.remove('token');
+          if (res.status == 403) apiFactory.logout();
         })
         .then(function() {
           $scope.loaded = true;

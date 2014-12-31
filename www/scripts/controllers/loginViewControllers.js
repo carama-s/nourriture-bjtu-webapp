@@ -14,11 +14,8 @@ loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refre
               glob.set("forRegisterUser", data.user);
               $location.path('/registerUser');
             } else {
-              apiFactory.setToken(data.token.token);
+              apiFactory.setToken(data.token.token, true);
               apiFactory.setUser(data.user);
-              if ($scope.loginInputRemember === true) {
-                ipCookie("token", data.token.token, {expirationUnit: 'hours', expires: 240});
-              }
               $location.path('/');
             }
           });
@@ -27,21 +24,18 @@ loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refre
   }
 ]);
 
-loginViewControllers.controller("LogInFormCtrl", ['$scope', '$location', 'ipCookie', 'apiFactory', function($scope, $location, ipCookie, apiFactory) {
+loginViewControllers.controller("LogInFormCtrl", ['$scope', '$location', 'apiFactory', function($scope, $location, apiFactory) {
   $scope.submitLogIn = function(isValid) {
     $scope.submitted = true;
     if (isValid) {
       apiFactory.user.authenticate($scope.loginInputEmail, $scope.loginInputPassword)
         .then(function(data) {
-          apiFactory.setToken(data.token.token);
+          apiFactory.setToken(data.token.token, $scope.loginInputRemember);
           apiFactory.setUser(data.user);
-          if ($scope.loginInputRemember === true) {
-            ipCookie("token", data.token.token, {expirationUnit: 'hours', expires: 240});
-          }
           $location.path('/');
         }, function(data) {
           $scope.badPassword = true;
-          ipCookie.remove("token");
+          apiFactory.logout();
         });
     }
   };

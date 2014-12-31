@@ -32,19 +32,17 @@ homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'a
 
     apiFactory.timeline.find(config).then(function(res) {
       $scope.timeline = res.data;
-      
+
     });
 
   }
 ]);
 
-
-homeViewControllers.controller("HomeNavUserCtrl", ['$scope', '$location', 'ipCookie', 'apiFactory',
-  function($scope, $location, ipCookie, apiFactory) {
+homeViewControllers.controller("HomeNavUserCtrl", ['$scope', '$location', 'apiFactory',
+  function($scope, $location, apiFactory) {
 
     $scope.logOut = function() {
-      ipCookie.remove('token');
-      apiFactory.setToken(undefined);
+      apiFactory.logout();
       $location.path('/');
     };
   }
