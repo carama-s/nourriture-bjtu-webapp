@@ -6,7 +6,7 @@ registerUserViewControllers.controller('RegisterUserViewCtrl', ['$scope', 'refre
   }
 ]);
 
-registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactory', "globalFactory", function($scope, apiFactory, glob) {
+registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactory', "globalFactory", "$location", function($scope, apiFactory, glob, $location) {
   var initData = glob.pop("forRegisterUser");
   var facebookMode = undefined;
   if (initData === undefined) {
@@ -41,7 +41,14 @@ registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactor
                                     $scope.registerInputUsername, $scope.registerInputEmail, $scope.registerInputPassword);
       }
       fn.then(function(res) {
-        alert("success register");
+        return apiFactory.user.authenticate($scope.registerInputEmail, $scope.registerInputPassword).then(function(data) {
+          apiFactory.setToken(data.token.token, $scope.loginInputRemember);
+          apiFactory.setUser(data.user);
+          $location.path('/');
+        }, function(data) {
+          apiFactory.logout();
+          $location.path('/');
+        });
       }, function(res) {
         if (res.data.name == "ValidationError") {
           var mapping = {username: "usernameAlreadyExists", email: "emailAlreadyExists"};
@@ -55,7 +62,7 @@ registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactor
           }
         }
         else {
-          // server problem
+
         }
       });
     }
