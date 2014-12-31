@@ -12,7 +12,29 @@
 </div>
 
 <div class="container">
-  <br /> <br />
-  <p ng-show="apiFactory.getToken()">Vous êtes connecté !</p>
-  <p ng-show="!apiFactory.getToken()">Vous n'êtes pas connecté !</p>
+
+  <div class="row">
+
+    <div class="col l6 offset-l6" ng-cloak>
+      <div class="timeline-header">Timeline</div>
+      <div ng-controller="SocketTimelineCtrl" style="background-color: white;">
+        <ul style="margin: 0;">
+          <li class="row timeline-row" ng-repeat="line in timeline">
+            <div class="col l2">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
+            <div class="col l2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
+            <div class="col l8" ng-if="line.domain == 'ingredient'">
+              {{ line.ingredient.name }} has been {{ socket_name_mapper[line.name].name }}
+              <span ng-if="line.user"> by {{ line.user.username }}</span>.<span >exist</span>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+
+    </div>
+
+  </div>
+
 </div>

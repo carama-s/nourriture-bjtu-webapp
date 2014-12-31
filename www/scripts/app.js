@@ -16,6 +16,14 @@ var app = angular.module('nourritureApp', [
   'btford.socket-io'
 ]);
 
+app.value('socket_domain_mapper', {'ingredient': {name: "Ingredient", color: 'red'}});
+
+app.value('socket_name_mapper', {
+  'create': {name: "created"},
+  'update': {name: "updated"},
+  'destroy': {name: "deleted"}
+});
+
 app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
                                 'cheese': {name: "Cheese", color: '#f1c40f'},
                                 'chocolate': {name: "Chocolate", color: '#d35400'},
@@ -199,8 +207,9 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     var host = apiURL;
     var urlUser = host + "/user";
     var urlIngredient = host + "/ingredient";
+    var urlTimeline = host + "/timeline";
 
-    var apiFactory = {user: {}, ingredient: {}};
+    var apiFactory = {user: {}, ingredient: {}, timeline: {}};
     var token = undefined;
     var user = undefined;
 
@@ -358,6 +367,12 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
       return httpGet(urlIngredient + "/count", config).then(function(res) {
         return res.data.count;
       });
+    };
+
+    /* API TIMELINE */
+
+    apiFactory.timeline.find = function(config) {
+      return httpGet(urlTimeline, config);
     };
 
     return apiFactory;

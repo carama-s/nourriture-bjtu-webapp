@@ -1,5 +1,36 @@
-<div class="container" ng-controller="ingredientAutocompleteController">
+<div class="container" ng-controller="ingredientAutocompleteController" ng-cloak>
 
+  <p class="title">Add a new recipe</p>
+
+  <!-- Identity -->
+  <p class="sub-title">Identity</p>
+  <div class="row" ng-cloak>
+    <div class="col s12 m4 l3">
+      <div class="ratio-container" id="containerPreviewImage">
+        <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(/images/default-preview.png)'}"></div>
+      </div>
+      <input class="hidden" id="uploadImage" type="file" file-model="photoRecipe"/>
+    </div>
+    <div class="col s12 hide-on-med-and-up" style="height: 28px;"></div>
+    <div class="col s12 m7 l8 offset-m1 offset-l1">
+      <div class="row">
+        <div data-ng-repeat="(k, v) in categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
+          {{ v.name }}
+        </div>
+      </div>
+      <div class="row" style="padding-top: 12px;">
+        <div class="input-field col s12">
+          <input required ng-model="nameRecipe" ng-change="emptyRecipeName = false;" name="nameRecipe" id="nameRecipe" type="text">
+          <label for="nameRecipe">Name</label>
+          <div class="has-error-block" ng-show="submitted && emptyRecipeName">The recipe name is required and cannot be empty.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ingredients list -->
+
+  <p class="sub-title">Ingredients list</p>
   <div class="row">
     <div class="col s12 m12 l12">
       <div>
@@ -9,7 +40,7 @@
         minlength="1"
         match-class="highlight"
         selected-object="addIngredientToRecipe"
-        remote-url="http://nourriture.dennajort.fr/api/ingredient/autocomplete?name="
+        remote-url="http://nourriture.dennajort.fr/api/ingredient/autocomplete?{{urlIngredientExclude}}name="
         remote-url-data-field=""
         title-field="name"
         description-field="category"
@@ -37,7 +68,11 @@
       </ul>
     </div>
   </div>
+  {{ recipeIngredients }}
 
+
+  {{ idIngredientExclude }}
+  {{ urlIngredientExclude }}
   <script type="text/ng-template" id="/my-custom-template.html">
 
   <div class="angucomplete-holder" ng-class="{'angucomplete-dropdown-visible': showDropdown}">

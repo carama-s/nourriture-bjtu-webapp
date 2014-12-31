@@ -13,6 +13,32 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSock
   }
 ]);
 
+homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'apiSocketFactory', 'socket_domain_mapper', 'socket_name_mapper',
+  function($scope, apiFactory, apiSocketFactory, socket_domain_mapper, socket_name_mapper) {
+
+    apiSocketFactory.subscribe(["timeline.create"], $scope);
+    $scope.$on("apiSocket:timeline.create", function(event, data) {
+      $scope.timeline.unshift(data);
+    });
+
+    $scope.socket_domain_mapper = socket_domain_mapper;
+    $scope.socket_name_mapper = socket_name_mapper;
+    var config = {
+      params: {
+        sort: "createdAt DESC",
+        limit: 10
+      }
+    };
+
+    apiFactory.timeline.find(config).then(function(res) {
+      $scope.timeline = res.data;
+      
+    });
+
+  }
+]);
+
+
 homeViewControllers.controller("HomeNavUserCtrl", ['$scope', '$location', 'ipCookie', 'apiFactory',
   function($scope, $location, ipCookie, apiFactory) {
 
