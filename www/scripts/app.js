@@ -213,6 +213,11 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     var token = undefined;
     var user = undefined;
 
+    apiFactory.isRole = function(roles) {
+      if (user) return false;
+      return true;
+    };
+
     function httpGet(url, config) {
       config = config || {};
       config.headers = config.headers || {};
@@ -421,7 +426,6 @@ app.factory("Facebook", ["$q",
 
     fac.login = function(scope) {
       var d = Q.defer();
-      console.log("Hello I'm here !");
       waitLoaded(function() {
         FB.login(function(res) {
           console.log(res);
@@ -448,8 +452,8 @@ app.controller('MainAppCtrl', ['$scope', 'ipCookie', 'apiFactory',
       apiFactory.user.me()
         .then(function(data) { // token is the same
           apiFactory.setUser(data);
-        }, function(data) { // invalid token
-          //ipCookie.remove('token');
+        }, function(res) { // invalid token
+          if (res.status == 403) ipCookie.remove('token');
         })
         .then(function() {
           $scope.loaded = true;
