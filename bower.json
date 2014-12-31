@@ -23,6 +23,7 @@
     "angular-socket-io": "~0.7.0",
     "angular-scroll": "~0.6.2",
     "angular-xeditable": "~0.1.8",
-    "components-font-awesome": "~4.2.0"
+    "components-font-awesome": "~4.2.0",
+    "angucomplete-alt": "~0.0.33"
   }
 }

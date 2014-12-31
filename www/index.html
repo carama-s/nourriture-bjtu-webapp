@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/styles/lcss/custom.css">
     <link rel="stylesheet" type="text/css" href="/styles/css/spinner.css">
     <link rel="stylesheet" type="text/css" href="/bower/components-font-awesome/css/font-awesome.min.css">
-
+    <link rel="stylesheet" type="text/css" href="/bower/angucomplete-alt/angucomplete-alt.css">
 
     <nav ng-controller="RouteCtrl">
       <div class="container">
@@ -23,8 +23,9 @@
           <ul id="nav-mobile" class="right side-nav" data-ng-show="loaded">
             <li><a href="#/">Home</a></li>
             <li><a href="#/">Recipes</a></li>
+            <li><a href="#/addRecipe"> + Recipe</a></li>
             <li><a href="#/ingredients">Ingredients</a></li>
-            <li><a href="#/addIngredient"> + Ingredients</a></li>
+            <li><a href="#/addIngredient"> + Ingredient</a></li>
 
             <li ng-show="apiFactory.getToken() == undefined && !isActive('/login')">
               <a href="#/login"><i class="mdi-action-account-circle"></i></a>
@@ -61,10 +62,12 @@
   <script src="http://nourriture.dennajort.fr/socket.io/socket.io.js"></script>
   <script src="/bower/angular-socket-io/socket.min.js"></script>
   <script src="/bower/angular-scroll/angular-scroll.min.js"></script>
+  <script src="/bower/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
   <script src="/bower/angular-xeditable/dist/js/xeditable.min.js"></script>
 
   <script src="/scripts/app.js"></script>
   <script src="/scripts/controllers/addIngredientViewControllers.js"></script>
+  <script src="/scripts/controllers/addRecipeViewControllers.js"></script>
   <script src="/scripts/controllers/editIngredientViewControllers.js"></script>
   <script src="/scripts/controllers/editUserViewControllers.js"></script>
   <script src="/scripts/controllers/homeViewControllers.js"></script>

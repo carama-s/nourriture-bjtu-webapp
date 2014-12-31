@@ -3,6 +3,7 @@ var app = angular.module('nourritureApp', [
   'ipCookie',
   'duScroll',
   'xeditable',
+  'angucomplete-alt',
   'editUserViewControllers',
   'loginViewControllers',
   'registerUserViewControllers',
@@ -10,6 +11,7 @@ var app = angular.module('nourritureApp', [
   'ingredientViewControllers',
   'ingredientsViewControllers',
   'addIngredientViewControllers',
+  'addRecipeViewControllers',
   'editIngredientViewControllers',
   'btford.socket-io'
 ]);
@@ -62,6 +64,10 @@ app.config(['$routeProvider',
       when('/addIngredient', {
         templateUrl: '/views/addIngredient.html',
         controller: 'AddIngredientViewCtrl'
+      }).
+      when('/addRecipe', {
+        templateUrl: '/views/addRecipe.html',
+        controller: 'AddRecipeViewCtrl'
       }).
       otherwise({
         redirectTo: '/home'
