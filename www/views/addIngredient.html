@@ -14,7 +14,7 @@
     <div class="col s12 hide-on-med-and-up" style="height: 28px;"></div>
     <div class="col s12 m7 l8 offset-m1 offset-l1">
       <div class="row">
-        <div data-ng-repeat="(k, v) in categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
+        <div data-ng-repeat="(k, v) in ingredient_categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
           {{ v.name }}
         </div>
       </div>

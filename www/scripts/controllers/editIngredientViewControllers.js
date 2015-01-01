@@ -2,20 +2,20 @@ var editIngredientViewControllers = angular.module('editIngredientViewController
 
 editIngredientViewControllers.controller('EditIngredientViewCtrl', function() {});
 
-editIngredientViewControllers.controller('EditIngredientCtrl', ['$scope', '$routeParams', '$location', 'apiFactory', 'categories_mapper',
-  function($scope, $routeParams, $location, apiFactory, categories_mapper) {
+editIngredientViewControllers.controller('EditIngredientCtrl', ['$scope', '$routeParams', '$location', 'apiFactory', 'ingredient_categories_mapper',
+  function($scope, $routeParams, $location, apiFactory, ingredient_categories_mapper) {
     $scope.loaded = false;
     $scope.ingredientId = $routeParams.id;
     $scope.emptyIngredientName = false;
     $scope.emptyIngredientDescription = false;
     // Categories
-    $scope.categories_mapper = categories_mapper;
+    $scope.ingredient_categories_mapper = ingredient_categories_mapper;
     $scope.changeCategory = function($event, value) {
       var parent = $event.currentTarget.parentNode;
       for (var i = 0; i < parent.children.length; i++) {
         parent.children[i].style.backgroundColor = "#DADADA";
       }
-      $event.currentTarget.style.backgroundColor = categories_mapper[value].color;
+      $event.currentTarget.style.backgroundColor = ingredient_categories_mapper[value].color;
       $scope.categoryIngredient = value;
     };
 
@@ -68,8 +68,9 @@ editIngredientViewControllers.controller('EditIngredientCtrl', ['$scope', '$rout
         {designation: 'Vitamin C', value: '35 %', dailyValue: '40 %'},
         {designation: 'Vitamin D', value: '55 %', dailyValue: '10 %'}
       ];
-      if ($scope.needNewRow())
+      if ($scope.needNewRow()) {
         $scope.addNutrition();
+      }
       $scope.loaded = true;
     });
 

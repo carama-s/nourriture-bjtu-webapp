@@ -5,7 +5,7 @@
       <div class="ratio-container">
         <div class="ratio-4_3 background-image background-image-zoom" ng-style="{'background-image': 'url(/images/category_fruit.jpg)'}"></div>
         <div class="ingredients-category-banner ingredients-category-banner-fruits">
-          <a href="" ng-click="changeCategory('fruit')" class="ingredients-category-banner-text">{{ categories_mapper['fruit'].name }}</a>
+          <a href="" ng-click="changeCategory('fruit')" class="ingredients-category-banner-text">{{ ingredient_categories_mapper['fruit'].name }}</a>
         </div>
       </div>
     </li>
@@ -14,7 +14,7 @@
       <div class="ratio-container">
         <div class="ratio-4_3 background-image background-image-zoom" ng-style="{'background-image': 'url(/images/category_vegetable.jpg)'}"></div>
         <div class="ingredients-category-banner ingredients-category-banner-vegetables">
-          <a href="" ng-click="changeCategory('vegetable')" class="ingredients-category-banner-text">{{ categories_mapper['vegetable'].name }}</a>
+          <a href="" ng-click="changeCategory('vegetable')" class="ingredients-category-banner-text">{{ ingredient_categories_mapper['vegetable'].name }}</a>
         </div>
       </div>
     </li>
@@ -23,7 +23,7 @@
       <div class="ratio-container">
         <div class="ratio-4_3 background-image background-image-zoom" ng-style="{'background-image': 'url(/images/category_fish.jpg)'}"></div>
         <div class="ingredients-category-banner ingredients-category-banner-fish">
-          <a href="" ng-click="changeCategory('fish')" class="ingredients-category-banner-text">{{ categories_mapper['fish'].name }}</a>
+          <a href="" ng-click="changeCategory('fish')" class="ingredients-category-banner-text">{{ ingredient_categories_mapper['fish'].name }}</a>
         </div>
       </div>
     </li>
@@ -37,7 +37,7 @@
         <div class="ingredients-menu-sub-title">Categories</div>
         <ul>
           <li class="category-li"><a href="#/ingredients" ng-click="changeCategory('all')" ng-class="selectedCategory == 'All' ? 'category-li-selected' : ''">All</a></li>
-          <li class="category-li" data-ng-repeat="(k, v) in categories_mapper">
+          <li class="category-li" data-ng-repeat="(k, v) in ingredient_categories_mapper">
             <a href="#/ingredients" ng-click="changeCategory(k)" ng-class="selectedCategory == v.name ? 'category-li-selected' : ''">{{ v.name }}</a/>
           </li>
         </ul>
@@ -66,7 +66,7 @@
               </div>
               <div class="row ingredient-li-content">
                 <div class="ingredient-li-content-name">{{ ingredient.name }}</div>
-                <div class="ingredient-li-content-category" style="color: {{ categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
+                <div class="ingredient-li-content-category" style="color: {{ ingredient_categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
                 <div class="ingredient-li-content-description">{{ ingredient.description | limitTo : 92 }}...</div><br/>
               </div>
             </li>
@@ -80,7 +80,7 @@
               </div>
               <div class="row ingredient-li-content">
                 <div class="ingredient-li-content-name">{{ ingredient.name }}</div>
-                <div class="ingredient-li-content-category" style="color: {{ categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
+                <div class="ingredient-li-content-category" style="color: {{ ingredient_categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
                 <div class="ingredient-li-content-description">{{ ingredient.description | limitTo : 92}}...</div><br/>
               </div>
             </li>
@@ -94,7 +94,7 @@
               </div>
               <div class="col s8 m8 l8 no-padding ingredient-li-horizontal-content ingredient-li-horizontal-container">
                 <div class="ingredient-li-horizontal-content-name">{{ ingredient.name }}</div>
-                <div class="ingredient-li-horizontal-content-category" style="color: {{ categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
+                <div class="ingredient-li-horizontal-content-category" style="color: {{ ingredient_categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
                 <div class="ingredient-li-content-description">{{ ingredient.description | limitTo : 200}}...</div>
               </div>
             </li>

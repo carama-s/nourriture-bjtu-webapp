@@ -1,12 +1,12 @@
 var ingredientViewControllers = angular.module('ingredientViewControllers', []);
 
 
-ingredientViewControllers.controller('IngredientViewCtrl', ['$scope', '$routeParams', '$location', '$document', 'apiFactory', 'categories_mapper',
-  function($scope, $routeParams, $location, $document, apiFactory, categories_mapper) {
+ingredientViewControllers.controller('IngredientViewCtrl', ['$scope', '$routeParams', '$location', '$document', 'apiFactory', 'ingredient_categories_mapper',
+  function($scope, $routeParams, $location, $document, apiFactory, ingredient_categories_mapper) {
     $scope.loaded = false;
     $scope.ingredientId = $routeParams.id;
     $scope.months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    $scope.categories_mapper = categories_mapper;
+    $scope.ingredient_categories_mapper = ingredient_categories_mapper;
     apiFactory.ingredient.findById($routeParams.id).then(function(res) {
       $scope.ingredient = res.data;
 

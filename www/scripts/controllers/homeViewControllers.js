@@ -16,9 +16,23 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSock
 homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'apiSocketFactory', 'socket_domain_mapper', 'socket_name_mapper',
   function($scope, apiFactory, apiSocketFactory, socket_domain_mapper, socket_name_mapper) {
 
+    function checkDestroyed(elements) {
+      var destroyed = [];
+      _(elements).forEach(function(value, i) {
+        if (value.name == 'destroy') {
+          destroyed.push(value.ingredient.id);
+          value.destroyed = true;
+        } else {
+          value.destroyed = _.contains(destroyed, value.ingredient.id);
+        }
+      });
+      return elements;
+    }
+
     apiSocketFactory.subscribe(["timeline.create"], $scope);
     $scope.$on("apiSocket:timeline.create", function(event, data) {
       $scope.timeline.unshift(data);
+      $scope.timeline = checkDestroyed($scope.timeline);
     });
 
     $scope.socket_domain_mapper = socket_domain_mapper;
@@ -31,8 +45,7 @@ homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'a
     };
 
     apiFactory.timeline.find(config).then(function(res) {
-      $scope.timeline = res.data;
-
+      $scope.timeline = checkDestroyed(res.data);
     });
 
   }

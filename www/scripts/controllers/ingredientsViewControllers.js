@@ -1,10 +1,10 @@
 var ingredientsViewControllers = angular.module('ingredientsViewControllers', []);
 
 
-ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFactory', 'categories_mapper',
-  function($scope, apiFactory, categories_mapper) {
+ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFactory', 'ingredient_categories_mapper',
+  function($scope, apiFactory, ingredient_categories_mapper) {
     $scope.ingredients = [];
-    $scope.categories_mapper = categories_mapper;
+    $scope.ingredient_categories_mapper = ingredient_categories_mapper;
     $scope.selectedCategory = "All";
     $scope.modeDisplay = 'module';
 
@@ -62,7 +62,7 @@ ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFact
         $scope.selectedCategory = "All"
       } else {
         currentCategory = category_name;
-        $scope.selectedCategory = categories_mapper[category_name].name;
+        $scope.selectedCategory = ingredient_categories_mapper[category_name].name;
       }
       $scope.currentPage = 0;
 

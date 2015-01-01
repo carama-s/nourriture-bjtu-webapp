@@ -24,16 +24,27 @@ app.value('socket_name_mapper', {
   'destroy': {name: "deleted"}
 });
 
-app.value('categories_mapper', {'bread': {name: "Bread", color: '#ecf0f1'},
-                                'cheese': {name: "Cheese", color: '#f1c40f'},
-                                'chocolate': {name: "Chocolate", color: '#d35400'},
-                                'egg': {name: "Egg", color: '#1abc9c'},
-                                'fish': {name: "Fish", color: '#3498db'},
-                                'fruit': {name: "Fruits", color: '#2ecc71'},
-                                'meat': {name: "Meat", color: '#c0392b'},
-                                'spice': {name: "Spice", color: '#e74c3c'},
-                                'vegetable': {name: "Vegetables", color: '#e67e22'},
-                                'other': {name: "Other", color: '#bdc3c7'}});
+app.value('ingredient_categories_mapper', {
+  'bread': {name: "Bread", color: '#ecf0f1'},
+  'cheese': {name: "Cheese", color: '#f1c40f'},
+  'chocolate': {name: "Chocolate", color: '#d35400'},
+  'egg': {name: "Egg", color: '#1abc9c'},
+  'fish': {name: "Fish", color: '#3498db'},
+  'fruit': {name: "Fruits", color: '#2ecc71'},
+  'meat': {name: "Meat", color: '#c0392b'},
+  'spice': {name: "Spice", color: '#e74c3c'},
+  'vegetable': {name: "Vegetables", color: '#e67e22'},
+  'other': {name: "Other", color: '#bdc3c7'}
+});
+
+app.value('recipe_categories_mapper', {
+  'appetizer': {name: "Appetizer", color: "orange"},
+  'dessert': {name: "Dessert", color: '#1abc9c'},
+  'main': {name: "Main dish", color: '#c0392b'},
+  'starter': {name: "Starter", color: '#e74c3c'},
+  'vegetarian': {name: "Vegetarian", color: '#2ecc71'},
+  'other': {name: "Other", color: '#bdc3c7'}
+});
 
 app.value("apiURL", "http://nourriture.dennajort.fr/api");
 app.value("apiSocketURL", "http://nourriture.dennajort.fr:80/");
@@ -208,8 +219,9 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     var urlUser = host + "/user";
     var urlIngredient = host + "/ingredient";
     var urlTimeline = host + "/timeline";
+    var urlRecipe = host + "/recipe";
 
-    var apiFactory = {user: {}, ingredient: {}, timeline: {}};
+    var apiFactory = {user: {}, ingredient: {}, timeline: {}, recipe: {}};
     var token = ipCookie("token");
     var user = undefined;
 
@@ -380,6 +392,13 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
     apiFactory.timeline.find = function(config) {
       return httpGet(urlTimeline, config);
     };
+
+    /* API RECIPE */
+
+    apiFactory.recipe.findCategories = function(config) {
+      return httpGet(urlRecipe + "/categories", config);
+    }
+
 
     return apiFactory;
   }

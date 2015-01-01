@@ -1,6 +1,6 @@
-<div class="container" ng-controller="ingredientAutocompleteController" ng-cloak>
+<div class="container" ng-cloak>
 
-  <p class="title">Add a new recipe</p>
+  <p class="title">Add Recipe</p>
 
   <!-- Identity -->
   <p class="sub-title">Identity</p>
@@ -14,7 +14,7 @@
     <div class="col s12 hide-on-med-and-up" style="height: 28px;"></div>
     <div class="col s12 m7 l8 offset-m1 offset-l1">
       <div class="row">
-        <div data-ng-repeat="(k, v) in categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
+        <div data-ng-repeat="(k, v) in recipe_categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
           {{ v.name }}
         </div>
       </div>
@@ -24,12 +24,32 @@
           <label for="nameRecipe">Name</label>
           <div class="has-error-block" ng-show="submitted && emptyRecipeName">The recipe name is required and cannot be empty.</div>
         </div>
+        <div class="input-field col l12">
+          <div class="col l6">
+            <div class="col l10">
+              Cook time
+            </div>
+            <div class="col l2">
+              <input type="number" min="0"/>
+            </div>
+          </div>
+          <div class="col l6">
+            <div class="col l10">
+              Cook time
+            </div>
+            <div class="col l2">
+              <input type="number" min="0"/>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Ingredients list -->
 
+  <!-- Ingredients list -->
+<!--
   <p class="sub-title">Ingredients list</p>
   <div class="row">
     <div class="col s12 m12 l12">
@@ -107,4 +127,12 @@
     </div>
   </div>
   </script>
+-->
 </div>
+
+<script>
+$(function() {
+  $("input[type='number']").stepper();
+});
+</script>
+<script type="text/javascript" src="/bower/materialize/bin/materialize.js"></script>

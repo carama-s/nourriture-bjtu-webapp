@@ -25,6 +25,7 @@
     "angular-xeditable": "~0.1.8",
     "components-font-awesome": "~4.2.0",
     "angucomplete-alt": "~0.0.33",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "Stepper": "~3.0.8"
   }
 }

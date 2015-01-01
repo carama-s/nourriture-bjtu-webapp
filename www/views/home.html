@@ -19,12 +19,14 @@
       <div class="timeline-header">Timeline</div>
       <div ng-controller="SocketTimelineCtrl" style="background-color: white;">
         <ul style="margin: 0;">
-          <li class="row timeline-row" ng-repeat="line in timeline">
+          <li class="row timeline-row" ng-repeat="line in timeline track by line.id">
             <div class="col l2">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
             <div class="col l2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
             <div class="col l8" ng-if="line.domain == 'ingredient'">
-              {{ line.ingredient.name }} has been {{ socket_name_mapper[line.name].name }}
-              <span ng-if="line.user"> by {{ line.user.username }}</span>.<span >exist</span>
+              <a ng-if="!line.destroyed" ng-href="#/ingredient/{{ line.ingredient.id }}" class="keyword">{{ line.ingredient.name }}</a>
+              <span ng-if="line.destroyed">{{ line.ingredient.name }}</span>
+               has been {{ socket_name_mapper[line.name].name }}
+              <span ng-if="line.user"> by {{ line.user.username }}</span>
             </div>
           </li>
         </ul>
