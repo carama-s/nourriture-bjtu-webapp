@@ -1,7 +1,6 @@
 /www/bower
 /node_modules
 /build
-/www/styles/lcss/
-!/www/styles/lcss/.gitkeep
 /www/scripts/**/*.min.js
 /www/scripts/**/*.min.js.map
+/www/styles/css/style.css

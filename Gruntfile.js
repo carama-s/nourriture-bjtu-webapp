@@ -26,22 +26,19 @@ module.exports = function(grunt) {
       }
     },
     less: {
-      options: {
-        compress: true,
-        optimization: 2
-      },
-      files: {
-        expand: true,     // Enable dynamic expansion.
-        cwd: 'www/styles/less/',      // Src matches are relative to this path.
-        src: ['**/*.less'], // Actual pattern(s) to match.
-        dest: 'www/styles/lcss/',   // Destination path prefix.
-        ext: '.css',   // Dest filepaths will have this extension.
-        extDot: 'last'   // Extensions in filenames begin after the first dot
+      less: {
+        options: {
+          compress: true,
+          optimization: 2,
+        },
+        files: {
+          "www/styles/css/style.css": "www/styles/less/style.less"
+        }
       }
     },
     watch: {
       styles: {
-        files: ['www/styles/**/*.less'], // which files to watch
+        files: ['www/styles/less/**/*.less'], // which files to watch
         tasks: ['less'],
         options: {
           nospawn: true
