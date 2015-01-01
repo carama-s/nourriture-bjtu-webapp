@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         src: ['**/*.less'], // Actual pattern(s) to match.
         dest: 'www/styles/lcss/',   // Destination path prefix.
         ext: '.css',   // Dest filepaths will have this extension.
-        extDot: 'first'   // Extensions in filenames begin after the first dot
+        extDot: 'last'   // Extensions in filenames begin after the first dot
       }
     },
     watch: {
