@@ -46,8 +46,7 @@ registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactor
           apiFactory.setUser(data.user);
           $location.path('/');
         }, function(data) {
-          apiFactory.logout();
-          $location.path('/');
+          apiFactory.logout("/");
         });
       }, function(res) {
         if (res.data.name == "ValidationError") {

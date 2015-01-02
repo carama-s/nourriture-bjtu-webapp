@@ -55,8 +55,7 @@ homeViewControllers.controller("HomeNavUserCtrl", ['$scope', '$location', 'apiFa
   function($scope, $location, apiFactory) {
 
     $scope.logOut = function() {
-      apiFactory.logout();
-      $location.path('/');
+      apiFactory.logout("/");
     };
   }
 ]);

@@ -235,10 +235,11 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL
       return false;
     };
 
-    apiFactory.logout = function() {
+    apiFactory.logout = function(red) {
       user = false;
       token = false;
       ipCookie.remove('token');
+      if (red) $location.path(red);
     };
 
     function httpGet(url, config) {
