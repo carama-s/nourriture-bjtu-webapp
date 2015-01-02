@@ -1,6 +1,6 @@
 var app = angular.module('nourritureApp', [
   'ngRoute',
-  'ipCookie',
+  'LocalStorageModule',
   'duScroll',
   'xeditable',
   'angucomplete-alt',
@@ -219,7 +219,7 @@ app.factory("refreshInputForms", [function() {
   }
 }]);
 
-app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", "$location", function (apiURL, $http, $q, ipCookie, $location) {
+app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageServiceProvider", "$location", function (apiURL, $http, $q, localStorage, $location) {
     var host = apiURL;
     var urlUser = host + "/user";
     var urlIngredient = host + "/ingredient";
@@ -227,7 +227,7 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", "$location", fun
     var urlRecipe = host + "/recipe";
 
     var apiFactory = {user: {}, ingredient: {}, timeline: {}, recipe: {}};
-    var token = ipCookie("token");
+    var token = localStorage.get("token");
     var user = undefined;
 
     apiFactory.isRole = function(roles) {
@@ -238,7 +238,7 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", "$location", fun
     apiFactory.logout = function(red) {
       user = false;
       token = false;
-      ipCookie.remove('token');
+      localStorage.remove('token');
       if (red) $location.path(red);
     };
 
@@ -283,7 +283,7 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", "$location", fun
 
     apiFactory.setToken = function(t, save) {
       token = t;
-      if (save) ipCookie("token", t, {expirationUnit: 'hours', expires: 240});
+      if (save) localStorage.set("token", t);
     };
 
     apiFactory.getUser = function() {
