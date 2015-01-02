@@ -219,7 +219,7 @@ app.factory("refreshInputForms", [function() {
   }
 }]);
 
-app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", function (apiURL, $http, $q, ipCookie) {
+app.factory("apiFactory", ["apiURL", '$http', "$q", "ipCookie", "$location", function (apiURL, $http, $q, ipCookie, $location) {
     var host = apiURL;
     var urlUser = host + "/user";
     var urlIngredient = host + "/ingredient";
