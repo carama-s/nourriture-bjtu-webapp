@@ -23,21 +23,20 @@ editUserViewControllers.controller("EditUserFormCtrl", ['$scope', '$timeout', 'a
           .then(function(res) {
             alert("success change user info");
           }, function(res) {
-              if (res.data.name == "ValidationError") {
-                var mapping = {email: "emailAlreadyExists"};
-                for (fieldName in res.data.errors) {
-                  var field = res.data.errors[fieldName];
-                  if (field.type == "user defined") {
-                    // already exists
-                    var realName = mapping[fieldName];
-                    $scope[realName] = true;
-                  }
+            var err = res.data;
+            if (err.status == 400 && err.code == "E_VALIDATION") {
+              var mapping = {email: "emailAlreadyExists"};
+              _.forOwn(err.invalidAttributes, function(errors, field) {
+                if (_.contains(errors, "unique")) {
+                  var realName = mapping[field];
+                  $scope[realName] = true;
                 }
-              }
-              else {
-                // server problem
-              }
-          });
+              });
+            }
+            else {
+              // server problem
+            }
+        });
       }
     }
     $timeout(refreshInputForms);
