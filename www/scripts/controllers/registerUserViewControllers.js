@@ -49,20 +49,17 @@ registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactor
           apiFactory.logout("/");
         });
       }, function(res) {
-        if (res.data.name == "ValidationError") {
+        var err = res.data;
+        if (err.status == 400 && err.code == "E_VALIDATION") {
           var mapping = {username: "usernameAlreadyExists", email: "emailAlreadyExists"};
-          for (fieldName in res.data.errors) {
-            var field = res.data.errors[fieldName];
-            if (field.type == "user defined") {
-              // already exists
-              var realName = mapping[fieldName];
+          _.forOwn(err.invalidAttributes, function(errors, field) {
+            if (_.contains(errors, "unique")) {
+              var realName = mapping[field];
               $scope[realName] = true;
             }
-          }
+          });
         }
-        else {
-
-        }
+        else {}
       });
     }
   };
