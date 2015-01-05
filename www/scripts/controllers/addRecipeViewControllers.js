@@ -33,9 +33,9 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", 
         $scope.emptyRecipeDescription = true;
         valid = false;
       }
-      if ($scope.stepsRecipe.length > 0 && _.last($scope.stepsRecipe).trim().length === 0) {
-        $scope.stepsRecipe.pop();
-      }
+      $scope.stepsRecipe = _.filter($scope.stepsRecipe, function(step) {
+        return (step.trim().length > 0);
+      });
       if (!_.contains($scope.timeList, $scope.prepTimeUnitRecipe)) {
         $scope.prepTimeUnitRecipe = $scope.timeList[0];
         valid = false;
