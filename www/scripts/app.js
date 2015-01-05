@@ -16,7 +16,10 @@ var app = angular.module('nourritureApp', [
   'btford.socket-io'
 ]);
 
-app.value('socket_domain_mapper', {'ingredient': {name: "Ingredient", color: 'red'}});
+app.value('socket_domain_mapper', {
+  'ingredient': {name: "Ingredient", color: 'red'},
+  "recipe": {name: "Recipe", color: "blue"}
+});
 
 app.value('socket_name_mapper', {
   'create': {name: "created"},

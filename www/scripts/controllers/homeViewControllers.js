@@ -16,14 +16,16 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSock
 homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'apiSocketFactory', 'socket_domain_mapper', 'socket_name_mapper',
   function($scope, apiFactory, apiSocketFactory, socket_domain_mapper, socket_name_mapper) {
 
+    var domains = ["ingredient", "recipe"];
+
     function checkDestroyed(elements) {
       var destroyed = [];
       _(elements).forEach(function(value, i) {
         if (value.name == 'destroy') {
-          destroyed.push(value.ingredient.id);
+          destroyed.push(value.data.id);
           value.destroyed = true;
         } else {
-          value.destroyed = _.contains(destroyed, value.ingredient.id);
+          value.destroyed = _.contains(destroyed, value.data.id);
         }
       });
       return elements;
@@ -31,8 +33,10 @@ homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'a
 
     apiSocketFactory.subscribe(["timeline.create"], $scope);
     $scope.$on("apiSocket:timeline.create", function(event, data) {
-      $scope.timeline.unshift(data);
-      $scope.timeline = checkDestroyed($scope.timeline);
+      if (_.contains(domains, event.domain)) {
+        $scope.timeline.unshift(data);
+        $scope.timeline = checkDestroyed($scope.timeline);
+      }
     });
 
     $scope.socket_domain_mapper = socket_domain_mapper;
@@ -40,7 +44,8 @@ homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'a
     var config = {
       params: {
         sort: "createdAt DESC",
-        limit: 10
+        limit: 10,
+        domain: domains
       }
     };
 
