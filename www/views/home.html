@@ -18,14 +18,9 @@
       <div class="row home-timeline-line" ng-repeat="line in timeline track by line.id">
           <div class="col-md-3">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
           <div class="col-md-2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
-          <div class="col-md-7" ng-if="line.domain == 'ingredient'">
-            <a ng-if="!line.destroyed" ng-href="#/ingredient/{{ line.data.id }}">{{ line.data.name }}</a>
-            <span ng-if="line.destroyed">{{ line.data.name }}</span>
-            has been {{ socket_name_mapper[line.name].name }}
-            <span ng-if="line.user"> by {{ line.user.username }}</span>
-          </div>
-          <div class="col-md-7" ng-if="line.domain == 'recipe'">
-            <a ng-if="!line.destroyed" ng-href="#/recipe/{{ line.data.id }}">{{ line.data.name }}</a>
+          <div class="col-md-7">
+            <a ng-if="!line.destroyed && line.domain == 'ingredient'" ng-href="#/ingredient/{{ line.data.id }}">{{ line.data.name }}</a>
+            <a ng-if="!line.destroyed && line.domain == 'recipe'" ng-href="#/recipe/{{ line.data.id }}">{{ line.data.name }}</a>
             <span ng-if="line.destroyed">{{ line.data.name }}</span>
             has been {{ socket_name_mapper[line.name].name }}
             <span ng-if="line.user"> by {{ line.user.username }}</span>
