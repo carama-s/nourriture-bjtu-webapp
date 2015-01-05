@@ -112,7 +112,7 @@
   </div>
 
   <br />
-  <p class="sub-title-page">Steps</p>
+  <p class="sub-title-page">Steps&nbsp;<button type="button" class="btn btn-primary btn-xs" ng-click="addStep()">Add&nbsp;<i class="fa fa-plus"></i></button></p>
   <div class="row" ng-repeat="step in stepsRecipe track by $index">
     <div class="col-xs-12 form-group">
       <label class="form-label">Step {{$index + 1}}</label>
@@ -124,7 +124,14 @@
   <div class="row">
     <div class="col-xs-12">
       <p class="main-color" ng-show="stepsRecipe.length == 0">No steps defined for this new recipe</p>
-      <button type="button" class="btn btn-primary" ng-click="addStep()">Add step</button>
+
+    </div>
+  </div>
+
+  <br />
+  <div class="row">
+    <div class="col-xs-12">
+      <button type="button" class="btn btn-primary" ng-click="createRecipe()">Create recipe</button>
     </div>
   </div>
   <br />
