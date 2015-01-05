@@ -1,8 +1,7 @@
 var loginViewControllers = angular.module('loginViewControllers', []);
 
-loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'refreshInputForms', 'Facebook', "globalFactory", "$location",
-  function($scope, apiFactory, refreshInputForms, Facebook, glob, $location) {
-    refreshInputForms();
+loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'Facebook', "globalFactory", "$location",
+  function($scope, apiFactory, Facebook, glob, $location) {
 
     $scope.loginWithFB = function() {
       Facebook.login({scope: 'public_profile,email'})

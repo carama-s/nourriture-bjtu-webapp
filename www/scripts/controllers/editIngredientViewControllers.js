@@ -12,7 +12,7 @@ editIngredientViewControllers.controller('EditIngredientCtrl', ['$scope', '$rout
     $scope.ingredient_categories_mapper = ingredient_categories_mapper;
     $scope.changeCategory = function($event, value) {
       var parent = $event.currentTarget.parentNode;
-      for (var i = 0; i < parent.children.length; i++) {
+      for (var i = 1; i < parent.children.length; i++) {
         parent.children[i].style.backgroundColor = "#DADADA";
       }
       $event.currentTarget.style.backgroundColor = ingredient_categories_mapper[value].color;

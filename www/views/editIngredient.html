@@ -1,107 +1,113 @@
 <div class="container" ng-controller="EditIngredientCtrl" ng-show="loaded" ng-cloak>
-  <p class="title">Edit Ingredient</p>
+  <input id="hiddenElement" type="hidden" />
+  <p class="title-page">Edit ingredient</p>
 
-  <!-- Identity -->
-  <p class="sub-title">Identity</p>
-  <div class="row">
-    <div class="col s12 m4 l3">
+  <br />
+  <p class="sub-title-page">Identity</p>
+  <div class=row>
+    <div class="col-md-3">
       <div ng-if="loaded" class="ratio-container" id="containerPreviewImage">
         <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
       </div>
       <input class="hidden" id="uploadImage" type="file" file-model="photoIngredient"/>
     </div>
-    <div class="col s12 hide-on-med-and-up" style="height: 28px;"></div>
-    <div class="col s12 m7 l8 offset-m1 offset-l1">
+    <div class="col-md-8 col-md-offset-1">
+      <div class="form-group">
+        <label class="form-label" for="nameIngredient">Ingredient name</label>
+        <input type="text" value="{{ ingredient.name }}" ng-class="{'input-text-error': submitted && emptyIngredientName}" class="form-control input-text" ng-model="nameIngredient" name="nameIngredient" id="nameIngredient" placeholder="Ingredient name" ng-change="emptyIngredientName = false;">
+        <div class="block-error" ng-show="submitted && emptyIngredientName">The ingredient name is required and cannot be empty.</div>
+      </div>
+
       <div class="row">
-        <div data-ng-repeat="(k, v) in ingredient_categories_mapper track by $index" ng-style="ingredient.category == k && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col s4 m4 l2 categories">
-          {{ v.name }}
-        </div>
-      </div>
-      <div class="row" style="padding-top: 12px;">
-        <div class="input-field col s12">
-          <input ng-model="nameIngredient" ng-change="emptyIngredientName = false;" id="nameIngredient" value="{{ ingredient.name }}" type="text"/>
-          <label for="nameIngredient">Name</label>
-          <div class="has-error-block" ng-show="submitted && emptyIngredientName">The ingredient name is required and cannot be empty.</div>
+        <div class="col-xs-12 form-group">
+          <label class="form-label">Ingredient category</label><br />
+          <div data-ng-repeat="(k, v) in ingredient_categories_mapper track by $index" ng-style="ingredient.category == k && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col-sm-2 col-xs-4 categories">
+            {{ v.name }}
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Season -->
   <div ng-if="hasSeasonPeriod()">
-    <p class="sub-title">Season</p>
+    <br /><br />
+    <p class="sub-title-page">Season</p>
     <div class="row" >
-      <div class="col s2 m2 l1 month" data-ng-repeat="m in months track by $index" ng-class="m.active ? 'month-selected' : ''" ng-click="changeMonth($index);">
-        {{ m.name }}
+      <div class="col-xs-12 form-group">
+        <label class="form-label">Ingredient season</label><br />
+        <div class="col-lg-1 col-xs-2 month" data-ng-repeat="m in months track by $index" ng-class="m.active ? 'month-selected' : ''" ng-click="changeMonth($index);">
+          {{ m.name }}
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Description -->
-  <p class="sub-title">Description</p>
+  <br /><br />
+  <p class="sub-title-page">Description</p>
   <div class="row">
-    <div class="input-field col s12">
-      <textarea class="materialize-textarea" ng-model="descriptionIngredient" ng-change="emptyIngredientDescription = false;" style="padding-top: 0px;"></textarea>
-      <div class="has-error-block" ng-show="submitted && emptyIngredientDescription">The ingredient description is required and cannot be empty.</div>
+    <div class="col-xs-12 form-group">
+      <label class="form-label">Ingredient description</label><br />
+      <textarea class="form-control input-text" ng-class="{'input-text-error': submitted && emptyIngredientDescription}" rows="6" ng-model="descriptionIngredient" ng-change="emptyIngredientDescription = false;" placeholder="Ingredient description"></textarea>
+      <div class="block-error" ng-show="submitted && emptyIngredientDescription">The ingredient description is required and cannot be empty.</div>
     </div>
   </div>
 
-  <!-- Nutritions -->
-  <p class="sub-title">Nutritions</p>
+  <br /><br />
+  <p class="sub-title-page">Nutrition</p>
   <div class="row">
-    <table class="striped centered">
-      <thead class="table-thead">
-        <tr>
-          <th data-field="designation" style="width: 30%;">Designation</th>
-          <th data-field="value" style="width: 25%;">Value</th>
-          <th data-field="dailyValue" style="width: 25%;">% Daily Value*</th>
-          <th data-field="edit" style="width: 20%;">Edit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="nutrition in ingredient.nutritions">
-          <td>
-            <span editable-text="nutrition.designation" e-name="designation" e-form="rowform" onbeforesave="checkDesignation($data)" e-required>
-              {{ nutrition.designation || 'Unknown' }}
-            </span>
-          </td>
+    <div class="col-xs-12">
+      <div class="row" style="padding-left: 15px; padding-right: 15px;">
+        <div class="col-xs-3 form-group  no-padding">
+          <label class="form-label">Designation</label>
+        </div>
+        <div class="col-xs-3 form-group no-padding">
+          <label class="form-label">Value</label>
+        </div>
+        <div class="col-xs-3 form-group no-padding">
+          <label class="form-label">Daily value</label>
+        </div>
+        <div class="col-xs-3 form-group no-padding">
+          <label class="form-label">Edit</label>
+        </div>
+      </div>
 
-          <td>
-            <span editable-text="nutrition.value" e-name="value" e-form="rowform">
-              {{ nutrition.value || 'Unknown' }}
-            </span>
-          </td>
-
-          <td>
-            <span editable-text="nutrition.dailyValue" e-name="dailyValue" e-form="rowform">
-              {{ nutrition.dailyValue || 'Unknown' }}
-            </span>
-          </td>
-
-          <td>
-            <form editable-form name="rowform" ng-show="rowform.$visible" onaftersave="onNutritionAdded()" class="form-buttons form-inline" shown="inserted == nutrition">
-              <button type="submit" class="no-btn" ng-disabled="rowform.$waiting"><i class="mdi-navigation-check btn-icon-nutrition"></i></button>
-              <button ng-show="nutrition.designation" type="button" class="no-btn" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"><i class="mdi-navigation-close btn-icon-nutrition"></i></button>
+      <div class="row" ng-repeat="nutrition in ingredient.nutritions" style="padding-left: 15px; padding-right: 15px;">
+        <div class="col-xs-3 form-group no-padding">
+          <span class="form-text" e-placeholder="Designation" editable-text="nutrition.designation" e-name="designation" e-form="rowform" onbeforesave="checkDesignation($data)" e-required>
+            {{ nutrition.designation || 'Unknown' }}
+          </span>
+        </div>
+        <div class="col-xs-3 form-group no-padding">
+          <span class="form-text" e-placeholder="Value" editable-text="nutrition.value" e-name="value" e-form="rowform">
+            {{ nutrition.value || 'Unknown' }}
+          </span>
+        </div>
+        <div class="col-xs-3 form-group no-padding">
+          <span class="form-text" e-placeholder="Daily value" editable-text="nutrition.dailyValue" e-name="dailyValue" e-form="rowform">
+            {{ nutrition.dailyValue || 'Unknown' }}
+          </span>
+        </div>
+        <div class="col-xs-3 no-padding">
+          <div class="row">
+            <form editable-form name="rowform" onbeforesave="saveNutrition($data, nutrition.designation)" ng-show="rowform.$visible" onaftersave="onNutritionAdded()"  class="form-buttons form-inline" shown="inserted == nutrition">
+              <div class="col-xs-6"><button type="submit" class="form-control" ng-disabled="rowform.$waiting"><i class="fa fa-check btn-icon-nutrition"></i></button></div>
+              <div class="col-xs-6"><button ng-show="nutrition.designation" type="button" class="form-control" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"><i class="fa fa-remove btn-icon-nutrition"></i></button></div>
             </form>
+          </div>
 
-
-            <div class="buttons" ng-show="!rowform.$visible">
-              <button type="button" class="no-btn" ng-click="rowform.$show()"><i class="mdi-action-settings btn-icon-nutrition"></i></button>
-              <button type="button" class="no-btn" ng-click="removeNutrition($index)"><i class="mdi-action-delete btn-icon-nutrition btn-icon-nutrition-delete"></i></button>
+          <div class="form-buttons form-inline" ng-show="!rowform.$visible">
+            <div class="row">
+              <div class="col-xs-6"><button type="button" class="form-control" ng-click="rowform.$show()"><i class="fa fa-cog btn-icon-nutrition"></i></button></div>
+              <div class="col-xs-6"><button type="button" class="form-control" ng-click="removeNutrition($index)"><i class="fa fa-trash btn-icon-nutrition"></i></button></div>
             </div>
-          </td>
-
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      *Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.
-    </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-
-  <div class="row" style="text-align: center">
-    <button type="button" class="waves-effect waves-light btn" ng-click="submitEditIngredient()">Edit</button>
+  <div class="row center">
+    <button type="button" class="btn btn-default" ng-click="submitEditIngredient()">Edit Ingredient</button>
   </div>
 </div>
 
@@ -118,4 +124,3 @@ $(document).ready(function() {
   });
 });
 </script>
-<script type="text/javascript" src="/bower/materialize/bin/materialize.js"></script>

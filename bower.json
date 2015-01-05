@@ -25,6 +25,7 @@
     "components-font-awesome": "~4.2.0",
     "angucomplete-alt": "~0.0.33",
     "lodash": "~2.4.1",
-    "bootstrap": "~3.3.1"
+    "bootstrap": "~3.3.1",
+    "Pager": "~1.1.0"
   }
 }

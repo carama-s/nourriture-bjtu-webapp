@@ -7,48 +7,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BJTU Nourriture</title>
-
-    <link rel="stylesheet" type="text/css" href="/styles/lcss/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/bower/angular-xeditable/dist/css/xeditable.css">
     <link rel="stylesheet" type="text/css" href="/styles/css/fonts.css">
     <link rel="stylesheet" type="text/css" href="/styles/css/spinner.css">
-    <link rel="stylesheet" type="text/css" href="/styles/lcss/custom.css">
+    <link rel="stylesheet" type="text/css" href="/styles/css/style.css">
     <link rel="stylesheet" type="text/css" href="/bower/components-font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/bower/angucomplete-alt/angucomplete-alt.css">
-<!--
-    <nav ng-controller="RouteCtrl">
-      <div class="container">
-        <div class="nav-wrapper">
-          <a href="#/" class="brand-logo"><span class="brand-text">nourriture</span></a>
-          <ul id="nav-mobile" class="right side-nav" data-ng-show="loaded">
-            <li><a href="#/">Home</a></li>
-            <li><a href="#/">Recipes</a></li>
-            <li><a href="#/addRecipe"> + Recipe</a></li>
-            <li><a href="#/ingredients">Ingredients</a></li>
-            <li ng-show="apiFactory.isRole()"><a href="#/addIngredient"> + Ingredient</a></li>
 
-            <li ng-show="!apiFactory.isRole() && !isActive('/login')">
-              <a href="#/login"><i class="mdi-action-account-circle"></i></a>
-            </li>
-            <li ng-show="apiFactory.isRole()" ng-controller="HomeNavUserCtrl">
-              <a href="#/editUser"><img src="/images/profile.jpg" height="40" width="40" style="border-radius: 50px; vertical-align: middle;"/></a>
-            </li>
-            <li ng-show="apiFactory.isRole()" ng-controller="HomeNavUserCtrl">
-              <a href="#/" ng-click="logOut();"><i class="mdi-action-exit-to-app"></i></a>
-            </li>
-
-          </ul>
-          <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-        </div>
-      </div>
-    </nav>
-  -->
   </head>
-
 
   <main>
 
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top" ng-class="{'no-margin': isActive('/home')}" ng-controller="RouteCtrl">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -57,59 +27,36 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><span class="navbar-brand-text">nourriture</span></a>
+          <a class="navbar-brand" href="#/"><span class="navbar-brand-text">nourriture</span></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#/">Home</a></li>
+            <li><a href="#/">Recipes</a></li>
+            <li><a href="#/addRecipe">Add Recipe</a></li>
+            <li><a href="#/ingredients">Ingredients</a></li>
+            <li ng-show="!apiFactory.isRole() && !isActive('/login')">
+              <a class="navbar-icon" href="#/login"><i class="fa fa-user"></i></a>
+            </li>
+            <li ng-show="apiFactory.isRole()" ng-controller="HomeNavUserCtrl">
+              <a style="padding-top: 12px !important; padding-bottom: 12px !important" href="#/editUser"><img class="img-circle" src="/images/profile.jpg" height="40" width="40" style="vertical-align: middle;"/></a>
+            </li>
+
+            <li ng-show="apiFactory.isRole()" ng-controller="HomeNavUserCtrl">
+              <a class="navbar-icon" href="#/" ng-click="logOut()"><i class="fa fa-sign-out"></i></a>
             </li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li class="active"><a href="./">Static top <span class="sr-only">(current)</span></a></li>
-            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </nav>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--
-    <div class="container loader" style="text-align:center;" data-ng-if="!loaded">
+    <div class="container loader center" data-ng-if="!loaded">
       <svg class="circular">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
       </svg>
     </div>
 
     <div ng-view data-ng-if="loaded"></div>
-  -->
   </main>
 
   <script src="/bower/lodash/dist/lodash.min.js"></script>

@@ -30,10 +30,10 @@ app.value('ingredient_categories_mapper', {
   'chocolate': {name: "Chocolate", color: '#d35400'},
   'egg': {name: "Egg", color: '#1abc9c'},
   'fish': {name: "Fish", color: '#3498db'},
-  'fruit': {name: "Fruits", color: '#2ecc71'},
+  'fruit': {name: "Fruit", color: '#2ecc71'},
   'meat': {name: "Meat", color: '#c0392b'},
   'spice': {name: "Spice", color: '#e74c3c'},
-  'vegetable': {name: "Vegetables", color: '#e67e22'},
+  'vegetable': {name: "Vegetable", color: '#e67e22'},
   'other': {name: "Other", color: '#bdc3c7'}
 });
 
@@ -112,6 +112,11 @@ app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location
   });
 }]);
 
+app.run(["editableOptions", "editableThemes", function(editableOptions, editableThemes) {
+  editableThemes.bs3.inputClass = 'input-text';
+  editableThemes.bs3.buttonsClass = 'btn-icon-nutrition';
+  editableOptions.theme = 'bs3';
+}]);
 
 // Initialize Facebook
 app.run(["Facebook", function(face) {

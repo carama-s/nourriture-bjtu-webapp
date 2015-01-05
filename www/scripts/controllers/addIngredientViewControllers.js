@@ -1,7 +1,7 @@
 var addIngredientViewControllers = angular.module('addIngredientViewControllers', []);
 
-addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$location', 'apiFactory', 'ingredient_categories_mapper', 'refreshInputForms',
-  function($scope, $location, apiFactory, ingredient_categories_mapper, refreshInputForms) {
+addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$location', 'apiFactory', 'ingredient_categories_mapper',
+  function($scope, $location, apiFactory, ingredient_categories_mapper) {
     $scope.submitted = false;
 
     // Periods
@@ -28,11 +28,18 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
     $scope.ingredient_categories_mapper = ingredient_categories_mapper;
     $scope.changeCategory = function($event, value) {
       var parent = $event.currentTarget.parentNode;
-      for (var i = 0; i < parent.children.length; i++) {
+      for (var i = 1; i < parent.children.length; i++) {
         parent.children[i].style.backgroundColor = "#DADADA";
       }
       $event.currentTarget.style.backgroundColor = ingredient_categories_mapper[value].color;
       $scope.categoryIngredient = value;
+    };
+
+    $scope.hasSeasonPeriod = function() {
+      if ($scope.categoryIngredient == 'fruit' || $scope.categoryIngredient == 'vegetable') {
+        return true;
+      }
+      return false;
     };
 
     // Image
@@ -119,7 +126,5 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
         console.error(res);
       });
     };
-
-    refreshInputForms();
   }
 ]);

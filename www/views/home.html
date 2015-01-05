@@ -1,10 +1,10 @@
-<div class="home-bandeau">
-  <div class="container">
-    <div class="row">
-      <div class=" col l6 offset-l3 m8 offset-m2 s12 home-search-bar-border">
-        <div class="input-group">
-            <input class="input-text-default" type="text" placeholder="Find Everything on Nourriture..."/>
-            <i class="mdi-action-search icon-search-bar"></i>
+<div class="container-fluid">
+  <div class="row home-bandeau">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 home-bandeau-searchbar">
+      <div class="home-bandeau-searchbar-container">
+        <div class="right-inner-addon">
+          <i class="fa fa-search home-bandea-search-bar-icon"></i>
+          <input type="search" class="form-control input-text-no-border" placeholder="Find Everything on Nourriture..."/>
         </div>
       </div>
     </div>
@@ -12,31 +12,19 @@
 </div>
 
 <div class="container">
-
   <div class="row">
-
-    <div class="col l6 offset-l6" ng-cloak>
-      <div class="timeline-header">Timeline</div>
-      <div ng-controller="SocketTimelineCtrl" style="background-color: white;">
-        <ul style="margin: 0;">
-          <li class="row timeline-row" ng-repeat="line in timeline track by line.id">
-            <div class="col l2">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
-            <div class="col l2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
-            <div class="col l8" ng-if="line.domain == 'ingredient'">
-              <a ng-if="!line.destroyed" ng-href="#/ingredient/{{ line.ingredient.id }}" class="keyword">{{ line.ingredient.name }}</a>
-              <span ng-if="line.destroyed">{{ line.ingredient.name }}</span>
-               has been {{ socket_name_mapper[line.name].name }}
-              <span ng-if="line.user"> by {{ line.user.username }}</span>
-            </div>
-          </li>
-        </ul>
-
+    <div class="col-md-6 col-md-offset-6" ng-controller="SocketTimelineCtrl">
+      <div class="row home-timeline-header">Timeline</div>
+      <div class="row home-timeline-line" ng-repeat="line in timeline track by line.id">
+          <div class="col-md-3">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
+          <div class="col-md-2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
+          <div class="col-md-7" ng-if="line.domain == 'ingredient'">
+            <a ng-if="!line.destroyed" ng-href="#/ingredient/{{ line.ingredient.id }}">{{ line.ingredient.name }}</a>
+            <span ng-if="line.destroyed">{{ line.ingredient.name }}</span>
+            has been {{ socket_name_mapper[line.name].name }}
+            <span ng-if="line.user"> by {{ line.user.username }}</span>
+          </div>
       </div>
     </div>
-
-
-    </div>
-
   </div>
-
 </div>

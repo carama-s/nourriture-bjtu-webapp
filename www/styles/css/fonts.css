@@ -12,3 +12,13 @@
   font-family: robotoRegular;
   src: url('/styles/fonts/Roboto-Regular.ttf');
 }
+
+@font-face {
+  font-family: robotoThin;
+  src: url('/styles/fonts/Roboto-Thin.ttf');
+}
+
+@font-face {
+  font-family: robotoBold;
+  src: url('/styles/fonts/Roboto-Bold.ttf');
+}
