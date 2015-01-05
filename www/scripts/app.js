@@ -403,8 +403,11 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
 
     apiFactory.recipe.findCategories = function(config) {
       return httpGet(urlRecipe + "/categories", config);
-    }
+    };
 
+    apiFactory.recipe.create = function(data, config) {
+      return httpPost(urlRecipe, data, config);
+    };
 
     return apiFactory;
   }

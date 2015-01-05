@@ -123,91 +123,11 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
+      <p class="main-color" ng-show="stepsRecipe.length == 0">No steps defined for this new recipe</p>
       <button type="button" class="btn btn-primary" ng-click="addStep()">Add step</button>
     </div>
   </div>
   <br />
-
-  <!-- Ingredients list -->
-<!--
-  <p class="sub-title">Ingredients list</p>
-  <div class="row">
-    <div class="col s12 m12 l12">
-      <div>
-        <angucomplete-alt id="ingredients"
-        placeholder="Search ingredients"
-        pause="400"
-        minlength="1"
-        match-class="highlight"
-        selected-object="addIngredientToRecipe"
-        remote-url="http://nourriture.dennajort.fr/api/ingredient/autocomplete?{{urlIngredientExclude}}name="
-        remote-url-data-field=""
-        title-field="name"
-        description-field="category"
-        image-field="photo_url"
-        template-url="/my-custom-template.html"
-        input-class="form-control form-control-small"/>
-      </div>
-      <p ng-show="recipeIngredients.length == 0">No ingredient defined for this new recipe</p>
-      <ul class="row ul-recipe-add-ingredient">
-        <li class="col s6 m3 l2" ng-repeat="ingredient in recipeIngredients">
-            <div class="ratio-container">
-              <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url({{ ingredient.photo_url }})'}"></div>
-            </div>
-            <div class="li-recipe-add-ingredient-content">
-              <div>
-                {{ ingredient.name }} <i class="mdi-navigation-close recipe-remove-ingredient-btn" ng-click="removeIngredientFromRecipe($index)"></i>
-              </div>
-              <div>
-                <a href="#" buttons="no" editable-text="ingredient.quantity" onbeforesave="checkQuantity($data)">
-                  {{ ingredient.quantity || 'empty' }}
-                </a>
-              </div>
-            </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-  {{ recipeIngredients }}
-
-
-  {{ idIngredientExclude }}
-  {{ urlIngredientExclude }}
-  <script type="text/ng-template" id="/my-custom-template.html">
-
-  <div class="angucomplete-holder" ng-class="{'angucomplete-dropdown-visible': showDropdown}">
-    <input ng-model="searchStr"
-    ng-disabled="disableInput"
-    type="text"
-    placeholder="{{placeholder}}"
-    ng-focus="onFocusHandler()"
-    class="{{inputClass}}"
-    ng-focus="resetHideResults()"
-    ng-blur="hideResults($event)"
-    autocapitalize="off"
-    autocorrect="off"
-    autocomplete="off"
-    ng-change="inputChangeHandler(searchStr);"/>
-    <div class="angucomplete-dropdown" ng-show="showDropdown">
-      <div class="angucomplete-searching" ng-show="searching" ng-bind="textSearching"></div>
-      <div class="angucomplete-searching" ng-show="!searching && (!results || results.length == 0)" ng-bind="textNoResults"></div>
-      <div class="angucomplete-row" ng-repeat="result in results" ng-click="selectResult(result)" ng-mouseenter="hoverRow($index)" ng-class="{'angucomplete-selected-row': $index == currentIndex}">
-        <div ng-if="imageField" class="angucomplete-image-holder">
-          <img ng-if="result.image && result.image != ''" ng-src="{{result.image}}" class="angucomplete-image"/>
-          <div ng-if="!result.image && result.image != ''" class="angucomplete-image-default"></div>
-        </div>
-        <div class="angucomplete-title" ng-if="matchClass" ng-bind-html="result.title"></div>
-        <div class="angucomplete-title" ng-if="!matchClass">{{ result.title }}</div>
-        <div ng-if="matchClass && result.description && result.description != ''" class="angucomplete-description" ng-bind-html="result.description"></div>
-        <div ng-if="!matchClass && result.description && result.description != ''" class="angucomplete-description">{{result.description}}</div>
-      </div>
-      <div class="angucomplete-row" ng-click="selectResult({title: searchStr, originalObject: { name: searchStr, custom: true }})" ng-mouseenter="hoverRow(results.length)" ng-class="{'angucomplete-selected-row': results.length == currentIndex}">
-        <div class="angucomplete-title">Select custom ingredient '{{ searchStr }}'</div>
-      </div>
-    </div>
-  </div>
-  </script>
--->
 </div>
 
 <script type="text/ng-template" id="/my-custom-template.html">
