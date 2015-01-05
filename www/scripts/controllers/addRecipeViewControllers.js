@@ -1,7 +1,7 @@
 var addRecipeViewControllers = angular.module('addRecipeViewControllers', []);
 
-addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', 'apiFactory', 'recipe_categories_mapper',
-  function($scope, apiFactory, recipe_categories_mapper) {
+addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", "$document", 'apiFactory', 'recipe_categories_mapper',
+  function($scope, $timeout, $document, apiFactory, recipe_categories_mapper) {
 
     var timeUnitMult = {
       "minutes": 1,
@@ -16,6 +16,29 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', 'apiFactory'
     $scope.prepTimeUnitRecipe = $scope.timeList[0];
     $scope.cookTimeValueRecipe = 0;
     $scope.cookTimeUnitRecipe = $scope.timeList[0];
+
+    $scope.stepsRecipe = [];
+
+    // Steps
+    $scope.addStep = function() {
+      function focusLast() {
+        var last = angular.element("#lastStepTextAddRecipe");
+        last.focus();
+        $document.scrollToElementAnimated(last);
+      }
+
+      if ($scope.stepsRecipe.length > 0 && _.last($scope.stepsRecipe).trim().length == 0) {
+        return focusLast();
+      }
+      $scope.stepsRecipe.push("");
+      $timeout(focusLast);
+    };
+
+    $scope.removeStep = function(i) {
+      if (i < $scope.stepsRecipe.length) {
+        $scope.stepsRecipe.splice(i, 1);
+      }
+    };
 
     // Categories
     $scope.recipe_categories_mapper = recipe_categories_mapper;

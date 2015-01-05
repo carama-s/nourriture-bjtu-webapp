@@ -111,7 +111,22 @@
     </div>
   </div>
 
-
+  <br />
+  <p class="sub-title-page">Steps</p>
+  <div class="row" ng-repeat="step in stepsRecipe track by $index">
+    <div class="col-xs-12 form-group">
+      <label class="form-label">Step {{$index + 1}}</label>
+      <span class="pull-right"><i class="fa fa-times add-recipe-remove-step-icon" ng-click="removeStep($index)"></i></span>
+      <textarea ng-if="!$last" class="form-control input-text add-recipe-step-text" rows="3" ng-model="stepsRecipe[$index]"></textarea>
+      <textarea ng-if="$last" class="form-control input-text add-recipe-step-text" rows="3" ng-model="stepsRecipe[$index]" id="lastStepTextAddRecipe"></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <button type="button" class="btn btn-primary" ng-click="addStep()">Add step</button>
+    </div>
+  </div>
+  <br />
 
   <!-- Ingredients list -->
 <!--
