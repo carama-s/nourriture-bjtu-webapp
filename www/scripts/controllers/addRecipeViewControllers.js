@@ -3,7 +3,19 @@ var addRecipeViewControllers = angular.module('addRecipeViewControllers', []);
 addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', 'apiFactory', 'recipe_categories_mapper',
   function($scope, apiFactory, recipe_categories_mapper) {
 
+    var timeUnitMult = {
+      "minutes": 1,
+      "hours": 60,
+      "days": 1440 // 60 * 24
+    };
+
+    $scope.timeList = ["minutes", "hours", "days"];
     $scope.submitted = false;
+    $scope.servingsRecipe = 1;
+    $scope.prepTimeValueRecipe = 0;
+    $scope.prepTimeUnitRecipe = $scope.timeList[0];
+    $scope.cookTimeValueRecipe = 0;
+    $scope.cookTimeUnitRecipe = $scope.timeList[0];
 
     // Categories
     $scope.recipe_categories_mapper = recipe_categories_mapper;
@@ -15,7 +27,6 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', 'apiFactory'
       $event.currentTarget.style.backgroundColor = recipe_categories_mapper[value].color;
       $scope.categoryRecipe = value;
     };
-
 
     // List ingredients
     $scope.recipeIngredients = [];

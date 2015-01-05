@@ -27,6 +27,41 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-xs-4 form group">
+          <label class="form-label">Servings</label><br />
+          <div class="input-group">
+            <input type="number" class="form-control input-text" ng-model="servingsRecipe" name="servingsRecipe" id="servingsRecipe" min="1">
+            <div class="input-group-addon input-text" ng-if="servingsRecipe <= 1">&nbsp;Person&nbsp;</div>
+            <div class="input-group-addon input-text" ng-if="servingsRecipe > 1">Persons</div>
+          </div>
+        </div>
+
+        <div class="col-xs-4 form group">
+          <label class="form-label">Preparation Time</label><br />
+          <div class="input-group">
+            <input type="number" class="form-control input-text" ng-model="prepTimeValueRecipe" name="prepTimeValueRecipe" id="prepTimeValueRecipe" min="0" style="width: 40%;">
+            <select ng-options="i for i in timeList" name="prepTimeUnitRecipe" ng-model="prepTimeUnitRecipe" class="form-control" style="width: 60%;"></select>
+          </div>
+        </div>
+
+        <div class="col-xs-4 form group">
+          <label class="form-label">Cooking Time</label><br />
+          <div class="input-group">
+            <input type="number" class="form-control input-text" ng-model="cookTimeValueRecipe" name="cookTimeValueRecipe" id="cookTimeValueRecipe" min="0" style="width: 40%;">
+            <select ng-options="i for i in timeList" name="cookTimeUnitRecipe" ng-model="cookTimeUnitRecipe" class="form-control" style="width: 60%;"></select>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="sub-title-page">Description</p>
+  <div class="row">
+    <div class="col-xs-12 form-group">
+      <textarea class="form-control input-text" rows="3" ng-model="descriptionRecipe" name="descriptionRecipe" id="descriptionRecipe" style="max-width: 100%;"></textarea>
     </div>
   </div>
 
