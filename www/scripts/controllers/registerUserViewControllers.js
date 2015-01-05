@@ -1,8 +1,7 @@
 var registerUserViewControllers = angular.module('registerUserViewControllers', []);
 
-registerUserViewControllers.controller('RegisterUserViewCtrl', ['$scope', 'refreshInputForms',
-  function($scope, refreshInputForms) {
-    refreshInputForms();
+registerUserViewControllers.controller('RegisterUserViewCtrl', ['$scope',
+  function($scope) {
   }
 ]);
 
@@ -45,14 +44,15 @@ registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactor
           apiFactory.setToken(data.token.token, $scope.loginInputRemember);
           apiFactory.setUser(data.user);
           $location.path('/');
-        }, function(data) {
-          apiFactory.logout("/");
+        }, function() {
+          apiFactory.logout('/');
         });
       }, function(res) {
         var err = res.data;
-        if (err.status == 400 && err.code == "E_VALIDATION") {
+        if (err.status == 400 && err.error == "E_VALIDATION") {
           var mapping = {username: "usernameAlreadyExists", email: "emailAlreadyExists"};
           _.forOwn(err.invalidAttributes, function(errors, field) {
+            errors = _.pluck(errors, 'rule');
             if (_.contains(errors, "unique")) {
               var realName = mapping[field];
               $scope[realName] = true;

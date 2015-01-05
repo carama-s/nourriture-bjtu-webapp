@@ -1,102 +1,186 @@
-<div class="container" data-ng-cloak>
-
-<div class="row center" style="margin-top: 30px;">
-  <img src="/images/fraise.png" height="60"/>
-  <p style="padding: 8px 12px; margin-top: 15px;">Joins us and enjoy all the features of the <span class="keyword">nourriture</span> platform.</p>
-</div>
-
-<div class="row">
-
-  <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
-  <div class="row" ng-controller="RegisterFormCtrl">
-    <form role="form" class="col s12" name="formRegister" ng-submit="submitRegister(formRegister.$valid)" novalidate>
-
+<div class="full" style="display: table; background-color: #EEE;">
+  <div class="row-fluid">
+    <div class="container centering" data-ng-cloak>
+      <i ng-controller="RouteCtrl" class="fa fa-close icon-corner-top-right" ng-click="go('#/')"></i>
+      
       <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2" ng-controller="RegisterFormCtrl">
 
-        <!-- input firstname -->
-        <div class="input-field col s6">
-          <input required ng-model="registerInputFirstname" name="registerInputFirstname" id="registerInputFirstname" type="text">
-          <label for="registerInputFirstname">First Name</label>
-          <div class="has-error-block" ng-show="submitted && formRegister.registerInputFirstname.$error.required">The firstname is required and cannot be empty.</div>
-        </div>
+          <p class="title-login">Joins us on <span class="regular">nourriture</span></p>
+          Use your email address to sign up.<br />
+          <a id="a-already-member" href="#/login">Already member on nourriture ? <span class="keyword">Sign in</span> !</a>
+          <br /><br /><br />
 
-        <!-- input lastname -->
-        <div class="input-field col s6">
-          <input required ng-model="registerInputLastname" name="registerInputLastname" id="registerInputLastname" type="text">
-          <label for="registerInputLastname">Last Name</label>
-          <div class="has-error-block" ng-show="submitted && formRegister.registerInputLastname.$error.required">The lastname is required and cannot be empty.</div>
-        </div>
-      </div>
+          <form role="form" name="formRegister" ng-submit="submitRegister(formRegister.$valid)" novalidate>
+          <div class="row">
 
-      <!-- input radio gender -->
-      <div class="row">
-        <div class="radio radio-primary">
-          <div class="col s3">
+            <!-- Social -->
+            <div class="col-sm-6">
 
-              <input name="registerInputGender" ng-model="registerInputGender" value="male" type="radio" id="genderMale" />
-              <label style="font-size: 15px;" for="genderMale">Male</label>
+              <div class="form-group">
+                <label class="form-label" for="registerInputFirstname">Firstname</label>
+                <input ng-class="{'input-text-error': submitted && formRegister.registerInputFirstname.$error.required}" class="form-control input-text" required ng-model="registerInputFirstname" name="registerInputFirstname" id="registerInputFirstname" placeholder="Firstname" type="text">
+                <div class="block-error" ng-show="submitted && formRegister.registerInputFirstname.$error.required">The firstname is required and cannot be empty.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="registerInputLastname">Lastname</label>
+                <input ng-class="{'input-text-error': submitted && formRegister.registerInputLastname.$error.required}" class="form-control input-text" required ng-model="registerInputLastname" name="registerInputLastname" id="registerInputLastname" placeholder="Lastname" type="text">
+                <div class="block-error" ng-show="submitted && formRegister.registerInputLastname.$error.required">The lastname is required and cannot be empty.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="registerInputUsername">Username</label>
+                <input required class="form-control input-text" ng-class="{'input-text-error': submitted && (formRegister.registerInputUsername.$error.required || usernameAlreadyExists)}" ng-change="usernameAlreadyExists = false" ng-model="registerInputUsername" name="registerInputUsername" id="registerInputUsername" placeholder="Username" type="text">
+                <div class="block-error" ng-show="submitted && formRegister.registerInputUsername.$error.required">The username is required and cannot be empty.</div>
+                <div class="block-error" ng-show="submitted && usernameAlreadyExists">The username already exists.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="">Gender</label><br />
+                <label class="radio-inline">
+                  <input type="radio" ng-model="registerInputGender" name="registerInputGender" id="genderMale" value="male"> Male
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" ng-model="registerInputGender" name="registerInputGender" id="genderFemale" value="female"> Female
+                </label>
+              </div>
+
+            </div>
+
+            <div class="col-sm-6">
+
+              <div class="form-group">
+                <label class="form-label" for="registerInputEmail">Email Address</label>
+                <input required class="form-control input-text"  ng-class="{'input-text-error': submitted && (formRegister.registerInputEmail.$error.required || formRegister.registerInputEmail.$invalid || emailAlreadyExists)}" ng-change="emailAlreadyExists = false" ng-model="registerInputEmail" name="registerInputEmail" id="registerInputEmail" placeholder="Email address" type="email">
+                <div class="block-error" ng-show="submitted && formRegister.registerInputEmail.$error.required">The email address is required and cannot be empty.</div>
+                <div class="block-error" ng-show="submitted && !formRegister.registerInputEmail.$error.required && formRegister.registerInputEmail.$invalid">The email address is not valid.</div>
+                <div class="block-error" ng-show="submitted && emailAlreadyExists">The email address already exists.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="registerInputPassword">Password</label>
+                <input required class="form-control input-text" ng-minlength="6" ng-class="{'input-text-error': submitted && (formRegister.registerInputPassword.$error.required || formRegister.registerInputPassword.$invalid)}" ng-change="passwordDontMatch = false" ng-model="registerInputPassword" name="registerInputPassword" id="registerInputPassword" placeholder="Password" type="password">
+                <div class="block-error" ng-show="submitted && formRegister.registerInputPassword.$error.required">The password is required and cannot be empty.</div>
+                <div class="block-error" ng-show="submitted && !formRegister.registerInputPassword.$error.required && formRegister.registerInputPassword.$invalid">The password must be at least 6 characters long.</div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="registerInputConfirmPassword">Confirm Password</label>
+                <input class="form-control input-text" required ng-minlength="6" ng-class="{'input-text-error': submitted && (formRegister.registerInputConfirmPassword.$error.required || formRegister.registerInputConfirmPassword.$invalid || passwordDontMatch)}" ng-change="passwordDontMatch = false" ng-model="registerInputConfirmPassword" name="registerInputConfirmPassword" id="registerInputConfirmPassword" placeholder="Confirm password" type="password">
+                <div class="block-error" ng-show="submitted && formRegister.registerInputConfirmPassword.$error.required">The confirm password is required and cannot be empty.</div>
+                <div class="block-error" ng-show="submitted && !formRegister.registerInputConfirmPassword.$error.required && formRegister.registerInputConfirmPassword.$invalid">The password must be at least 6 characters long.</div>
+                <div class="block-error" ng-show="submitted && passwordDontMatch">The passwords don't match.</div>
+              </div>
+
+            </div>
+
+
 
           </div>
-          <div class="col s3">
-
-              <input name="registerInputGender" ng-model="registerInputGender" value="female" type="radio" id="genderFemale" />
-              <label style="font-size: 15px;" for="genderFemale">Female</label>
-
+          <div class="center">
+            <button style="margin-top: 30px;" type="submit" class="btn btn-default">Register</button>
           </div>
+          </form>
         </div>
       </div>
 
-      <!-- input username -->
-      <div class="row">
-        <div class="input-field col s12">
-          <input required ng-change="usernameAlreadyExists = false" ng-model="registerInputUsername" name="registerInputUsername" id="registerInputUsername" type="text">
-          <label for="registerInputUsername">Username</label>
-          <div class="has-error-block" ng-show="submitted && formRegister.registerInputUsername.$error.required">The username is required and cannot be empty.</div>
-          <div class="has-error-block" ng-show="submitted && usernameAlreadyExists">The username already exists.</div>
-        </div>
+
+    <!--
+    <div class="row center" style="margin-top: 30px;">
+      <img src="/images/fraise.png" height="60"/>
+      <p style="padding: 8px 12px; margin-top: 15px;">Joins us and enjoy all the features of the <span class="keyword">nourriture</span> platform.</p>
+    </div>
+
+    <div class="row">
+
+      <div class="col s10 offset-s1 m6 offset-m3 l4 offset-l4">
+      <div class="row" ng-controller="RegisterFormCtrl">
+        <form role="form" class="col s12" name="formRegister" ng-submit="submitRegister(formRegister.$valid)" novalidate>
+
+          <div class="row">
+
+            <div class="input-field col s6">
+              <input required ng-model="registerInputFirstname" name="registerInputFirstname" id="registerInputFirstname" type="text">
+              <label for="registerInputFirstname">First Name</label>
+              <div class="has-error-block" ng-show="submitted && formRegister.registerInputFirstname.$error.required">The firstname is required and cannot be empty.</div>
+            </div>
+
+            <div class="input-field col s6">
+              <input required ng-model="registerInputLastname" name="registerInputLastname" id="registerInputLastname" type="text">
+              <label for="registerInputLastname">Last Name</label>
+              <div class="has-error-block" ng-show="submitted && formRegister.registerInputLastname.$error.required">The lastname is required and cannot be empty.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="radio radio-primary">
+              <div class="col s3">
+
+                  <input name="registerInputGender" ng-model="registerInputGender" value="male" type="radio" id="genderMale" />
+                  <label style="font-size: 15px;" for="genderMale">Male</label>
+
+              </div>
+              <div class="col s3">
+
+                  <input name="registerInputGender" ng-model="registerInputGender" value="female" type="radio" id="genderFemale" />
+                  <label style="font-size: 15px;" for="genderFemale">Female</label>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input required ng-change="usernameAlreadyExists = false" ng-model="registerInputUsername" name="registerInputUsername" id="registerInputUsername" type="text">
+              <label for="registerInputUsername">Username</label>
+              <div class="has-error-block" ng-show="submitted && formRegister.registerInputUsername.$error.required">The username is required and cannot be empty.</div>
+              <div class="has-error-block" ng-show="submitted && usernameAlreadyExists">The username already exists.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input required ng-change="emailAlreadyExists = false" ng-model="registerInputEmail" name="registerInputEmail" id="registerInputEmail" type="email">
+              <label for="registerInputEmail">Address Mail</label>
+              <div class="has-error-block" ng-show="submitted && formRegister.registerInputEmail.$error.required">The email address is required and cannot be empty.</div>
+              <div class="has-error-block" ng-show="submitted && !formRegister.registerInputEmail.$error.required && formRegister.registerInputEmail.$invalid">The email address is not valid.</div>
+              <div class="has-error-block" ng-show="submitted && emailAlreadyExists">The email address already exists.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input required ng-minlength="6" ng-change="passwordDontMatch = false" ng-model="registerInputPassword" name="registerInputPassword" id="registerInputPassword" type="password">
+                <label for="registerInputPassword">Password</label>
+                <div class="has-error-block" ng-show="submitted && formRegister.registerInputPassword.$error.required">The password is required and cannot be empty.</div>
+                <div class="has-error-block" ng-show="submitted && !formRegister.registerInputPassword.$error.required && formRegister.registerInputPassword.$invalid">The password must be at least 6 characters long.</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input required ng-minlength="6" ng-change="passwordDontMatch = false" ng-model="registerInputConfirmPassword" name="registerInputConfirmPassword" id="registerInputConfirmPassword" type="password">
+              <label for="registerInputConfirmPassword">Confirm Password</label>
+              <div class="has-error-block" ng-show="submitted && formRegister.registerInputConfirmPassword.$error.required">The confirm password is required and cannot be empty.</div>
+              <div class="has-error-block" ng-show="submitted && !formRegister.registerInputConfirmPassword.$error.required && formRegister.registerInputConfirmPassword.$invalid">The password must be at least 6 characters long.</div>
+              <div class="has-error-block" ng-show="submitted && passwordDontMatch">The passwords don't match.</div>
+            </div>
+          </div>
+          <div class="center">
+            <button style="margin-top: 30px;" type="submit" class="waves-effect waves-light btn">Register</button>
+          </div>
+
+        </form>
       </div>
 
-      <!-- input email -->
-      <div class="row">
-        <div class="input-field col s12">
-          <input required ng-change="emailAlreadyExists = false" ng-model="registerInputEmail" name="registerInputEmail" id="registerInputEmail" type="email">
-          <label for="registerInputEmail">Address Mail</label>
-          <div class="has-error-block" ng-show="submitted && formRegister.registerInputEmail.$error.required">The email address is required and cannot be empty.</div>
-          <div class="has-error-block" ng-show="submitted && !formRegister.registerInputEmail.$error.required && formRegister.registerInputEmail.$invalid">The email address is not valid.</div>
-          <div class="has-error-block" ng-show="submitted && emailAlreadyExists">The email address already exists.</div>
-        </div>
-      </div>
+    <div class="row center">
+      <a class="a-normal" href="#/login">Already member on <span class="keyword">nourriture</span> ? <span class="keyword-red">Sign in</span> !</a>
+    </div>
+    </div>
 
-      <!-- input password -->
-      <div class="row">
-        <div class="input-field col s12">
-          <input required ng-minlength="6" ng-change="passwordDontMatch = false" ng-model="registerInputPassword" name="registerInputPassword" id="registerInputPassword" type="password">
-            <label for="registerInputPassword">Password</label>
-            <div class="has-error-block" ng-show="submitted && formRegister.registerInputPassword.$error.required">The password is required and cannot be empty.</div>
-            <div class="has-error-block" ng-show="submitted && !formRegister.registerInputPassword.$error.required && formRegister.registerInputPassword.$invalid">The password must be at least 6 characters long.</div>
-        </div>
-      </div>
-
-      <!-- input confirm password -->
-      <div class="row">
-        <div class="input-field col s12">
-          <input required ng-minlength="6" ng-change="passwordDontMatch = false" ng-model="registerInputConfirmPassword" name="registerInputConfirmPassword" id="registerInputConfirmPassword" type="password">
-          <label for="registerInputConfirmPassword">Confirm Password</label>
-          <div class="has-error-block" ng-show="submitted && formRegister.registerInputConfirmPassword.$error.required">The confirm password is required and cannot be empty.</div>
-          <div class="has-error-block" ng-show="submitted && !formRegister.registerInputConfirmPassword.$error.required && formRegister.registerInputConfirmPassword.$invalid">The password must be at least 6 characters long.</div>
-          <div class="has-error-block" ng-show="submitted && passwordDontMatch">The passwords don't match.</div>
-        </div>
-      </div>
-      <div class="center">
-        <button style="margin-top: 30px;" type="submit" class="waves-effect waves-light btn">Register</button>
-      </div>
-
-    </form>
+    </div>
+  -->
+    </div>
   </div>
-
-<div class="row center">
-  <a class="a-normal" href="#/login">Already member on <span class="keyword">nourriture</span> ? <span class="keyword-red">Sign in</span> !</a>
-</div>
-</div>
-
 </div>

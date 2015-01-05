@@ -1,26 +1,29 @@
-<!--<div class="container" style="position: absolute; margin: 0 auto; background-color: #ecf0f1; z-index:-1; top: 0; height: 100%; width: 100%;"></div>-->
-<div class="jumbotron vertical-center" style="top: 0; position: absolute;">
-
-<div class="container" data-ng-cloak>
+<div class="full" style="display: table; background-color: #EEE;">
+<div class="row-fluid">
+<div class="container centering" data-ng-cloak>
+  <i ng-controller="RouteCtrl" class="fa fa-close icon-corner-top-right" ng-click="go('#/')"></i>
 
   <div class="row">
-    <div class="col-sm-12 col-md-8 col-md-offset-2">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
 
-      <p class="title">Sign in to <span class="regular">nourriture</span></p>
+      <p class="title-login">Sign in to <span class="regular">nourriture</span></p>
       Use Facebook or you email to sign in.<br />
-      New on <span class="keyword">nourriture</span> ? <span class="keyword-red">Join us</span> !
+      <a id="a-new-on-nourriture" href="#/registerUser">New on nourriture ? <span class="keyword">Join us</span> !</a>
 
+      <br /><br /><br />
       <div class="row">
 
         <!-- Social -->
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <div class="center" style="margin-top: 10px;">
             <button data-ng-click="loginWithFB()" class="btn btn-default">Sign in with facebook</button>
           </div>
         </div>
 
+        <div class="col-xs-12 hidden-sm hidden-md hidden-lg" style="height: 30px;"></div>
+
         <!-- Address mail -->
-        <div class="col-md-6" ng-controller="LogInFormCtrl">
+        <div class="col-sm-6" ng-controller="LogInFormCtrl">
           <form role="form" name="formLogIn" ng-submit="submitLogIn(formLogIn.$valid)" novalidate>
             <div class="form-group">
               <label class="form-label" for="loginInputEmail">Email address</label>
@@ -45,7 +48,7 @@
               The email address or password you entered is not valid. Please try again.
             </div>
 
-            <div class="center" style="margin-top: 10px;">
+            <div class="center" style="margin-top: 25px;">
               <button type="submit" class="btn btn-default">Sign in</button>
             </div>
           </form>
@@ -56,6 +59,7 @@
 
   </div>
 
+</div>
 </div>
 </div>
 <!--

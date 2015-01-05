@@ -1,11 +1,32 @@
 /* ALL */
 
-body {
-  background: url("/images/background.jpg") no-repeat fixed center top transparent;
-  font-family: robotoRegular;
+html {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+body {
+  background: url("/images/background.jpg") no-repeat fixed center top transparent;
+  font-family: robotoRegular;
+}
+
+.full {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.row-fluid {
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.centering {
+  float: none;
+  margin: 0 auto;
 }
 
 ul {
@@ -33,54 +54,6 @@ a, a:hover, a:focus {
 .sub-title-page {
   color: #555;
   font-size: 20px;
-}
-
-
-
-.jumbotron.vertical-center {
-  margin-bottom: 0; /* Remove the default bottom margin of .jumbotron */
-}
-
-.vertical-center {
-  min-height: 100%;  /* Fallback for vh unit */
-  min-height: 100vh; /* You might also want to use
-  'height' property instead.
-
-  Note that for percentage values of
-  'height' or 'min-height' properties,
-  the 'height' of the parent element
-  should be specified explicitly.
-
-  In this case the parent of '.vertical-center'
-  is the <body> element */
-
-  /* Make it a flex container */
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-
-  /* Align the bootstrap's container vertically */
-  -webkit-box-align : center;
-  -webkit-align-items : center;
-  -moz-box-align : center;
-  -ms-flex-align : center;
-  align-items : center;
-
-  /* In legacy web browsers such as Firefox 9
-  we need to specify the width of the flex container */
-  width: 100%;
-
-  /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
-  hence the bootstrap's container won't be aligned to the center anymore.
-
-  Therefore, we should use the following declarations to get it centered again */
-  -webkit-box-pack : center;
-  -moz-box-pack : center;
-  -ms-flex-pack : center;
-  -webkit-justify-content : center;
-  justify-content : center;
 }
 
 .main-color {
@@ -115,6 +88,11 @@ a, a:hover, a:focus {
   text-align: center;
 }
 
+.keyword {
+  color: @secondColor !important;
+  font-family: robotoBold;
+}
+
 .no-margin {
   margin: 0;
 }
@@ -133,6 +111,19 @@ a, a:hover, a:focus {
 
 .thin {
   font-family: robotoThin;
+}
+
+.icon-corner-top-right {
+  top: 20px;
+  right: 20px;
+  float: right;
+  position: fixed;
+  font-size: 28px !important;
+  color: @mainColor;
+  cursor: pointer;
+}
+.icon-corner-top-right:hover {
+  opacity: 0.75;
 }
 
 .input-text-no-border, .input-text-no-border:hover, .input-text-no-border:focus {
