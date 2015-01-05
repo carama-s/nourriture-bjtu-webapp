@@ -5,24 +5,27 @@ module.exports = function(grunt) {
     uglify: {
       uglify: {
         options: {
-          sourceMap: true,
-          angular: true,
-          mangle: false,
+          mangle: true,
+          sourceMap : true,
           compress: {
-            angular: true,
-            drop_console: false
-          }
+            warnings: false,
+            drop_console: false,
+            sequences: true,
+            dead_code: true,
+            conditionals: true,
+            comparisons: true,
+            booleans: true,
+            loops: true,
+            unused: true,
+            if_return: true,
+            join_vars: true,
+            cascade: true
+          },
+          report: "gzip",
+          preserveComments: false
         },
-        files: [
-          {
-            expand: true,     // Enable dynamic expansion.
-            cwd: 'www/',      // Src matches are relative to this path.
-            src: ['scripts/**/*.js'], // Actual pattern(s) to match.
-            dest: 'www/',   // Destination path prefix.
-            ext: '.min.js',   // Dest filepaths will have this extension.
-            extDot: 'first'   // Extensions in filenames begin after the first dot
-          }
-        ]
+        dest: "www/scripts.min.js",
+        src: ["www/scripts/**/*.js"]
       }
     },
     less: {
@@ -43,6 +46,13 @@ module.exports = function(grunt) {
         options: {
           nospawn: true
         }
+      },
+      uglify: {
+        files: ["www/scripts/**/*.js"],
+        tasks: ["uglify"],
+        options: {
+          nospawn: true
+        }
       }
     }
   });
@@ -53,7 +63,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
-  grunt.registerTask('default', ['less', 'watch']);
+  grunt.registerTask('default', ['less', "uglify", 'watch']);
 
-  grunt.registerTask('deploy', ['less']);
+  grunt.registerTask('deploy', ['less', "uglify"]);
 };
