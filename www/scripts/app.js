@@ -458,7 +458,6 @@ app.factory("Facebook", ["$q",
       var d = Q.defer();
       waitLoaded(function() {
         FB.login(function(res) {
-          console.log(res);
           if (res.status === 'connected') {
             d.resolve(res);
           } else {
