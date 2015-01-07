@@ -13,6 +13,26 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSock
   }
 ]);
 
+homeViewControllers.controller("MostUsedIngredientsCtrl", ["$scope",
+function($scope) {
+  $scope.ingredients = [];
+}]);
+
+homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
+  function($scope, apiFactory, apiSocketFactory) {
+    $scope.comments = [];
+
+    apiFactory.recipe_comment.find({
+      params: {
+        sort: "createdAt DESC",
+        limit: 10
+      }
+    }).then(function(res) {
+      $scope.comments = res.data;
+    });
+  }
+]);
+
 homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'apiSocketFactory', 'socket_domain_mapper', 'socket_name_mapper',
   function($scope, apiFactory, apiSocketFactory, socket_domain_mapper, socket_name_mapper) {
 

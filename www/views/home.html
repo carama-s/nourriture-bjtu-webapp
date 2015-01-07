@@ -15,19 +15,37 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6 col-md-offset-6" ng-controller="SocketTimelineCtrl">
-      <div class="row home-timeline-header">Timeline</div>
-      <div class="row home-timeline-line" ng-repeat="line in timeline track by line.id">
-          <div class="col-md-3">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
-          <div class="col-md-2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
-          <div class="col-md-7">
-            <a ng-if="!line.destroyed && line.domain == 'ingredient'" ng-href="#/ingredient/{{ line.data.id }}">{{ line.data.name }}</a>
-            <a ng-if="!line.destroyed && line.domain == 'recipe'" ng-href="#/recipe/{{ line.data.id }}">{{ line.data.name }}</a>
-            <span ng-if="line.destroyed">{{ line.data.name }}</span>
-            has been {{ socket_name_mapper[line.name].name }}
-            <span ng-if="line.user"> by {{ line.user.username }}</span>
-          </div>
+
+    <div class="col-md-4 home-categories">
+      <div class="row home-best-recipes-header">Best Recipes</div>
+    </div>
+
+    <div class="col-md-4 home-categories">
+      <div class="row home-most-used-ingredients-header">Most used Ingredients</div>
+    </div>
+
+    <div class="col-md-4 home-categories" ng-controller="LatestCommentsCtrl">
+      <div class="row home-latest-comments-header">Latest Comments</div>
+      <div class="row" ng-repeat="com in comments track by com.id">
+        {{com.id}}
       </div>
+    </div>
+
+  </div>
+</div>
+<!--
+<div class="col-md-3" ng-controller="SocketTimelineCtrl">
+  <div class="row home-timeline-header">Timeline</div>
+  <div class="row home-timeline-line" ng-repeat="line in timeline track by line.id">
+    <div class="col-md-3">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
+    <div class="col-md-2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
+    <div class="col-md-7">
+      <a ng-if="!line.destroyed && line.domain == 'ingredient'" ng-href="#/ingredient/{{ line.data.id }}">{{ line.data.name }}</a>
+      <a ng-if="!line.destroyed && line.domain == 'recipe'" ng-href="#/recipe/{{ line.data.id }}">{{ line.data.name }}</a>
+      <span ng-if="line.destroyed">{{ line.data.name }}</span>
+      has been {{ socket_name_mapper[line.name].name }}
+      <span ng-if="line.user"> by {{ line.user.username }}</span>
     </div>
   </div>
 </div>
+-->

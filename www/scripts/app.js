@@ -228,8 +228,9 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
     var urlIngredient = host + "/ingredient";
     var urlTimeline = host + "/timeline";
     var urlRecipe = host + "/recipe";
+    var urlRecipeComment = host + "/recipe_comment";
 
-    var apiFactory = {user: {}, ingredient: {}, timeline: {}, recipe: {}};
+    var apiFactory = {user: {}, ingredient: {}, timeline: {}, recipe: {}, recipe_comment: {}};
     var token = localStorage.get("token");
     var user = undefined;
 
@@ -410,6 +411,16 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
 
     apiFactory.recipe.create = function(data, config) {
       return httpPost(urlRecipe, data, config);
+    };
+
+    /* API RECIPE COMMENT */
+
+    apiFactory.recipe_comment.find = function(config) {
+      return httpGet(urlRecipeComment, config);
+    };
+
+    apiFactory.recipe_comment.create = function(data, config) {
+      return httpPost(urlRecipeComment, data, config);
     };
 
     return apiFactory;
