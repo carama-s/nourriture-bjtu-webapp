@@ -16,8 +16,11 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-md-4 home-categories">
+    <div class="col-md-4 home-categories"  ng-controller="BestRecipesCtrl">
       <div class="row home-best-recipes-header">Best Recipes</div>
+      <div class="row" ng-repeat="rec in recipes track by rec.id">
+        {{rec.id}}
+      </div>
     </div>
 
     <div class="col-md-4 home-categories">

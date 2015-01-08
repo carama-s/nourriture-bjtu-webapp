@@ -18,6 +18,21 @@ function($scope) {
   $scope.ingredients = [];
 }]);
 
+homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
+  function($scope, apiFactory, apiSocketFactory) {
+    $scope.recipes = [];
+
+    apiFactory.recipe.find({
+      params: {
+        sort: "rate DESC",
+        limit: 10
+      }
+    }).then(function(res) {
+      $scope.recipes = res.data;
+    });
+  }
+]);
+
 homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
   function($scope, apiFactory, apiSocketFactory) {
     $scope.comments = [];
