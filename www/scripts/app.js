@@ -468,13 +468,38 @@ app.factory('apiSocketFactory', ["socketFactory", "apiSocketURL", function(socke
     ioSocket: ioSocket,
     prefix: "apiSocket:"
   });
+  var counter = {};
   var fac = {};
 
   fac.subscribe = function(events, scope) {
-    socket.emit("subscribe", {names: events});
-    scope.$on("$destroy", function() {
-      socket.emit("unsubscribe", {names: events});
+    var toSubscribe = [];
+    _.forEach(events, function(ev) {
+      if (counter[ev] == undefined) {
+        counter[ev] = 1;
+      } else {
+        counter[ev] += 1;
+      }
+      if (counter[ev] == 1) {
+        toSubscribe.push(ev);
+      }
     });
+    if (toSubscribe.length > 0) {
+      socket.emit("subscribe", {names: toSubscribe});
+    }
+
+    scope.$on("$destroy", function() {
+      var toUnsubscribe = [];
+      _.forEach(events, function(ev) {
+        counter[ev] -= 1;
+        if (counter[ev] <= 0) {
+          toUnsubscribe.push(ev);
+        }
+      });
+      if (toUnsubscribe.length > 0) {
+        socket.emit("unsubscribe", {names: toUnsubscribe});
+      }
+    });
+
     socket.forward(events, scope);
   };
 
