@@ -4,12 +4,12 @@
 
   <div class="row">
 
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <div ng-if="loaded" class="ratio-container">
           <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{recipe.photo_url}})'}"></div>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-sm-8">
         <div class="row">
           <p class="col-xs-12 title-page">{{ recipe.name }}
             <a href="" ng-click="deleteRecipe()"><i class="fa fa-trash btn-icon-ingredient"></i></a>
@@ -17,42 +17,65 @@
           </p>
         </div>
         <div class="row">
-          <div class="col-sm-6">
-            <rating class="no-outline" ng-model="rate" max="max" rating-states="ratingStates" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
-<br />
-            By {{ recipe.nb_rates }} person<span ng-show="recipe.nb_rates > 1">s</span>
+          <div class="col-xs-12" style="padding-bottom: 20px;">
+            {{ recipe.description }}
           </div>
-          <div class="col-sm-6">
 
+          <div class="col-md-4 col-xs-6">
+            <div>
+              <rating style="font-size: 20px;" class="no-outline" ng-model="rate" max="max" rating-states="ratingStates" readonly="true" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+            </div>
+            <div>
+              by {{ recipe.nb_rates }} person<span ng-show="recipe.nb_rates > 1">s</span>
+            </div>
+            <div>
+              <a>read comments</a>
+            </div>
+          </div>
+          <div class="col-md-4 col-xs-6" style="border-left: 1px #CCC solid">
+            <div>
+              <rating style="font-size: 20px;" class="no-outline" ng-model="rate" max="max" rating-states="ratingStates" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+            </div>
+            <div>
+              add your rating
+            </div>
+            <div>
+              <a>add a comment</a>
+            </div>
           </div>
         </div>
-        <p >
-          {{ recipe.description }}
-        </p>
 
       </div>
   </div>
 
-
-
-  <p class="sub-title-page">Directions</p>
   <div class="row">
-    <div class="col-xs-12">
-    lol
-    </div>
-  </div>
+    <div class="col-sm-6">
+      <p class="sub-title-page">Ingredients</p>
 
 
-  <div class="row">
-    <div class="col-xs-12">
-      <div ng-repeat="direction in recipe.directions">
-        {{ direction }}
-
+      <div class="row" ng-cloak>
         <div class="col-xs-12">
-
+          <ul>
+            <li class="col-sm-4 col-xs-6" ng-repeat="ingredient in recipe.ingredients">
+              <div class="ratio-container" ng-if="loaded">
+                <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr/{{ ingredient.photo_url }})'}"></div>
+              </div>
+              <div class="col-xs-12 ingredient-container">
+                  <a ng-href="#/ingredient/{{ ingredient.id }}"><span class="recipe-ingredient-name">{{ ingredient.name }}</span></a>
+                  <br />
+                  {{ ingredient.quantity }}
+              </div>
+            </li>
+          </ul>
         </div>
+      </div>
+
+    </div>
+    <div class="col-sm-6">
+      <p class="sub-title-page">Directions</p>
+      <div class="direction" ng-repeat="direction in recipe.directions">
+        <span class="direction-index">{{ $index + 1 }}. </span> {{ direction }}
       </div>
     </div>
   </div>
-
 </div>

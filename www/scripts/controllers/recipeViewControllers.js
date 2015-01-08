@@ -8,7 +8,24 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
     $scope.recipe_categories_mapper = recipe_categories_mapper;
     apiFactory.recipe.findById($routeParams.id).then(function(res) {
       $scope.recipe = res.data;
-      $scope.loaded = true;
+      $scope.rate = res.data.rate;
+
+      var ingredients = _.pluck(res.data.ingredients, "ingredient");
+      var quantities = _.mapValues(_.groupBy(res.data.ingredients, "ingredient"), function(ings) {
+        return ings[0].quantity;
+      });
+      var config = {
+        params: {
+          where: JSON.stringify({id: ingredients})
+        }
+      };
+      apiFactory.ingredient.find(config).then(function(res) {
+        $scope.recipe.ingredients = _.map(res.data, function(ing) {
+          ing.quantity = quantities[ing.id];
+          return ing;
+        });
+        $scope.loaded = true;
+      });
     });
 
     $scope.deleteRecipe = function() {
@@ -17,10 +34,7 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
       });
     };
 
-
-    $scope.rate = 4;
     $scope.max = 5;
-    $scope.isReadonly = false;
     $scope.ratingStates = [
       {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
       {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
