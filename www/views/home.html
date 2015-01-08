@@ -19,8 +19,13 @@
     <div class="col-md-6 home-categories"  ng-controller="BestRecipesCtrl">
       <div class="row home-best-recipes-header">Best Recipes</div>
       <div class="row home-best-recipes-row" ng-repeat="rec in recipes track by rec.id">
-        <div class="col-md-10">{{rec.name}}</div>
-        <div class="col-md-2">{{rec.rate}}/5</div>
+        <div class="col-sm-2"><img class="home-best-recipe-img" ng-src="http://nourriture.dennajort.fr{{rec.photo_url}}"/></div>
+        <div class="col-sm-10 home-best-recipe-text">
+          <div class="row">
+            <div class="col-sm-10">{{rec.name}}</div>
+            <div class="col-sm-2">{{rec.rate}}/5</div>
+          </div>
+        </div>
       </div>
       <div class="row home-best-recipes-row center" ng-if="loading">Loading</div>
       <div class="row home-best-recipes-row center" ng-if="!loading && recipes.length == 0">No recipes</div>
