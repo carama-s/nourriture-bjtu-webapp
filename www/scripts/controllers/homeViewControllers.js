@@ -17,14 +17,26 @@ homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiS
   function($scope, apiFactory, socket) {
     $scope.recipes = [];
 
-    apiFactory.recipe.find({
-      params: {
-        sort: "rate DESC",
-        limit: 10
+    socket.subscribe(["timeline.create"], $scope);
+
+    $scope.$on("apiSocket:timeline.create", function(event, data) {
+      if (event.domain == "recipe_rate") {
+        getBestRecipes();
       }
-    }).then(function(res) {
-      $scope.recipes = res.data;
     });
+
+    function getBestRecipes() {
+      apiFactory.recipe.find({
+        params: {
+          sort: "rate DESC",
+          limit: 10
+        }
+      }).then(function(res) {
+        $scope.recipes = res.data;
+      });
+    }
+
+    getBestRecipes();
   }
 ]);
 

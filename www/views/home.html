@@ -19,7 +19,7 @@
     <div class="col-md-6 home-categories"  ng-controller="BestRecipesCtrl">
       <div class="row home-best-recipes-header">Best Recipes</div>
       <div class="row" ng-repeat="rec in recipes track by rec.id">
-        {{rec.id}}
+        {{rec.name}}&nbsp;{{rec.rate}}/5
       </div>
     </div>
 
