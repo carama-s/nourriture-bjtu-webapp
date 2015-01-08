@@ -1,15 +1,7 @@
 var homeViewControllers = angular.module('homeViewControllers', []);
 
-homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSocketFactory',
-  function($scope, apiFactory, socket) {
-    $scope.apiFactory = apiFactory;
-
-    socket.subscribe(["timeline.create"], $scope);
-
-    $scope.$on("apiSocket:timeline.create", function(event, data) {
-      console.log("timeline.create");
-      console.log(data);
-    });
+homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory',
+  function($scope, apiFactory) {
   }
 ]);
 
