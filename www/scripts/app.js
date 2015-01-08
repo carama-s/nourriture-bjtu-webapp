@@ -5,6 +5,7 @@ var app = angular.module('nourritureApp', [
   'duScroll',
   'xeditable',
   'angucomplete-alt',
+  'ui.bootstrap',
   'addIngredientViewControllers',
   'addRecipeViewControllers',
   'editIngredientViewControllers',

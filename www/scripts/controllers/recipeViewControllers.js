@@ -16,5 +16,17 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
         $location.path("/recipes");
       });
     };
+
+
+    $scope.rate = 4;
+    $scope.max = 5;
+    $scope.isReadonly = false;
+    $scope.ratingStates = [
+      {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
+      {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
+      {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
+      {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
+      {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'}
+    ];
   }
 ]);

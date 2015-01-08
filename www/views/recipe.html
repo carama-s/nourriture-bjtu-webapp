@@ -10,11 +10,22 @@
         </div>
       </div>
       <div class="col-md-8">
-        <p class="title-page">{{ recipe.name }}
-          <a href="" ng-click="deleteRecipe()"><i class="fa fa-trash btn-icon-ingredient"></i></a>
-          <a ng-href="#/recipe/{{ recipe.id }}/edit"><i class="fa fa-cog btn-icon-ingredient" style="margin-right: 15px;"></i></a>
-        </p>
+        <div class="row">
+          <p class="col-xs-12 title-page">{{ recipe.name }}
+            <a href="" ng-click="deleteRecipe()"><i class="fa fa-trash btn-icon-ingredient"></i></a>
+            <a ng-href="#/recipe/{{ recipe.id }}/edit"><i class="fa fa-cog btn-icon-ingredient" style="margin-right: 15px;"></i></a>
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <rating class="no-outline" ng-model="rate" max="max" rating-states="ratingStates" readonly="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+<br />
+            By {{ recipe.nb_rates }} person<span ng-show="recipe.nb_rates > 1">s</span>
+          </div>
+          <div class="col-sm-6">
 
+          </div>
+        </div>
         <p >
           {{ recipe.description }}
         </p>
