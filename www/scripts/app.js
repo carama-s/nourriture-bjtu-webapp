@@ -1,19 +1,21 @@
 var app = angular.module('nourritureApp', [
   'ngRoute',
+  'btford.socket-io',
   'LocalStorageModule',
   'duScroll',
   'xeditable',
   'angucomplete-alt',
-  'editUserViewControllers',
-  'loginViewControllers',
-  'registerUserViewControllers',
-  'homeViewControllers',
-  'ingredientViewControllers',
-  'ingredientsViewControllers',
   'addIngredientViewControllers',
   'addRecipeViewControllers',
   'editIngredientViewControllers',
-  'btford.socket-io'
+  'editUserViewControllers',
+  'homeViewControllers',
+  'ingredientViewControllers',
+  'ingredientsViewControllers',
+  'loginViewControllers',
+  'registerUserViewControllers',
+  'recipeViewControllers',
+  'recipesViewControllers'
 ]);
 
 app.value('socket_domain_mapper', {
@@ -48,6 +50,8 @@ app.value('recipe_categories_mapper', {
   'vegetarian': {name: "Vegetarian", color: '#2ecc71'},
   'other': {name: "Other", color: '#bdc3c7'}
 });
+
+app.value('recipe_categories_mapper_first', 'appetizer');
 
 app.value("apiURL", "http://nourriture.dennajort.fr/api");
 app.value("apiSocketURL", "http://nourriture.dennajort.fr:80/");
@@ -90,6 +94,14 @@ app.config(['$routeProvider',
       when('/addRecipe', {
         templateUrl: '/views/addRecipe.html',
         controller: 'AddRecipeViewCtrl'
+      }).
+      when('/recipes', {
+        templateUrl: '/views/recipes.html',
+        controller: 'RecipesViewCtrl'
+      }).
+      when('/recipe/:id', {
+        templateUrl: '/views/recipe.html',
+        controller: 'RecipeViewCtrl'
       }).
       otherwise({
         redirectTo: '/home'
@@ -405,6 +417,14 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
 
     /* API RECIPE */
 
+    apiFactory.recipe.find = function(config) {
+      return httpGet(urlRecipe, config);
+    };
+
+    apiFactory.recipe.findById = function(id, config) {
+      return httpGet(urlRecipe + '/' + id, config);
+    };
+
     apiFactory.recipe.findCategories = function(config) {
       return httpGet(urlRecipe + "/categories", config);
     };
@@ -421,6 +441,16 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
 
     apiFactory.recipe_comment.create = function(data, config) {
       return httpPost(urlRecipeComment, data, config);
+    };
+
+    apiFactory.recipe.count = function(config) {
+      return httpGet(urlRecipe + "/count", config).then(function(res) {
+        return res.data.count;
+      });
+    };
+
+    apiFactory.recipe.deleteById = function(id, config) {
+      return httpDelete(urlRecipe + '/' + id, config);
     };
 
     return apiFactory;

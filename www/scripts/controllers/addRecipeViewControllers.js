@@ -1,7 +1,7 @@
 var addRecipeViewControllers = angular.module('addRecipeViewControllers', []);
 
-addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", "$document", "$location", 'apiFactory', 'recipe_categories_mapper',
-  function($scope, $timeout, $document, $location, apiFactory, recipe_categories_mapper) {
+addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", "$document", "$location", 'apiFactory', 'recipe_categories_mapper', 'recipe_categories_mapper_first',
+  function($scope, $timeout, $document, $location, apiFactory, recipe_categories_mapper, recipe_categories_mapper_first) {
 
     var timeUnitMult = {
       "minutes": 1,
@@ -16,6 +16,7 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", 
     $scope.prepTimeUnitRecipe = $scope.timeList[0];
     $scope.cookTimeValueRecipe = 0;
     $scope.cookTimeUnitRecipe = $scope.timeList[0];
+    $scope.categoryRecipe = recipe_categories_mapper_first;
 
     $scope.stepsRecipe = [];
 

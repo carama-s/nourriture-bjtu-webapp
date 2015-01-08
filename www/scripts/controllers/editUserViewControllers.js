@@ -6,8 +6,8 @@ editUserViewControllers.controller('EditUserViewCtrl', ['$scope', 'apiFactory',
   }
 ]);
 
-editUserViewControllers.controller("EditUserFormCtrl", ['$scope', '$timeout', 'apiFactory', 'refreshInputForms',
-  function($scope, $timeout, apiFactory, refreshInputForms) {
+editUserViewControllers.controller("EditUserFormCtrl", ['$scope', '$timeout', 'apiFactory',
+  function($scope, $timeout, apiFactory) {
     $scope.editUserInputFirstname = apiFactory.getUser().firstname;
     $scope.editUserInputLastname = apiFactory.getUser().lastname;
     $scope.editUserInputGender = apiFactory.getUser().gender;
@@ -17,16 +17,18 @@ editUserViewControllers.controller("EditUserFormCtrl", ['$scope', '$timeout', 'a
 
     $scope.submitEditUser = function(isValid) {
       $scope.submitted = true;
+      $scope.editUserSuccess = false;
 
       if (isValid) {
         apiFactory.user.editUser({'firstname': $scope.editUserInputFirstname, 'lastname': $scope.editUserInputLastname, 'gender': $scope.editUserInputGender, 'email': $scope.editUserInputEmail })
           .then(function(res) {
-            alert("success change user info");
+            $scope.editUserSuccess = true;
           }, function(res) {
             var err = res.data;
             if (err.status == 400 && err.code == "E_VALIDATION") {
               var mapping = {email: "emailAlreadyExists"};
               _.forOwn(err.invalidAttributes, function(errors, field) {
+                errors = _.pluck(errors, 'rule');
                 if (_.contains(errors, "unique")) {
                   var realName = mapping[field];
                   $scope[realName] = true;
@@ -39,13 +41,13 @@ editUserViewControllers.controller("EditUserFormCtrl", ['$scope', '$timeout', 'a
         });
       }
     }
-    $timeout(refreshInputForms);
   }
 ]);
 
 editUserViewControllers.controller("ChangePasswordFormCtrl", ['$scope', 'apiFactory', function($scope, apiFactory) {
   $scope.submitChangePassword = function(isValid) {
     $scope.submitted = true;
+    $scope.editPasswordSuccess = false;
     $scope.passwordDontMatch = false;
     $scope.badCurrentPassword = false;
 
@@ -56,7 +58,7 @@ editUserViewControllers.controller("ChangePasswordFormCtrl", ['$scope', 'apiFact
       }
       apiFactory.user.changePassword($scope.changePasswordInputCurrentPassword, $scope.changePasswordInputNewPassword)
         .then(function(res) {
-          alert("success change pwd");
+          $scope.editPasswordSuccess = true;
         }, function(res) {
           $scope.badCurrentPassword = true;
         });

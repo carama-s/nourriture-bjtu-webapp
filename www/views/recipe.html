@@ -1,0 +1,47 @@
+<div ng-include="'/views/navbar.html'"></div>
+
+<div class="container" ng-if="loaded">
+
+  <div class="row">
+
+      <div class="col-md-4">
+        <div ng-if="loaded" class="ratio-container">
+          <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{recipe.photo_url}})'}"></div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <p class="title-page">{{ recipe.name }}
+          <a href="" ng-click="deleteRecipe()"><i class="fa fa-trash btn-icon-ingredient"></i></a>
+          <a ng-href="#/recipe/{{ recipe.id }}/edit"><i class="fa fa-cog btn-icon-ingredient" style="margin-right: 15px;"></i></a>
+        </p>
+
+        <p >
+          {{ recipe.description }}
+        </p>
+
+      </div>
+  </div>
+
+
+
+  <p class="sub-title-page">Directions</p>
+  <div class="row">
+    <div class="col-xs-12">
+    lol
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div ng-repeat="direction in recipe.directions">
+        {{ direction }}
+
+        <div class="col-xs-12">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
