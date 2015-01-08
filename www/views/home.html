@@ -18,9 +18,12 @@
 
     <div class="col-md-6 home-categories"  ng-controller="BestRecipesCtrl">
       <div class="row home-best-recipes-header">Best Recipes</div>
-      <div class="row" ng-repeat="rec in recipes track by rec.id">
-        {{rec.name}}&nbsp;{{rec.rate}}/5
+      <div class="row home-best-recipes-row" ng-repeat="rec in recipes track by rec.id">
+        <div class="col-md-10">{{rec.name}}</div>
+        <div class="col-md-2">{{rec.rate}}/5</div>
       </div>
+      <div class="row home-best-recipes-row center" ng-if="loading">Loading</div>
+      <div class="row home-best-recipes-row center" ng-if="!loading && recipes.length == 0">No recipes</div>
     </div>
 
     <div class="col-md-6 home-categories" ng-controller="LatestCommentsCtrl">
@@ -28,6 +31,8 @@
       <div class="row" ng-repeat="com in comments track by com.id">
         {{com.id}}
       </div>
+      <div class="row home-latest-comments-row center" ng-if="loading">Loading</div>
+      <div class="row home-latest-comments-row center" ng-if="!loading && comments.length == 0">No comments</div>
     </div>
 
   </div>

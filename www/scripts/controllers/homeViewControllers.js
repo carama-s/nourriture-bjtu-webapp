@@ -16,6 +16,7 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSock
 homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
   function($scope, apiFactory, socket) {
     $scope.recipes = [];
+    $scope.loading = true;
 
     socket.subscribe(["timeline.create"], $scope);
 
@@ -32,6 +33,7 @@ homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiS
           limit: 10
         }
       }).then(function(res) {
+        $scope.loading = false;
         $scope.recipes = res.data;
       });
     }
@@ -43,6 +45,7 @@ homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiS
 homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
   function($scope, apiFactory, socket) {
     $scope.comments = [];
+    $scope.loading = true;
 
     socket.subscribe(["timeline.create"], $scope);
 
@@ -66,6 +69,7 @@ homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'a
           limit: 10
         }
       }).then(function(res) {
+        $scope.loading = false;
         $scope.comments = res.data;
       });
     }
