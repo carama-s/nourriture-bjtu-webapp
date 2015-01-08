@@ -16,14 +16,16 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-md-6 home-categories"  ng-controller="BestRecipesCtrl">
+    <div class="col-sm-6 home-categories"  ng-controller="BestRecipesCtrl">
       <div class="row home-best-recipes-header">Best Recipes</div>
       <div class="row home-best-recipes-row" ng-repeat="rec in recipes track by rec.id">
-        <div class="col-sm-2"><img class="home-best-recipe-img" ng-src="http://nourriture.dennajort.fr{{rec.photo_url}}"/></div>
-        <div class="col-sm-10 home-best-recipe-text">
+        <div class="col-xs-2 home-best-recipe-img-div"><img class="home-best-recipe-img" ng-src="http://nourriture.dennajort.fr{{rec.photo_url}}"/></div>
+        <div class="col-xs-10 home-best-recipe-text">
           <div class="row">
-            <div class="col-sm-10">{{rec.name}}</div>
-            <div class="col-sm-2">{{rec.rate}}/5</div>
+            <div class="col-xs-12 col-md-8 col-lg-9">{{rec.name}}</div>
+            <div class="col-xs-12 col-md-4 col-lg-3">
+              <rating class="no-outline" ng-model="rec.rate" max="5" rating-states="ratingStates" readonly="true" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+            </div>
           </div>
         </div>
       </div>
@@ -31,7 +33,7 @@
       <div class="row home-best-recipes-row center" ng-if="!loading && recipes.length == 0">No recipes</div>
     </div>
 
-    <div class="col-md-6 home-categories" ng-controller="LatestCommentsCtrl">
+    <div class="col-sm-6 home-categories" ng-controller="LatestCommentsCtrl">
       <div class="row home-latest-comments-header">Latest Comments</div>
       <div class="row" ng-repeat="com in comments track by com.id">
         {{com.id}}
@@ -42,6 +44,7 @@
 
   </div>
 </div>
+<br />
 <!--
 <div class="col-md-3" ng-controller="SocketTimelineCtrl">
   <div class="row home-timeline-header">Timeline</div>

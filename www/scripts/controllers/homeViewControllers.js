@@ -18,6 +18,8 @@ homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiS
     $scope.recipes = [];
     $scope.loading = true;
 
+    $scope.ratingStates = _(5).times().map(function() {return {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'};}).value();
+
     socket.subscribe(["timeline.create"], $scope);
 
     $scope.$on("apiSocket:timeline.create", function(event, data) {
