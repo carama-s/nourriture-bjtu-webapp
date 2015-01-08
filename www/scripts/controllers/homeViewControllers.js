@@ -13,13 +13,8 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', 'apiSock
   }
 ]);
 
-homeViewControllers.controller("MostUsedIngredientsCtrl", ["$scope",
-function($scope) {
-  $scope.ingredients = [];
-}]);
-
 homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
-  function($scope, apiFactory, apiSocketFactory) {
+  function($scope, apiFactory, socket) {
     $scope.recipes = [];
 
     apiFactory.recipe.find({
@@ -34,17 +29,36 @@ homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiS
 ]);
 
 homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
-  function($scope, apiFactory, apiSocketFactory) {
+  function($scope, apiFactory, socket) {
     $scope.comments = [];
 
-    apiFactory.recipe_comment.find({
-      params: {
-        sort: "createdAt DESC",
-        limit: 10
+    socket.subscribe(["timeline.create"], $scope);
+
+    $scope.$on("apiSocket:timeline.create", function(event, data) {
+      if (event.domain == "recipe_comment") {
+        if (event.name == "create") {
+          $scope.comments.unshift(data);
+          if ($scope.comments.length > 10) {
+            $scope.comments.pop();
+          }
+        } else {
+          getLatestComments();
+        }
       }
-    }).then(function(res) {
-      $scope.comments = res.data;
     });
+
+    function getLatestComments() {
+      apiFactory.recipe_comment.find({
+        params: {
+          sort: "createdAt DESC",
+          limit: 10
+        }
+      }).then(function(res) {
+        $scope.comments = res.data;
+      });
+    }
+
+    getLatestComments();
   }
 ]);
 

@@ -16,18 +16,14 @@
 <div class="container">
   <div class="row">
 
-    <div class="col-md-4 home-categories"  ng-controller="BestRecipesCtrl">
+    <div class="col-md-6 home-categories"  ng-controller="BestRecipesCtrl">
       <div class="row home-best-recipes-header">Best Recipes</div>
       <div class="row" ng-repeat="rec in recipes track by rec.id">
         {{rec.id}}
       </div>
     </div>
 
-    <div class="col-md-4 home-categories">
-      <div class="row home-most-used-ingredients-header">Most used Ingredients</div>
-    </div>
-
-    <div class="col-md-4 home-categories" ng-controller="LatestCommentsCtrl">
+    <div class="col-md-6 home-categories" ng-controller="LatestCommentsCtrl">
       <div class="row home-latest-comments-header">Latest Comments</div>
       <div class="row" ng-repeat="com in comments track by com.id">
         {{com.id}}
