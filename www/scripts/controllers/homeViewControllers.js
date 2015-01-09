@@ -5,6 +5,16 @@ homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory',
   }
 ]);
 
+homeViewControllers.controller("SearchBarCtrl", ["$scope", "$location",
+  function($scope, $location) {
+    $scope.searchValue = "";
+
+    $scope.onSubmit = function() {
+      console.log("#/search?q=" + encodeURI($scope.searchValue));
+    };
+  }
+])
+
 homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
   function($scope, apiFactory, socket) {
     $scope.recipes = [];
