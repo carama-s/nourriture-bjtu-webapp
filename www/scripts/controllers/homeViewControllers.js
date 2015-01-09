@@ -10,7 +10,9 @@ homeViewControllers.controller("SearchBarCtrl", ["$scope", "$location",
     $scope.searchValue = "";
 
     $scope.onSubmit = function() {
-      console.log("#/search?q=" + encodeURI($scope.searchValue));
+      if ($scope.searchValue.length > 0) {
+        $location.url("/search?q=" + encodeURI($scope.searchValue));
+      }
     };
   }
 ])

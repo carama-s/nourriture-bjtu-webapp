@@ -17,7 +17,8 @@ var app = angular.module('nourritureApp', [
   'loginViewControllers',
   'registerUserViewControllers',
   'recipeViewControllers',
-  'recipesViewControllers'
+  'recipesViewControllers',
+  "searchViewControllers"
 ]);
 
 app.value('socket_domain_mapper', {
@@ -108,6 +109,10 @@ app.config(['$routeProvider',
       when('/recipe/:id/edit', {
         templateUrl: '/views/editRecipe.html',
         controller: 'EditRecipeViewCtrl'
+      }).
+      when("/search", {
+        templateUrl: "/views/search.html",
+        controller: "SearchViewCtrl"
       }).
       otherwise({
         redirectTo: '/home'
