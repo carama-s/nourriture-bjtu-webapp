@@ -13,10 +13,10 @@
       <div class="col-sm-8">
         <div class="row">
           <p class="col-xs-12 title-page">{{ recipe.name }}
-            <!--
+
             <a href="" ng-click="deleteRecipe()"><i class="fa fa-trash btn-icon-ingredient"></i></a>
             <a ng-href="#/recipe/{{ recipe.id }}/edit"><i class="fa fa-cog btn-icon-ingredient" style="margin-right: 15px;"></i></a>
-          -->
+        
           </p>
           <p class="col-xs-12">
             <span>{{ nb_comments }} Comment<span ng-if="recipe.nb_rates">s</span><span ng-if="recipe.user"> | Created by <span class="second-color">{{ recipe.user.username }}</span></span> | On {{ recipe.createdAt | date:'longDate'}}</span>
