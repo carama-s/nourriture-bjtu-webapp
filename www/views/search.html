@@ -21,16 +21,24 @@
     <div class="col-sm-3 col-xs-12">
       <div class="ingredients-menu-title">Categories</div>
       <ul>
-        <li class="category-li"><a ng-click="changeCategory('all')" ng-class="{'category-li-selected': selectedCategory == 'all'}">All</a></li>
-        <li class="category-li"><a ng-click="changeCategory('recipe')" ng-class="{'category-li-selected': selectedCategory == 'recipe'}">Recipe</a></li>
-        <li class="category-li"><a ng-click="changeCategory('ingredient')" ng-class="{'category-li-selected': selectedCategory == 'ingredient'}">Ingredient</a></li>
+        <li class="category-li">
+          <a ng-click="changeCategory('all')" ng-class="{'category-li-selected': selectedCategory == 'all'}">All</a>
+          &nbsp;(<span class="second-color">{{ nbElements.all }}</span>)
+        </li>
+        <li class="category-li">
+          <a ng-click="changeCategory('recipe')" ng-class="{'category-li-selected': selectedCategory == 'recipe'}">Recipe</a>
+          &nbsp;(<span class="second-color">{{ nbElements.recipe }}</span>)
+        </li>
+        <li class="category-li">
+          <a ng-click="changeCategory('ingredient')" ng-class="{'category-li-selected': selectedCategory == 'ingredient'}">Ingredient</a>
+          &nbsp;(<span class="second-color">{{ nbElements.ingredient }}</span>)
+        </li>
       </ul>
     </div>
 
     <div class="col-sm-9 col-xs-12">
       <div class="row">
         <div class="col-md-12 ingredients-menu-title">
-          Recipes <span style="font-size: 16px;">(<span class="second-color">{{ nbElements }}</span>)</span>
           <i ng-click="switchView('list')" ng-class="{'ingredients-switch-view-selected': modeDisplay == 'list'}" class="ingredients-switch-view fa fa-th-list" style="margin-left: 10px;"></i>
           <i ng-click="switchView('module')" ng-class="{'ingredients-switch-view-selected': modeDisplay == 'module'}" class="ingredients-switch-view fa fa-th"></i>
         </div>
@@ -107,9 +115,7 @@
 
         <div class="row">
           <div class="col-xs-12 center">
-            <i class="mdi-image-navigate-before ingredients-pagination-btn" ng-click="goPreviousPage()" ng-show="canGoPreviousPage()"></i>
-            {{ currentPage + 1 }} / {{ nbPage }}
-            <i class="mdi-image-navigate-next ingredients-pagination-btn" ng-click="goNextPage()" ng-show="canGoNextPage()"></i>
+            <pagination total-items="nbElements.all" items-per-page="perPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>
           </div>
         </div>
 

@@ -15,8 +15,8 @@ searchViewControllers.controller("SearchBarCtrl", ["$scope", "$location",
   }
 ]);
 
-searchViewControllers.controller('SearchViewResult', ['$scope', "$location", 'apiFactory',
-  function($scope, $location, apiFactory) {
+searchViewControllers.controller('SearchViewResult', ['$scope', "$location", 'apiFactory', 'recipe_categories_mapper', 'ingredient_categories_mapper',
+  function($scope, $location, apiFactory, recipe_category_mapper, ingredient_categories_mapper) {
     var qs = $location.search();
     if (!qs.q) return $location.url("/");
 
@@ -27,8 +27,10 @@ searchViewControllers.controller('SearchViewResult', ['$scope', "$location", 'ap
     $scope.modeDisplay = "module";
     $scope.nbElements = 0;
     $scope.nbPage = 0;
-    $scope.currentPage = 0;
+    $scope.currentPage = 1;
     $scope.perPage = 9;
+    $scope.ingredient_categories_mapper = ingredient_categories_mapper;
+    $scope.recipe_category_mapper = recipe_category_mapper;
 
     function changeUrl(q, what) {
       $location.url("/search?q=" + encodeURI(q) + "&what=" + what);
@@ -42,37 +44,19 @@ searchViewControllers.controller('SearchViewResult', ['$scope', "$location", 'ap
       $scope.modeDisplay = v;
     };
 
-    $scope.canGoPreviousPage = function() {
-      return $scope.currentPage > 0;
-    }
-
-    $scope.goPreviousPage = function() {
-      if ($scope.canGoPreviousPage()) {
-        $scope.currentPage -= 1;
-        doSearch();
-      }
-    };
-
-    $scope.canGoNextPage = function() {
-      return ($scope.currentPage + 1) < $scope.nbPage;
-    }
-
-    $scope.goNextPage = function() {
-      if ($scope.canGoNextPage()) {
-        $scope.currentPage += 1;
-        doSearch();
-      }
+    $scope.pageChanged = function() {
+      doSearch();
     };
 
     function doSearch() {
       var params = {search: qs.q};
       if (_.contains(["recipe", "ingredient"], qs.what)) params.what = qs.what;
       params.limit = $scope.perPage;
-      params.skip = $scope.currentPage * $scope.perPage;
+      params.skip = ($scope.currentPage - 1) * $scope.perPage;
 
       apiFactory.common.search({params: params}).then(function(res) {
         $scope.nbElements = res.data.total;
-        $scope.nbPage = Math.ceil(res.data.total / $scope.perPage);
+        $scope.nbPage = Math.ceil(res.data.total.all / $scope.perPage);
         $scope.results = res.data.results;
       });
     }
