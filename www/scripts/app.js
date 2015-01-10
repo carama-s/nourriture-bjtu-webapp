@@ -449,6 +449,10 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
       return httpPut(urlRecipe + '/' + id, data, config);
     };
 
+    apiFactory.recipe.myComment = function(id, config) {
+      return httpGet(urlRecipe + '/' + id + "/my_comment", config);
+    };
+
     /* API RECIPE COMMENT */
 
     apiFactory.recipe_comment.find = function(config) {

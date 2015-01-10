@@ -14,8 +14,12 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
       }
       apiFactory.recipe_comment.find(config).then(function(res) {
         $scope.comments = res.data;
-        console.log($scope.comments);
         $scope.nb_comments = $scope.comments.length;
+      });
+      apiFactory.recipe.myComment($routeParams.id).then(function(res) {
+        if (res.data.id) {
+          $scope.commented = true;
+        }
       });
     }
 
@@ -49,7 +53,7 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
     };
 
     $scope.submitted = false;
-    $scope.max = 5;
+    $scope.my_rate = 0;
     $scope.ratingStates = [
       {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
       {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
@@ -61,19 +65,20 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
       $scope.submitted = true;
       $scope.emptyRate = false;
       $scope.emptyComment = false;
+      console.log($scope.comment);
 
-      if ($scope.rate == 0) {
+      if ($scope.my_rate == 0) {
         $scope.emptyRate = true;
       }
       if ($scope.comment == undefined || $scope.comment == "") {
         $scope.emptyComment = true;
       }
-
+      console.log($scope.my_rate);
       if ($scope.emptyComment || $scope.emptyRate) {
         return;
       }
 
-      apiFactory.recipe_comment.create({"recipe": $scope.recipe.id, "rate": $scope.rate, "comment": $scope.comment}).then(function(res) {
+      apiFactory.recipe_comment.create({"recipe": $scope.recipe.id, "rate": $scope.my_rate, "comment": $scope.comment}).then(function(res) {
         updateComments();
       });
 
