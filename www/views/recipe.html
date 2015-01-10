@@ -6,19 +6,29 @@
 
       <div class="col-sm-4">
         <div ng-if="loaded" class="ratio-container">
-          <div class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{recipe.photo_url}})'}"></div>
+          <div ng-if="recipe.photo_url" class="ratio-4_3 background-image" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{recipe.photo_url}})'}"></div>
+          <div ng-if="!recipe.photo_url" class="ratio-4_3 background-image" ng-style="{'background-image': 'url(/images/default-preview.png)'}"></div>
         </div>
       </div>
       <div class="col-sm-8">
         <div class="row">
           <p class="col-xs-12 title-page">{{ recipe.name }}
+            <!--
             <a href="" ng-click="deleteRecipe()"><i class="fa fa-trash btn-icon-ingredient"></i></a>
             <a ng-href="#/recipe/{{ recipe.id }}/edit"><i class="fa fa-cog btn-icon-ingredient" style="margin-right: 15px;"></i></a>
+          -->
+          </p>
+          <span class="col-xs-12">{{ recipe.nb_rates }} Comment<span ng-if="recipe.nb_rates">s</span><span ng-if="recipe.user"> | Created by <span class="second-color">{{ recipe.user.username }}</span></span> | On {{ recipe.createdAt | date:'longDate'}}</span>
+          <p>
+            Preparation time: {{ recipe.preparation_time }}
+            Cooking time: {{ recipe.cooking_time }}
+            Servings: {{ recipe.servings }}
+
           </p>
         </div>
-        <div class="row">
-          <div class="col-xs-12" style="padding-bottom: 20px;" ng-bind-html="recipe.description | sanitize"></div>
 
+
+          <!--
           <div class="col-md-4 col-xs-6">
             <div>
               <rating style="font-size: 20px;" class="no-outline" ng-model="rate" max="max" rating-states="ratingStates" readonly="true" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
@@ -41,9 +51,12 @@
               <a>add a comment</a>
             </div>
           </div>
-        </div>
+          -->
 
       </div>
+  </div>
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-xs-12" style="padding-bottom: 20px;" ng-bind-html="recipe.description | sanitize"></div>
   </div>
 
   <div class="row" style="margin-top: 25px;">
@@ -81,6 +94,25 @@
   <div class="row" style="margin-top: 25px;">
     <div class="col-xs-12">
       <p class="sub-title-page">Comments</p>
+        <div>
+            <form name="form-post-comment" ng-controller="FormPostComment" style="padding: 10px;" ng-submit="submitPostComment()">
+              <div class="col-xs-12 form-group sub-title-page main-color">
+                Post a comment
+              </div>
+              <div class="col-xs-12 form-group">
+                <label class="form-label">Rate</label><br>
+                <rating style="font-size: 20px;" class="no-outline" ng-model="rate" max="max" rating-states="ratingStates" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+              </div>
+              <div class="col-xs-12 form-group">
+                <label class="form-label">Comment</label>
+                <textarea class="form-control input-text" rows="3" ng-model="comment" id="comment" placeholder="Comment the recipe"></textarea>
+              </div>
+              <div class="row center" style="margin-top: 40px;">
+                <input type="submit" class="btn btn-default" value="Post Comment"/>
+              </div>
+
+            </form>
+          </div>
     </div>
   </div>
 

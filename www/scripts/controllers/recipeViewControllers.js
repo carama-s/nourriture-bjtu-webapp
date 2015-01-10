@@ -1,6 +1,5 @@
 var recipeViewControllers = angular.module('recipeViewControllers', []);
 
-
 recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$location', '$document', 'apiFactory', 'recipe_categories_mapper',
   function($scope, $routeParams, $location, $document, apiFactory, recipe_categories_mapper) {
     $scope.loaded = false;
@@ -32,6 +31,18 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
       apiFactory.recipe.deleteById($routeParams.id).then(function(res) {
         $location.url("/recipes");
       });
+    };
+]);
+
+recipeViewControllers.controller('FormPostComment', ['$scope', '$routeParams', '$location', 'apiFactory',
+  function($scope, $routeParams, $location, apiFactory) {
+    $scope.submitted = false;
+
+    $scope.submitPostComment = function() {
+      alert("lol");
+      $scope.submitted = true;
+      console.log(rate);
+      console.log(comment);
     };
 
     $scope.max = 5;
