@@ -5,9 +5,24 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
     $scope.loaded = false;
     $scope.recipeId = $routeParams.id;
     $scope.recipe_categories_mapper = recipe_categories_mapper;
+
+    function updateComments() {
+      var config = {
+        params: {
+          where: JSON.stringify({recipe: $scope.recipe.id})
+        }
+      }
+      apiFactory.recipe_comment.find(config).then(function(res) {
+        $scope.comments = res.data;
+        console.log($scope.comments);
+        $scope.nb_comments = $scope.comments.length;
+      });
+    }
+
     apiFactory.recipe.findById($routeParams.id).then(function(res) {
       $scope.recipe = res.data;
       $scope.rate = res.data.rate;
+      updateComments();
 
       var ingredients = _.pluck(res.data.ingredients, "ingredient");
       var quantities = _.mapValues(_.groupBy(res.data.ingredients, "ingredient"), function(ings) {
@@ -32,19 +47,8 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
         $location.url("/recipes");
       });
     };
-]);
 
-recipeViewControllers.controller('FormPostComment', ['$scope', '$routeParams', '$location', 'apiFactory',
-  function($scope, $routeParams, $location, apiFactory) {
     $scope.submitted = false;
-
-    $scope.submitPostComment = function() {
-      alert("lol");
-      $scope.submitted = true;
-      console.log(rate);
-      console.log(comment);
-    };
-
     $scope.max = 5;
     $scope.ratingStates = [
       {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
@@ -53,5 +57,27 @@ recipeViewControllers.controller('FormPostComment', ['$scope', '$routeParams', '
       {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'},
       {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'}
     ];
+    $scope.submit = function() {
+      $scope.submitted = true;
+      $scope.emptyRate = false;
+      $scope.emptyComment = false;
+
+      if ($scope.rate == 0) {
+        $scope.emptyRate = true;
+      }
+      if ($scope.comment == undefined || $scope.comment == "") {
+        $scope.emptyComment = true;
+      }
+
+      if ($scope.emptyComment || $scope.emptyRate) {
+        return;
+      }
+
+      apiFactory.recipe_comment.create({"recipe": $scope.recipe.id, "rate": $scope.rate, "comment": $scope.comment}).then(function(res) {
+        updateComments();
+      });
+
+
+    };
   }
 ]);
