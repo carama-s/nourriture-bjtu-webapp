@@ -45,7 +45,7 @@
       <ul>
         <li class="category-li"><a href="#/recipes" ng-click="changeCategory('all')" ng-class="selectedCategory == 'All' ? 'category-li-selected' : ''">All</a></li>
         <li class="category-li" data-ng-repeat="(k, v) in recipe_categories_mapper">
-          <a href="#/recipes" ng-click="changeCategory(k)" ng-class="selectedCategory == v.name ? 'category-li-selected' : ''">{{ v.name }}</a/>
+          <a href="#/recipes" ng-click="changeCategory(k)" ng-class="selectedCategory == v.name ? 'category-li-selected' : ''">{{ v.name }}</a>
         </li>
       </ul>
     </div>
