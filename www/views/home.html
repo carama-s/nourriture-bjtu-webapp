@@ -16,9 +16,29 @@
 </div>
 
 <div class="container">
+  <div class="row" ng-controller="LatestRecipesCtrl">
+    <div ng-repeat="rec in recipes track by rec.id" class="col-sm-4 home-latest-recipe">
+      <div class="row">
+        <div class="col-xs-12 home-latest-recipe-container">
+          <a ng-href="#/recipe/{{rec.id}}">
+            <div class="row home-latest-recipe-img-container">
+              <img ng-if="rec.photo_url" class="home-latest-recipe-img" ng-src="http://nourriture.dennajort.fr{{rec.photo_url}}"/>
+              <img ng-if="!rec.photo_url" class="home-latest-recipe-img" src="/images/default-preview.png"/>
+            </div>
+            <div class="row home-latest-recipe-name">
+              {{rec.name}}
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br />
+
   <div class="row">
 
-    <div class="col-sm-6 home-categories"  ng-controller="BestRecipesCtrl">
+    <div class="col-sm-6 home-categories" ng-controller="BestRecipesCtrl">
       <div class="row home-best-recipes-header">Best Recipes</div>
 
       <div class="row home-best-recipes-row center" ng-if="loading">Loading</div>

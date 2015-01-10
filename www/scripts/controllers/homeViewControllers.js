@@ -1,7 +1,39 @@
 var homeViewControllers = angular.module('homeViewControllers', []);
 
-homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory',
-  function($scope, apiFactory) {
+homeViewControllers.controller('HomeViewCtrl', ['$scope', 'apiFactory', function($scope, apiFactory) {}]);
+
+homeViewControllers.controller("LatestRecipesCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
+  function($scope, apiFactory, socket) {
+    $scope.recipes = [];
+
+    socket.subscribe(["timeline.create"], $scope);
+
+    $scope.$on("apiSocket:timeline.create", function(event, data) {
+      if (event.domain == "recipe") {
+        if (event.name == "create") {
+          $scope.recipes.unshift(data);
+          if ($scope.recipes.length > 3) {
+            $scope.recipes.pop();
+          }
+        } else {
+          getLatestRecipes();
+        }
+      }
+    });
+
+    function getLatestRecipes() {
+      apiFactory.recipe.find({
+        params: {
+          sort: "createdAt DESC",
+          limit: 3
+        }
+      }).then(function(res) {
+        $scope.loading = false;
+        $scope.recipes = res.data;
+      });
+    }
+
+    getLatestRecipes();
   }
 ]);
 
