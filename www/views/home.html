@@ -79,21 +79,34 @@
     </div>
 
   </div>
-</div>
-<br />
-<!--
-<div class="col-md-3" ng-controller="SocketTimelineCtrl">
-  <div class="row home-timeline-header">Timeline</div>
-  <div class="row home-timeline-line" ng-repeat="line in timeline track by line.id">
-    <div class="col-md-3">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
-    <div class="col-md-2" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
-    <div class="col-md-7">
-      <a ng-if="!line.destroyed && line.domain == 'ingredient'" ng-href="#/ingredient/{{ line.data.id }}">{{ line.data.name }}</a>
-      <a ng-if="!line.destroyed && line.domain == 'recipe'" ng-href="#/recipe/{{ line.data.id }}">{{ line.data.name }}</a>
-      <span ng-if="line.destroyed">{{ line.data.name }}</span>
-      has been {{ socket_name_mapper[line.name].name }}
-      <span ng-if="line.user"> by {{ line.user.username }}</span>
+
+  <div id="home-timeline-container" class="hidden-xs" ng-controller="SocketTimelineCtrl">
+    <div class="home-timeline-header">
+      Timeline
+      <span class="pull-right home-timeline-opener" ng-click="toggleClosed()">
+        <i ng-if="closed" class="fa fa-arrow-up"></i>
+        <i ng-if="!closed" class="fa fa-arrow-down"></i>
+      </span>
+    </div>
+    <div class="col-xs-12 home-timeline-content" ng-hide="closed">
+      <div class="home-timeline-line" ng-repeat="line in timeline track by line.id">
+        <hr ng-if="!$first">
+        <div class="col-md-4">
+          <div class="row">{{ line.createdAt | date:'MM/dd HH:mm' }}</div>
+          <div class="row" ng-style="{'color': '{{ socket_domain_mapper[line.domain].color }}'}">{{ socket_domain_mapper[line.domain].name }}</div>
+        </div>
+        <div class="col-md-8">
+          <a ng-if="!line.destroyed && line.domain == 'ingredient'" ng-href="#/ingredient/{{ line.data.id }}">{{ line.data.name }}</a>
+          <a ng-if="!line.destroyed && line.domain == 'recipe'" ng-href="#/recipe/{{ line.data.id }}">{{ line.data.name }}</a>
+          <span ng-if="line.destroyed">{{ line.data.name }}</span>
+          has been {{ socket_name_mapper[line.name].name }}
+          <span ng-if="line.user"> by {{ line.user.username }}</span>
+        </div>
+        <br ng-if="$last" />
+        <br ng-if="$last" />
+      </div>
     </div>
   </div>
+
 </div>
--->
+<br />

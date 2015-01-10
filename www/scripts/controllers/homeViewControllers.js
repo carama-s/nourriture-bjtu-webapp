@@ -121,6 +121,12 @@ homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'a
 
     var domains = ["ingredient", "recipe"];
 
+    $scope.closed = true;
+
+    $scope.toggleClosed = function() {
+      $scope.closed ^= true;
+    };
+
     function checkDestroyed(elements) {
       var destroyed = [];
       _(elements).forEach(function(value, i) {
