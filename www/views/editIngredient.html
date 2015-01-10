@@ -7,13 +7,13 @@
   <br />
   <p class="sub-title-page">Identity</p>
   <div class=row>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div ng-if="loaded" class="ratio-container" id="containerPreviewImage">
         <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
       </div>
       <input class="hidden" id="uploadImage" type="file" file-model="photoIngredient"/>
     </div>
-    <div class="col-md-8 col-md-offset-1">
+    <div class="col-md-8">
       <div class="form-group">
         <label class="form-label" for="nameIngredient">Ingredient name</label>
         <input type="text" value="{{ ingredient.name }}" ng-class="{'input-text-error': submitted && emptyIngredientName}" class="form-control input-text" ng-model="nameIngredient" name="nameIngredient" id="nameIngredient" placeholder="Ingredient name" ng-change="emptyIngredientName = false;">

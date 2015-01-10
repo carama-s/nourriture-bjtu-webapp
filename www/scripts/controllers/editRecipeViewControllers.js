@@ -1,27 +1,29 @@
-var addRecipeViewControllers = angular.module('addRecipeViewControllers', []);
+var editRecipeViewControllers = angular.module('editRecipeViewControllers', []);
 
-addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", "$document", "$location", 'apiFactory', 'recipe_categories_mapper', 'recipe_categories_mapper_first',
-  function($scope, $timeout, $document, $location, apiFactory, recipe_categories_mapper, recipe_categories_mapper_first) {
+editRecipeViewControllers.controller('EditRecipeViewCtrl', ['$scope', "$routeParams", "$timeout", "$document", "$location", 'apiFactory', 'recipe_categories_mapper',
+  function($scope, $routeParams, $timeout, $document, $location, apiFactory, recipe_categories_mapper) {
 
-    var timeUnitMult = {
-      "minutes": 1,
-      "hours": 60,
-      "days": 1440 // 60 * 24
-    };
+    $scope.loaded = false;
+    $scope.recipeId = $routeParams.id;
 
-    $scope.timeList = ["minutes", "hours", "days"];
+    // Load data
+    apiFactory.recipe.findById($routeParams.id).then(function(res) {
+      $scope.recipe = res.data;
+      $scope.nameRecipe = $scope.recipe.name;
+      $scope.categoryRecipe = $scope.recipe.category;
+      $scope.descriptionRecipe = $scope.recipe.description;
+      $scope.servingsRecipe = $scope.recipe.servings;
+      $scope.prepTimeValueRecipe = $scope.recipe.preparation_time;
+      $scope.cookTimeValueRecipe = $scope.recipe.cooking_time;
+      $scope.stepsRecipe = $scope.recipe.directions;
+      loadExistingIngredients();
+    });
+
     $scope.submitted = false;
-    $scope.servingsRecipe = 1;
-    $scope.prepTimeValueRecipe = 0;
-    $scope.prepTimeUnitRecipe = $scope.timeList[0];
-    $scope.cookTimeValueRecipe = 0;
-    $scope.cookTimeUnitRecipe = $scope.timeList[0];
-    $scope.categoryRecipe = recipe_categories_mapper_first;
 
-    $scope.stepsRecipe = [];
 
     // Submit button
-    $scope.createRecipe = function() {
+    $scope.editRecipe = function() {
       $scope.submitted = true;
       var valid = true;
 
@@ -37,22 +39,14 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", 
       $scope.stepsRecipe = _.filter($scope.stepsRecipe, function(step) {
         return (step.trim().length > 0);
       });
-      if (!_.contains($scope.timeList, $scope.prepTimeUnitRecipe)) {
-        $scope.prepTimeUnitRecipe = $scope.timeList[0];
-        valid = false;
-      }
-      if (!_.contains($scope.timeList, $scope.cookTimeUnitRecipe)) {
-        $scope.cookTimeUnitRecipe = $scope.timeList[0];
-        valid = false;
-      }
       if ($scope.stepsRecipe.length <= 0 || $scope.recipeIngredients <= 0) {
         valid = false;
       }
 
       if (!valid) return;
 
-      var cooking_time = $scope.cookTimeValueRecipe; // * timeUnitMult[$scope.cookTimeUnitRecipe];
-      var preparation_time = $scope.prepTimeValueRecipe; // * timeUnitMult[$scope.prepTimeUnitRecipe];
+      var cooking_time = $scope.cookTimeValueRecipe;
+      var preparation_time = $scope.prepTimeValueRecipe;
       var ingredients = _.map($scope.recipeIngredients, function(ing) {
         return {ingredient: ing.id, quantity: ing.quantity};
       });
@@ -73,8 +67,8 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", 
         headers: {'Content-Type': undefined}
       };
 
-      apiFactory.recipe.create(fd, config).then(function(res) {
-        $location.path("/recipes");
+      apiFactory.recipe.updateById($routeParams.id, fd, config).then(function(res) {
+        $location.path("/recipe/" + $routeParams.id);
       }, function(res) {
         console.error(res);
       });
@@ -122,6 +116,43 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", 
     $scope.idIngredientExclude = [];
     $scope.urlIngredientExclude = "";
 
+    function loadExistingIngredients() {
+      var ingredients = _.pluck($scope.recipe.ingredients, "ingredient");
+      var quantities = _.mapValues(_.groupBy($scope.recipe.ingredients, "ingredient"), function(ings) {
+        return ings[0].quantity;
+      });
+      var config = {
+        params: {
+          where: JSON.stringify({id: ingredients})
+        }
+      };
+      apiFactory.ingredient.find(config).then(function(res) {
+        $scope.recipe.ingredients = _.map(res.data, function(ing) {
+          ing.quantity = quantities[ing.id];
+          return ing;
+        });
+        for (var i = 0; i < $scope.recipe.ingredients.length; i++) {
+          var new_ingredient = {
+            'name': $scope.recipe.ingredients[i].name,
+            'quantity': $scope.recipe.ingredients[i].quantity
+          }
+          if ($scope.recipe.ingredients[i].id) {
+            new_ingredient.id = $scope.recipe.ingredients[i].id;
+          }
+
+          if ($scope.recipe.ingredients[i].photo_url) {
+            new_ingredient.photo_url = "http://nourriture.dennajort.fr" + $scope.recipe.ingredients[i].photo_url;
+          }
+          else {
+            new_ingredient.photo_url = '/images/default-preview.png';
+          }
+          $scope.recipeIngredients.push(new_ingredient);
+        }
+        updateIdIngredientExclude();
+        $scope.loaded = true;
+      });
+    }
+
     function updateIdIngredientExclude() {
       $scope.idIngredientExclude = [];
       for (var i = 0; i < $scope.recipeIngredients.length; i++) {
@@ -153,7 +184,6 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", 
       else {
         new_ingredient.photo_url = '/images/default-preview.png';
       }
-
       $scope.recipeIngredients.push(new_ingredient);
       updateIdIngredientExclude();
     }

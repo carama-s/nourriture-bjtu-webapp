@@ -22,7 +22,30 @@ body {
 
 #main-background-container {
   height: 100%;
-  background-color: pink;
+  background-color: #FEFEFE;
+}
+
+#main-background-wrapper-load {
+  position: fixed;
+  top:0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#main-background-container-load {
+  height: 100%;
+  background-color: @mainColor;
+  display: table;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  background-color: @secondColor;
+  border-color: @secondColor;
+}
+
+.pagination > li > a, .pagination > li > span, .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+  color: @secondColor;
 }
 
 .full {
@@ -95,6 +118,8 @@ a, a:hover, a:focus {
 
 .btn-default {
   background-color: @secondColor;
+  border-radius: 2px;
+  padding: 8px 18px !important;
   color: white;
   border: none;
   outline: none !important;

@@ -20,7 +20,7 @@ ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFact
         params: {
           sort: "name ASC",
           limit: $scope.perPage,
-          skip: $scope.currentPage * $scope.perPage,
+          skip: ($scope.currentPage - 1) * $scope.perPage,
           category: currentCategory
         }
       };
@@ -34,26 +34,8 @@ ingredientsViewControllers.controller('IngredientsViewCtrl', ['$scope', 'apiFact
       $scope.modeDisplay = mode;
     };
 
-    $scope.canGoPreviousPage = function() {
-      return $scope.currentPage > 0;
-    }
-
-    $scope.goPreviousPage = function() {
-      if ($scope.canGoPreviousPage()) {
-        $scope.currentPage -= 1;
-        loadIngredient();
-      }
-    };
-
-    $scope.canGoNextPage = function() {
-      return ($scope.currentPage + 1) < $scope.nbPage;
-    }
-
-    $scope.goNextPage = function() {
-      if ($scope.canGoNextPage()) {
-        $scope.currentPage += 1;
-        loadIngredient();
-      }
+    $scope.pageChanged = function() {
+      loadIngredient();
     };
 
     $scope.changeCategory = function(category_name) {

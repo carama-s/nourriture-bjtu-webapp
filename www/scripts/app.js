@@ -9,6 +9,7 @@ var app = angular.module('nourritureApp', [
   'addIngredientViewControllers',
   'addRecipeViewControllers',
   'editIngredientViewControllers',
+  'editRecipeViewControllers',
   'editUserViewControllers',
   'homeViewControllers',
   'ingredientViewControllers',
@@ -103,6 +104,10 @@ app.config(['$routeProvider',
       when('/recipe/:id', {
         templateUrl: '/views/recipe.html',
         controller: 'RecipeViewCtrl'
+      }).
+      when('/recipe/:id/edit', {
+        templateUrl: '/views/editRecipe.html',
+        controller: 'EditRecipeViewCtrl'
       }).
       otherwise({
         redirectTo: '/home'
@@ -432,6 +437,10 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
 
     apiFactory.recipe.create = function(data, config) {
       return httpPost(urlRecipe, data, config);
+    };
+
+    apiFactory.recipe.updateById = function(id, data, config) {
+      return httpPut(urlRecipe + '/' + id, data, config);
     };
 
     /* API RECIPE COMMENT */

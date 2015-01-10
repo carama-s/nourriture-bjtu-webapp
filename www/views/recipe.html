@@ -17,9 +17,7 @@
           </p>
         </div>
         <div class="row">
-          <div class="col-xs-12" style="padding-bottom: 20px;">
-            {{ recipe.description }}
-          </div>
+          <div class="col-xs-12" style="padding-bottom: 20px;" ng-bind-html="recipe.description | sanitize"></div>
 
           <div class="col-md-4 col-xs-6">
             <div>
@@ -48,7 +46,7 @@
       </div>
   </div>
 
-  <div class="row">
+  <div class="row" style="margin-top: 25px;">
     <div class="col-sm-6">
       <p class="sub-title-page">Ingredients</p>
 
@@ -78,4 +76,12 @@
       </div>
     </div>
   </div>
+
+
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-xs-12">
+      <p class="sub-title-page">Comments</p>
+    </div>
+  </div>
+
 </div>

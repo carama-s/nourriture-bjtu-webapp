@@ -68,7 +68,7 @@
                   <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{recipe.photo_url}})'}"></div>
                 </a>
               </div>
-              <div class="ingredient-li-content">
+              <div style="min-height: 150px;" class="ingredient-li-content">
                 <div class="ingredient-li-content-name">{{ recipe.name }}</div>
                 <div class="ingredient-li-content-category" style="color: {{ recipe_categories_mapper[recipe.category].color }}">{{ recipe.category }}</div>
                 <div class="ingredient-li-content-description">{{ recipe.description | limitTo : 92}}...</div><br/>
@@ -96,77 +96,11 @@
       </ul>
       <div class="row">
         <div class="col-xs-12 center">
-          <i class="mdi-image-navigate-before ingredients-pagination-btn" ng-click="goPreviousPage()" ng-show="canGoPreviousPage()"></i>
-          {{ currentPage + 1 }} / {{ nbPage }}
-          <i class="mdi-image-navigate-next ingredients-pagination-btn" ng-click="goNextPage()" ng-show="canGoNextPage()"></i>
+          <pagination total-items="nbElements" items-per-page="perPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>
         </div>
       </div>
 
     </div>
 
-
-
-
-
-    <!--
-    <div class="col-md-9 col-xs-12">
-        <div class="row ingredients-menu-sub-title">
-          Ingredients <span class="ingredients-nb-elements">(<span class="second-color">{{ nbElements }}</span>)</span>
-          <i ng-click="switchView('list')" ng-class="{'ingredients-switch-view-selected': modeDisplay == 'list'}" class="ingredients-switch-view fa fa-th-list hide-on-med-and-down" style="margin-left: 10px;"></i>
-          <i ng-click="switchView('module')" ng-class="{'ingredients-switch-view-selected': modeDisplay == 'module'}" class="ingredients-switch-view fa fa-th hide-on-med-and-down"></i>
-        </div>
-        <div class="row">
-          <ul>
-            display module only medium and large
-            <li ng-repeat="ingredient in ingredients" class="col s12 m6 l4 ingredient-li hide-on-large-only" ng-show="modeDisplay == 'list'">
-              <div class="ratio-container">
-                <a ng-href="#/ingredient/{{ ingredient.id }}">
-                  <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
-                </a>
-              </div>
-              <div class="row ingredient-li-content">
-                <div class="ingredient-li-content-name">{{ ingredient.name }}</div>
-                <div class="ingredient-li-content-category" style="color: {{ ingredient_categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
-                <div class="ingredient-li-content-description">{{ ingredient.description | limitTo : 92 }}...</div><br/>
-              </div>
-            </li>
-            display module
-            <li ng-repeat="ingredient in ingredients" class="col s12 m6 l4 ingredient-li" ng-show="modeDisplay == 'module'">
-              <div class="ratio-container">
-                <a ng-href="#/ingredient/{{ ingredient.id }}">
-                  <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
-                </a>
-              </div>
-              <div class="row ingredient-li-content">
-                <div class="ingredient-li-content-name">{{ ingredient.name }}</div>
-                <div class="ingredient-li-content-category" style="color: {{ ingredient_categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
-                <div class="ingredient-li-content-description">{{ ingredient.description | limitTo : 92}}...</div><br/>
-              </div>
-            </li>
-
-             display list
-            <li ng-repeat="ingredient in ingredients" class="col s12 m12 l12 ingredient-li-horizontal hide-on-med-and-down" ng-show="modeDisplay == 'list'">
-              <div class="col s4 m4 l4 no-padding ratio-container ingredient-li-horizontal-container">
-                <a ng-href="#/ingredient/{{ ingredient.id }}">
-                  <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{ingredient.photo_url}})'}"></div>
-                </a>
-              </div>
-              <div class="col s8 m8 l8 no-padding ingredient-li-horizontal-content ingredient-li-horizontal-container">
-                <div class="ingredient-li-horizontal-content-name">{{ ingredient.name }}</div>
-                <div class="ingredient-li-horizontal-content-category" style="color: {{ ingredient_categories_mapper[ingredient.category].color }}">{{ ingredient.category }}</div>
-                <div class="ingredient-li-content-description">{{ ingredient.description | limitTo : 200}}...</div>
-              </div>
-            </li>
-          </ul>
-
-
-        </div>
-        <div class="row ingredients-pagination-container">
-          <i class="mdi-image-navigate-before ingredients-pagination-btn" ng-click="goPreviousPage()" ng-show="canGoPreviousPage()"></i>
-          {{ currentPage + 1 }} / {{ nbPage }}
-          <i class="mdi-image-navigate-next ingredients-pagination-btn" ng-click="goNextPage()" ng-show="canGoNextPage()"></i>
-        </div>
-    </div>
-  -->
   </div>
 </div>

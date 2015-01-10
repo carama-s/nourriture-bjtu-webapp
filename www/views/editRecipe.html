@@ -2,14 +2,14 @@
 
 <div class="container" ng-cloak>
 
-  <p class="title-page">Add recipe</p>
+  <p class="title-page">Edit recipe</p>
 
   <br />
   <p class="sub-title-page">Identity</p>
-  <div class="row" ng-cloak>
+  <div class="row">
     <div class="col-md-4">
-      <div class="ratio-container" id="containerPreviewImage">
-        <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(/images/default-preview.png)'}"></div>
+      <div ng-if="loaded" class="ratio-container" id="containerPreviewImage">
+        <div class="ratio-4_3 background-image" id="previewImage" ng-click="simulateClickFile();" ng-style="{'background-image': 'url(http://nourriture.dennajort.fr{{recipe.photo_url}})'}"></div>
       </div>
       <input class="hidden" id="uploadImage" type="file" file-model="photoRecipe"/>
     </div>
@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-xs-12 form-group">
           <label class="form-label">Recipe category</label><br />
-          <div data-ng-repeat="(k, v) in recipe_categories_mapper track by $index" ng-style="$index == 0 && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col-sm-2 col-xs-4 categories">
+          <div data-ng-repeat="(k, v) in recipe_categories_mapper track by $index" ng-style="recipe.category == k  && {'background-color': v.color}" ng-click="changeCategory($event, k)" class="col-sm-2 col-xs-4 categories">
             {{ v.name }}
           </div>
         </div>
@@ -44,7 +44,6 @@
           <label class="form-label">Preparation Time</label><br />
           <div class="input-group">
             <input type="number" class="form-control input-text" ng-model="prepTimeValueRecipe" name="prepTimeValueRecipe" id="prepTimeValueRecipe" min="0">
-            <!--<select ng-options="i for i in timeList" name="prepTimeUnitRecipe" ng-model="prepTimeUnitRecipe" class="add-recipe-time-unit form-control"></select>-->
             <div class="input-group-addon input-text" ng-if="prepTimeValueRecipe <= 1">&nbsp;Minute&nbsp;</div>
             <div class="input-group-addon input-text" ng-if="prepTimeValueRecipe > 1">Minutes</div>
           </div>
@@ -54,7 +53,6 @@
           <label class="form-label">Cooking Time</label><br />
           <div class="input-group">
             <input type="number" class="form-control input-text" ng-model="cookTimeValueRecipe" name="cookTimeValueRecipe" id="cookTimeValueRecipe" min="0">
-            <!--<select ng-options="i for i in timeList" name="cookTimeUnitRecipe" ng-model="cookTimeUnitRecipe" class="add-recipe-time-unit form-control"></select>-->
             <div class="input-group-addon input-text" ng-if="cookTimeValueRecipe <= 1">&nbsp;Minute&nbsp;</div>
             <div class="input-group-addon input-text" ng-if="cookTimeValueRecipe > 1">Minutes</div>
           </div>
@@ -120,9 +118,7 @@
   </div>
 
   <br />
-  <p class="sub-title-page">Steps
-    <button type="button" class="no-btn" ng-click="addStep()">Add&nbsp;<i class="fa fa-plus"></i></button>
-  </p>
+  <p class="sub-title-page">Steps&nbsp;<button type="button" class="btn btn-default btn-xs" ng-click="addStep()">Add&nbsp;<i class="fa fa-plus"></i></button></p>
   <div class="row" ng-repeat="step in stepsRecipe track by $index">
     <div class="col-xs-12 form-group">
       <label class="form-label">Step {{$index + 1}}</label>
@@ -139,7 +135,7 @@
   </div>
 
   <div class="row center" style="margin-top: 40px;">
-    <button type="button" class="btn btn-default" ng-click="createRecipe()">Add Recipe</button>
+    <button type="button" class="btn btn-default" ng-click="editRecipe()">Edit Recipe</button>
   </div>
   <br />
 </div>
