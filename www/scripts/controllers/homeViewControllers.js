@@ -85,15 +85,20 @@ homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'a
     $scope.comments = [];
     $scope.loading = true;
 
+    $scope.ratingStates = _(5).times().map(function() {return {stateOn: 'glyphicon-star rating-star-selected', stateOff: 'glyphicon-star rating-star-unselected'};}).value();
+
     socket.subscribe(["timeline.create"], $scope);
 
     $scope.$on("apiSocket:timeline.create", function(event, data) {
       if (data.domain == "recipe_comment") {
         if (data.name == "create") {
-          $scope.comments.unshift(data.data);
-          if ($scope.comments.length > 10) {
-            $scope.comments.pop();
-          }
+          apiFactory.recipe.findById(data.data.recipe).then(function(res) {
+            data.data.recipe = res.data;
+            $scope.comments.unshift(data.data);
+            if ($scope.comments.length > 10) {
+              $scope.comments.pop();
+            }
+          });
         } else {
           getLatestComments();
         }
@@ -107,8 +112,17 @@ homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'a
           limit: 10
         }
       }).then(function(res) {
-        $scope.loading = false;
-        $scope.comments = res.data;
+        var comments = res.data;
+        var recipe_ids = _(res.data).pluck("recipe").uniq().value();
+        return apiFactory.recipe.find({params: {where: JSON.stringify({id: recipe_ids})}}).then(function(res) {
+          var recipes = _.indexBy(res.data, "id");
+          var coms = _.map(comments, function(com) {
+            com.recipe = recipes[com.recipe];
+            return com;
+          });
+          $scope.loading = false;
+          $scope.comments = coms;
+        });
       });
     }
 

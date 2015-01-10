@@ -72,7 +72,10 @@
       <div class="row home-latest-comments-row center" ng-if="loading">Loading</div>
 
       <div class="row home-latest-comments-row" ng-repeat="com in comments track by com.id" ng-if="!loading && comments.length > 0">
-        {{com.id}}
+        {{com.user.username}}&nbsp;
+        <rating class="no-outline" ng-model="com.rate" max="5" rating-states="ratingStates" readonly="true" on-hover="hoveringOver(value)" on-leave="overStar = null"></rating>
+        &nbsp;{{com.recipe.name}}<br>
+        {{com.comment}}
       </div>
 
       <div class="row home-latest-comments-row center" ng-if="!loading && comments.length == 0">No comments</div>
