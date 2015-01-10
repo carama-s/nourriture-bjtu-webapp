@@ -43,7 +43,7 @@ registerUserViewControllers.controller("RegisterFormCtrl", ['$scope', 'apiFactor
         return apiFactory.user.authenticate($scope.registerInputEmail, $scope.registerInputPassword).then(function(data) {
           apiFactory.setToken(data.token.token, $scope.loginInputRemember);
           apiFactory.setUser(data.user);
-          $location.path('/');
+          $location.url('/');
         }, function() {
           apiFactory.logout('/');
         });

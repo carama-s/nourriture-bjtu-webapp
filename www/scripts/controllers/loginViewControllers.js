@@ -11,11 +11,11 @@ loginViewControllers.controller('LoginViewCtrl', ['$scope', 'apiFactory', 'Faceb
             if (data.need_signup === true) {
               // the user is authenticated on facebook but don't exists in our app
               glob.set("forRegisterUser", data.user);
-              $location.path('/registerUser');
+              $location.url('/registerUser');
             } else {
               apiFactory.setToken(data.token.token, true);
               apiFactory.setUser(data.user);
-              $location.path('/');
+              $location.url('/');
             }
           });
       });
@@ -31,7 +31,7 @@ loginViewControllers.controller("LogInFormCtrl", ['$scope', '$location', 'apiFac
         .then(function(data) {
           apiFactory.setToken(data.token.token, $scope.loginInputRemember);
           apiFactory.setUser(data.user);
-          $location.path('/');
+          $location.url('/');
         }, function(data) {
           $scope.badPassword = true;
           apiFactory.logout();

@@ -30,7 +30,7 @@ recipeViewControllers.controller('RecipeViewCtrl', ['$scope', '$routeParams', '$
 
     $scope.deleteRecipe = function() {
       apiFactory.recipe.deleteById($routeParams.id).then(function(res) {
-        $location.path("/recipes");
+        $location.url("/recipes");
       });
     };
 

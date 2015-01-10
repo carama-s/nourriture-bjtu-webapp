@@ -131,7 +131,7 @@ app.run(["$rootScope", "$location", "apiFactory", function($rootScope, $location
     if (apiFactory.isRole()) { // user logged
       if (next.templateUrl) {
         if (next.templateUrl == "/views/login.html" || next.templateUrl == "/views/registerUser.html") {
-          $location.path("/");
+          $location.url("/");
         }
       }
     }
@@ -266,7 +266,7 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
       user = false;
       token = false;
       localStorage.remove('token');
-      if (red) $location.path(red);
+      if (red) $location.url(red);
     };
 
     function httpGet(url, config) {
@@ -581,10 +581,10 @@ app.controller('MainAppCtrl', ['$scope', 'apiFactory',
 app.controller('RouteCtrl', ['$scope', '$location', 'apiFactory', function($scope, $location, apiFactory) {
   $scope.apiFactory = apiFactory;
   $scope.isActive = function(route) {
-    return route === $location.path();
+    return route === $location.url();
   };
 
   $scope.go = function (path) {
-    $location.path(path);
+    $location.url(path);
   };
 }]);

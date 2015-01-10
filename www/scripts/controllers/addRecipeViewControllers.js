@@ -74,7 +74,7 @@ addRecipeViewControllers.controller('AddRecipeViewCtrl', ['$scope', "$timeout", 
       };
 
       apiFactory.recipe.create(fd, config).then(function(res) {
-        $location.path("/recipes");
+        $location.url("/recipes");
       }, function(res) {
         console.error(res);
       });

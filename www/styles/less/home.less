@@ -51,21 +51,31 @@
   padding-top: 10px;
 }
 
-.home-best-recipes-header {
+.home-best-recipes-header, .home-latest-comments-header {
   padding: 10px 20px;
-  background-color: darkred;
   color: white;
 }
 
-.home-best-recipes-row {
+.home-latest-comments-header {
+  background-color: darkgreen;
+}
+
+.home-best-recipes-header {
+  background-color: darkred;
+}
+
+.home-best-recipes-row, .home-latest-comments-row {
   padding: 10px 20px;
-  background-color: crimson;
   color: white;
   vertical-align: middle;
 
   a {
     color: white;
   }
+}
+
+.home-best-recipes-row {
+  background-color: crimson;
 
   .home-best-recipe-img-div {
     text-align: center;
@@ -82,21 +92,13 @@
   }
 }
 
+.home-latest-comments-row {
+  background-color: green;
+}
+
 @media (min-width: @screen-md-min) {
-  .home-best-recipes-row {
+  .home-best-recipes-row, .home-latest-comments-row {
     line-height: 40px;
     height: 60px;
   }
-}
-
-.home-latest-comments-header {
-  padding: 10px 20px;
-  background-color: darkgreen;
-  color: white;
-}
-
-.home-latest-comments-row {
-  padding: 10px 20px;
-  background-color: green;
-  color: white;
 }

@@ -27,7 +27,7 @@ ingredientViewControllers.controller('IngredientViewCtrl', ['$scope', '$routePar
 
     $scope.deleteIngredient = function() {
       apiFactory.ingredient.deleteById($routeParams.id).then(function(res) {
-        $location.path("/ingredients");
+        $location.url("/ingredients");
       });
     };
   }

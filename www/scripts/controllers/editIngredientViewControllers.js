@@ -149,7 +149,7 @@ editIngredientViewControllers.controller('EditIngredientCtrl', ['$scope', '$rout
       };
       apiFactory.ingredient.updateById($routeParams.id, fd, config).then(function(res) {
         console.log(res.data);
-        $location.path("/ingredient/" + $routeParams.id);
+        $location.url("/ingredient/" + $routeParams.id);
       }, function(res) {
         console.error(res);
       });

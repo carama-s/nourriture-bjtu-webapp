@@ -121,7 +121,7 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
       };
       apiFactory.ingredient.create(fd, config).then(function(res) {
         console.log(res.data);
-        $location.path("/ingredients");
+        $location.url("/ingredients");
       }, function(res) {
         console.error(res);
       });
