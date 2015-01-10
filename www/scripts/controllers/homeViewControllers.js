@@ -9,9 +9,9 @@ homeViewControllers.controller("LatestRecipesCtrl", ["$scope", 'apiFactory', 'ap
     socket.subscribe(["timeline.create"], $scope);
 
     $scope.$on("apiSocket:timeline.create", function(event, data) {
-      if (event.domain == "recipe") {
-        if (event.name == "create") {
-          $scope.recipes.unshift(data);
+      if (data.domain == "recipe") {
+        if (data.name == "create") {
+          $scope.recipes.unshift(data.data);
           if ($scope.recipes.length > 3) {
             $scope.recipes.pop();
           }
@@ -59,7 +59,7 @@ homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiS
     socket.subscribe(["timeline.create"], $scope);
 
     $scope.$on("apiSocket:timeline.create", function(event, data) {
-      if (event.domain == "recipe_rate") {
+      if (data.domain == "recipe_rate") {
         getBestRecipes();
       }
     });
@@ -88,9 +88,9 @@ homeViewControllers.controller("LatestCommentsCtrl", ["$scope", 'apiFactory', 'a
     socket.subscribe(["timeline.create"], $scope);
 
     $scope.$on("apiSocket:timeline.create", function(event, data) {
-      if (event.domain == "recipe_comment") {
-        if (event.name == "create") {
-          $scope.comments.unshift(data);
+      if (data.domain == "recipe_comment") {
+        if (data.name == "create") {
+          $scope.comments.unshift(data.data);
           if ($scope.comments.length > 10) {
             $scope.comments.pop();
           }
@@ -142,7 +142,7 @@ homeViewControllers.controller("SocketTimelineCtrl", ['$scope', 'apiFactory', 'a
 
     apiSocketFactory.subscribe(["timeline.create"], $scope);
     $scope.$on("apiSocket:timeline.create", function(event, data) {
-      if (_.contains(domains, event.domain)) {
+      if (_.contains(domains, data.domain)) {
         $scope.timeline.unshift(data);
         $scope.timeline = checkDestroyed($scope.timeline);
       }
