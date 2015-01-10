@@ -252,8 +252,9 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
     var urlTimeline = host + "/timeline";
     var urlRecipe = host + "/recipe";
     var urlRecipeComment = host + "/recipe_comment";
+    var urlCommon = host + "/common";
 
-    var apiFactory = {user: {}, ingredient: {}, timeline: {}, recipe: {}, recipe_comment: {}};
+    var apiFactory = {user: {}, ingredient: {}, timeline: {}, recipe: {}, recipe_comment: {}, common: {}};
     var token = localStorage.get("token");
     var user = undefined;
 
@@ -468,6 +469,12 @@ app.factory("apiFactory", ["apiURL", '$http', "$q", "localStorageService", "$loc
       return httpDelete(urlRecipe + '/' + id, config);
     };
 
+    /* COMMON */
+
+    apiFactory.common.search = function(config) {
+      return httpGet(urlCommon + "/search", config);
+    };
+
     return apiFactory;
   }
 ]);
@@ -581,7 +588,7 @@ app.controller('MainAppCtrl', ['$scope', 'apiFactory',
 app.controller('RouteCtrl', ['$scope', '$location', 'apiFactory', function($scope, $location, apiFactory) {
   $scope.apiFactory = apiFactory;
   $scope.isActive = function(route) {
-    return route === $location.url();
+    return route === $location.path();
   };
 
   $scope.go = function (path) {

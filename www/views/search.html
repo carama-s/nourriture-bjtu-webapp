@@ -1,0 +1,22 @@
+<div ng-include="'/views/navbar.html'"></div>
+
+<div class="container" style="width: 100%;">
+  <div class="row home-bandeau">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 home-bandeau-searchbar">
+      <div class="home-bandeau-searchbar-container" ng-controller="SearchBarCtrl">
+        <div class="right-inner-addon">
+          <i class="fa fa-search home-bandea-search-bar-icon" ng-click="onSubmit()"></i>
+          <form ng-submit="onSubmit()">
+            <input type="search" class="form-control input-text-no-border" placeholder="Find Everything on Nourriture..." ng-model="searchValue"/>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" ng-controller="SearchViewResult">
+  <div class="row" ng-repeat="e in results track by e.data.id">
+    {{e.data.id}}
+  </div>
+</div>

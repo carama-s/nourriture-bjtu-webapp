@@ -15,7 +15,7 @@ homeViewControllers.controller("SearchBarCtrl", ["$scope", "$location",
       }
     };
   }
-])
+]);
 
 homeViewControllers.controller("BestRecipesCtrl", ["$scope", 'apiFactory', 'apiSocketFactory',
   function($scope, apiFactory, socket) {
