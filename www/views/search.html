@@ -115,7 +115,7 @@
 
         <div class="row">
           <div class="col-xs-12 center">
-            <pagination total-items="nbElements.all" items-per-page="perPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>
+            <pagination total-items="nbElements[selectedCategory]" items-per-page="perPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>
           </div>
         </div>
 
