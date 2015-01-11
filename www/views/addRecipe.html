@@ -96,15 +96,30 @@
     <div class="col-xs-12">
       <p class="main-color" ng-show="recipeIngredients.length == 0">No ingredient defined for this new recipe</p>
       <div class="row">
-        <div class="col-xs-12">
-        <ul class="recipe-add-ingredient-ul">
-          <li class="col-lg-2 col-md-3 col-sm-6" ng-repeat="ingredient in recipeIngredients">
+        <div class="col-xs-12 recipe-add-ingredient-container">
+          <div class="col-xs-6 col-md-3 col-lg-2" ng-repeat="ingredient in recipeIngredients">
+            <div class="ratio-container">
+              <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url({{ ingredient.photo_url }})'}"></div>
+            </div>
+            <div class="recipe-add-ingredient-content">
+              <span>{{ ingredient.name }}</span>&nbsp;<i class="glyphicon glyphicon-remove recipe-remove-ingredient-btn" ng-click="removeIngredientFromRecipe($index)"></i>
+
+              <div class="recipe-add-ingredient-editable">
+                <a href="#" buttons="no" editable-text="ingredient.quantity" onbeforesave="checkQuantity($data)">
+                  {{ ingredient.quantity || 'empty' }}
+                </a>
+              </div>
+            </div>
+          </div>
+          <!--
+          <div class="col-lg-2 col-md-3 col-sm-6" ng-repeat="ingredient in recipeIngredients">
             <div class="ratio-container">
               <div class="ratio-4_3 background-image" style="background-size: 90%" ng-style="{'background-image': 'url({{ ingredient.photo_url }})'}"></div>
             </div>
             <div class="col-xs-12 recipe-add-ingredient-content">
               <div>
-                {{ ingredient.name }} &nbsp;<i class="glyphicon glyphicon-remove recipe-remove-ingredient-btn" ng-click="removeIngredientFromRecipe($index)"></i>
+                <span>{{ ingredient.name }}</span><br>
+                <i class="glyphicon glyphicon-remove recipe-remove-ingredient-btn" ng-click="removeIngredientFromRecipe($index)"></i>
               </div>
               <div class="recipe-add-ingredient-container">
                 <a href="#" buttons="no" editable-text="ingredient.quantity" onbeforesave="checkQuantity($data)">
@@ -112,8 +127,8 @@
                 </a>
               </div>
             </div>
-          </li>
-        </ul>
+          </div>
+        -->
         </div>
       </div>
     </div>
