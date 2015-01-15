@@ -55,56 +55,39 @@
   </div>
 
   <br /><br />
-  <p class="sub-title-page">Nutrition</p>
+  <p class="sub-title-page">Nutrition
+    <button type="button" class="no-btn" ng-click="addNutrition()"><i class="fa fa-plus"></i></button>
+  </p>
   <div class="row">
     <div class="col-xs-12">
-      <div class="row" style="padding-left: 15px; padding-right: 15px;">
-        <div class="col-xs-3 form-group  no-padding">
-          <label class="form-label">Designation</label>
-        </div>
-        <div class="col-xs-3 form-group no-padding">
-          <label class="form-label">Value</label>
-        </div>
-        <div class="col-xs-3 form-group no-padding">
-          <label class="form-label">Daily value</label>
-        </div>
-        <div class="col-xs-3 form-group no-padding">
-          <label class="form-label">Edit</label>
-        </div>
-      </div>
-
-      <div class="row" ng-repeat="nutrition in ingredient.nutritions" style="padding-left: 15px; padding-right: 15px;">
-        <div class="col-xs-3 form-group no-padding">
-          <span class="form-text" e-placeholder="Designation" editable-text="nutrition.designation" e-name="designation" e-form="rowform" onbeforesave="checkDesignation($data)" e-required>
-            {{ nutrition.designation || 'Unknown' }}
-          </span>
-        </div>
-        <div class="col-xs-3 form-group no-padding">
-          <span class="form-text" e-placeholder="Value" editable-text="nutrition.value" e-name="value" e-form="rowform">
-            {{ nutrition.value || 'Unknown' }}
-          </span>
-        </div>
-        <div class="col-xs-3 form-group no-padding">
-          <span class="form-text" e-placeholder="Daily value" editable-text="nutrition.dailyValue" e-name="dailyValue" e-form="rowform">
-            {{ nutrition.dailyValue || 'Unknown' }}
-          </span>
-        </div>
-        <div class="col-xs-3 no-padding">
-          <div class="row">
-            <form editable-form name="rowform" onbeforesave="saveNutrition($data, nutrition.designation)" ng-show="rowform.$visible" onaftersave="onNutritionAdded()"  class="form-buttons form-inline" shown="inserted == nutrition">
-              <div class="col-xs-6"><button type="submit" class="form-control" ng-disabled="rowform.$waiting"><i class="fa fa-check btn-icon-nutrition"></i></button></div>
-              <div class="col-xs-6"><button ng-show="nutrition.designation" type="button" class="form-control" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()"><i class="fa fa-remove btn-icon-nutrition"></i></button></div>
-            </form>
-          </div>
-
-          <div class="form-buttons form-inline" ng-show="!rowform.$visible">
-            <div class="row">
-              <div class="col-xs-6"><button type="button" class="form-control" ng-click="rowform.$show()"><i class="fa fa-cog btn-icon-nutrition"></i></button></div>
-              <div class="col-xs-6"><button type="button" class="form-control" ng-click="removeNutrition($index)"><i class="fa fa-trash btn-icon-nutrition"></i></button></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <th>Designation</th>
+          <th>Value</th>
+          <th>Daily value</th>
+          <th></th>
+        </tr>
+        <tr ng-repeat="nutrition in ingredient.nutritions">
+          <td style="padding: 0px !important;">
+            <input
+            ng-class="{'input-text-error': submitted && ingredient.nutritions[$index].designation.trim().length <= 0}"
+            type="text" class="form-control" ng-model="ingredient.nutritions[$index].designation" placeholder="Designation"/>
+          </td>
+          <td style="padding: 0px !important;">
+            <input
+            ng-class="{'input-text-error': submitted && ingredient.nutritions[$index].value.trim().length <= 0}"
+            type="text" class="form-control" ng-model="ingredient.nutritions[$index].value" placeholder="Value"/>
+          </td>
+          <td style="padding: 0px !important;">
+            <input
+            ng-class="{'input-text-error': submitted && ingredient.nutritions[$index].dailyValue.trim().length <= 0}"
+            type="text" class="form-control" ng-model="ingredient.nutritions[$index].dailyValue" placeholder="Daily value"/>
+          </td>
+          <td style="padding: 0px !important; vertical-align: middle; text-align: center;" width="30px;">
+            <button type="button" class="no-btn" ng-click="removeNutrition($index)"><i class="fa fa-times"></i></button>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 

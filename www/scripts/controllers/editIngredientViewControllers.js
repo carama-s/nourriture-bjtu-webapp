@@ -62,54 +62,32 @@ editIngredientViewControllers.controller('EditIngredientCtrl', ['$scope', '$rout
         ($scope.ingredient.period[i]) ? ($scope.months[i].active = true) : '';
       }
 
-      $scope.ingredient.nutritions = [
-        {designation: 'Vitamin A', value: '5 %', dailyValue: '50 %'},
-        {designation: 'Vitamin B', value: '15 %', dailyValue: '20 %'},
-        {designation: 'Vitamin C', value: '35 %', dailyValue: '40 %'},
-        {designation: 'Vitamin D', value: '55 %', dailyValue: '10 %'}
-      ];
-      if ($scope.needNewRow()) {
-        $scope.addNutrition();
-      }
       $scope.loaded = true;
     });
 
     // Nutritions
 
-    $scope.checkDesignation = function(data) {
-      if (data == '' || data == undefined) {
-        return ""; // This field cannot be empty.
+    function nutritionIsValid(row) {
+      var final = true;
+      if (row.designation.trim().length <= 0) {
+        final = false;
       }
-    };
+      if (row.value.trim().length <= 0) {
+        final = false;
+      }
+      if (row.dailyValue.trim().length <= 0) {
+        final = false;
+      }
+      return final;
+    }
 
     $scope.removeNutrition = function(index) {
       $scope.ingredient.nutritions.splice(index, 1);
     };
 
-    $scope.needNewRow = function() {
-      for (var i = 0; i < $scope.ingredient.nutritions.length; i++) {
-        if ($scope.ingredient.nutritions[i].designation == '' || $scope.ingredient.nutritions[i].designation == undefined) {
-          return false;
-        }
-      }
-      return true;
-    };
-
-    $scope.onNutritionAdded = function() {
-      if ($scope.needNewRow()) {
-        $scope.addNutrition();
-      }
-    };
-
     $scope.addNutrition = function() {
-      if ($scope.needNewRow()) {
-        $scope.inserted = {
-          designation: '',
-          value: '',
-          dailyValue: ''
-        };
-        $scope.ingredient.nutritions.push($scope.inserted);
-      }
+      if ($scope.ingredient.nutritions.length > 0 && !nutritionIsValid(_.last($scope.ingredient.nutritions))) return;
+      $scope.ingredient.nutritions.push({designation: '', value: '', dailyValue: ''});
     };
 
     // Submit data
@@ -136,12 +114,16 @@ editIngredientViewControllers.controller('EditIngredientCtrl', ['$scope', '$rout
         }
       }
 
+      var nutritionsOk = _.every($scope.ingredient.nutritions, nutritionIsValid);
+      if (!nutritionsOk) return;
+
       var fd = new FormData();
       fd.append('photo', $scope.photoIngredient);
       fd.append('name', $scope.nameIngredient);
       fd.append('category', $scope.categoryIngredient);
       fd.append('description', $scope.descriptionIngredient);
       fd.append('period', JSON.stringify(period));
+      fd.append("nutritions", JSON.stringify($scope.ingredient.nutritions));
 
       var config = {
         transformRequest: angular.identity,

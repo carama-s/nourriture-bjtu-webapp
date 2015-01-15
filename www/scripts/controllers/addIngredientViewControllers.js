@@ -92,8 +92,9 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
       for(var i = 0; i < $scope.months.length; i++) {
         period[i] = ($scope.months[i].active ? 1 : 0);
       }
-      var nutritionIsValid = _.every($scope.nutritions, nutritionIsValid);
-      if (!nutritionIsValid) return;
+
+      var nutritionsOk = _.every($scope.nutritions, nutritionIsValid);
+      if (!nutritionsOk) return;
 
       var fd = new FormData();
       fd.append('photo', $scope.photoIngredient);
