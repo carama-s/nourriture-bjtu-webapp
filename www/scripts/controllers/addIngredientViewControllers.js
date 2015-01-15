@@ -49,45 +49,30 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
 
     // Nutrition
 
-    $scope.nutritions = [
-    ];
+    $scope.nutritions = [];
 
-    $scope.needNewRow = function() {
-      for (var i = 0; i < $scope.nutritions.length; i++) {
-        if ($scope.nutritions[i].designation == '' || $scope.nutritions[i].designation == undefined)
-          return false;
+    function nutritionIsValid(row) {
+      var final = true;
+      if (row.designation.trim().length <= 0) {
+        final = false;
       }
-      return true;
-    };
-
-    $scope.checkDesignation = function(data) {
-      if (data == '' || data == undefined) {
-        return ""; // This field cannot be empty.
+      if (row.value.trim().length <= 0) {
+        final = false;
       }
-    };
-
-    $scope.onNutritionAdded = function() {
-      if ($scope.needNewRow())
-        $scope.addNutrition();
-    };
+      if (row.dailyValue.trim().length <= 0) {
+        final = false;
+      }
+      return final;
+    }
 
     $scope.removeNutrition = function(index) {
       $scope.nutritions.splice(index, 1);
     };
 
     $scope.addNutrition = function() {
-      if ($scope.needNewRow()) {
-        $scope.inserted = {
-          designation: '',
-          value: '',
-          dailyValue: ''
-        };
-        $scope.nutritions.push($scope.inserted);
-      }
+      if ($scope.nutritions.length > 0 && !nutritionIsValid(_.last($scope.nutritions))) return;
+      $scope.nutritions.push({designation: '', value: '', dailyValue: ''});
     };
-
-    if ($scope.needNewRow())
-      $scope.addNutrition();
 
     $scope.submitAddIngredient = function() {
       $scope.submitted = true;
@@ -107,6 +92,8 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
       for(var i = 0; i < $scope.months.length; i++) {
         period[i] = ($scope.months[i].active ? 1 : 0);
       }
+      var nutritionIsValid = _.every($scope.nutritions, nutritionIsValid);
+      if (!nutritionIsValid) return;
 
       var fd = new FormData();
       fd.append('photo', $scope.photoIngredient);
@@ -114,6 +101,7 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
       fd.append('category', $scope.categoryIngredient);
       fd.append('description', $scope.descriptionIngredient);
       fd.append('period', JSON.stringify(period));
+      fd.append("nutrition", JSON.stringify($scope.nutritions));
 
       var config = {
         transformRequest: angular.identity,
