@@ -101,7 +101,7 @@ addIngredientViewControllers.controller('AddIngredientViewCtrl', ['$scope', '$lo
       fd.append('category', $scope.categoryIngredient);
       fd.append('description', $scope.descriptionIngredient);
       fd.append('period', JSON.stringify(period));
-      fd.append("nutrition", JSON.stringify($scope.nutritions));
+      fd.append("nutritions", JSON.stringify($scope.nutritions));
 
       var config = {
         transformRequest: angular.identity,

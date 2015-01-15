@@ -9,14 +9,7 @@ ingredientViewControllers.controller('IngredientViewCtrl', ['$scope', '$routePar
     $scope.ingredient_categories_mapper = ingredient_categories_mapper;
     apiFactory.ingredient.findById($routeParams.id).then(function(res) {
       $scope.ingredient = res.data;
-
-      $scope.ingredient.nutritions = [
-        {designation: 'Vitamin A', value: '5 %', dailyValue: '50 %'},
-        {designation: 'Vitamin B', value: '15 %', dailyValue: '20 %'},
-        {designation: 'Vitamin C', value: '35 %', dailyValue: '40 %'},
-        {designation: 'Vitamin D', value: '55 %', dailyValue: '10 %'}
-      ];
-
+      
       $scope.hasSeasonPeriod = function() {
         if ($scope.ingredient.category == 'fruit' || $scope.ingredient.category == 'vegetable')
           return true;
